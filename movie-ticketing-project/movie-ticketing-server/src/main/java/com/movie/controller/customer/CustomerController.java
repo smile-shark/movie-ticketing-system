@@ -12,4 +12,12 @@ public class CustomerController {
     public Result register() {
         return null;
     }
+    @PostMapping("/email/verification/code")
+    public Result emailVerificationCode() {
+        return null;
+    }
+    @PostMapping("/login")
+    public Result login() {
+        return null;
+    }
 }
