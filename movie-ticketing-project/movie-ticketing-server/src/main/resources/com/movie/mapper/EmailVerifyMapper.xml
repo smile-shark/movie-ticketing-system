@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.movie.mapper.EmailVerifyMapper">
+    <insert id="insertEmailVerify">
+        insert into email_verify(email, email_verify_code, end_time)
+        values (#{emailVerify.email},#{emailVerify.emailVerifyCode},#{emailVerify.endTime})
+    </insert>
+</mapper>
