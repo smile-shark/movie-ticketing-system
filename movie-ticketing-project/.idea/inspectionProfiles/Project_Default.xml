@@ -2150,7 +2150,7 @@
     <inspection_tool class="ThrowFromFinallyBlock" enabled="true" level="WARNING" enabled_by_default="true" />
     <inspection_tool class="ThrowFromFinallyBlockJS" enabled="true" level="WARNING" enabled_by_default="true" />
     <inspection_tool class="ThrowableNotThrown" enabled="true" level="WARNING" enabled_by_default="true" />
-    <inspection_tool class="ThrowablePrintStackTrace" enabled="true" level="WARNING" enabled_by_default="true" />
+    <inspection_tool class="ThrowablePrintStackTrace" enabled="false" level="WARNING" enabled_by_default="false" />
     <inspection_tool class="ThrowablePrintedToSystemOut" enabled="true" level="WARNING" enabled_by_default="true" />
     <inspection_tool class="ThrowableSupplierOnlyThrowException" enabled="true" level="WARNING" enabled_by_default="true" />
     <inspection_tool class="ThrownExceptionsPerMethod" enabled="false" level="WARNING" enabled_by_default="false" />
