@@ -5,4 +5,10 @@
         insert into email_verify(email, email_verify_code, end_time)
         values (#{emailVerify.email},#{emailVerify.emailVerifyCode},#{emailVerify.endTime})
     </insert>
+    <select id="selectEmailVerifyByEmail" resultType="emailVerify">
+        select * from email_verify
+        where email=#{email}
+        and end_time>now()
+        order by end_time desc
+    </select>
 </mapper>

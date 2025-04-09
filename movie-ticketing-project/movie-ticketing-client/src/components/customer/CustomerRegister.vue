@@ -17,7 +17,7 @@
             <el-input v-model="userEmail"  placeholder="请输入邮箱"></el-input>
           </el-form-item>
           <el-form-item >
-            <el-input  placeholder="输入验证码" style="width: 70%;"></el-input>
+            <el-input v-model="emailCode" placeholder="输入验证码" style="width: 70%;"></el-input>
             <el-button type="primary" size="small" style="margin-left: 10px;" @click="getEmailVerifyCode"
             :disabled="sendCooling">
               <span v-if="sendCooling">{{sendCoolingMessage}}</span>
@@ -36,7 +36,7 @@
             </el-checkbox>
           </el-form-item>
           <el-form-item>
-            <el-button type="warning" style="width: 100%;">注册</el-button>
+            <el-button type="warning" style="width: 100%;" @click="customerRegister">注册</el-button>
           </el-form-item>
         </el-form>
       </el-col>
@@ -80,6 +80,7 @@ export default {
       password:'',
       confirmPassword:'',
       agreementProtocol:false,
+      emailCode:''
     }
   },
   methods:{
@@ -144,6 +145,36 @@ export default {
              clearInterval(timer)
         })
       }
+    },
+    customerRegister(){
+      // 验证邮箱格式
+      if(!/^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/.test(this.userEmail)){
+        this.$message.error('请输入正确的邮箱格式')
+        return
+      }
+      // 验证密码格式
+      if(this.password.length<6 || this.password.length>20){
+        this.$message.error('密码长度必须在6-20位之间')
+        return
+      }
+      // 验证确认密码
+      if(this.password!==this.confirmPassword){
+        this.$message.error('两次密码输入不一致')
+        return
+      }
+      // 验证协议
+      if(!this.agreementProtocol){
+        this.$message.error('请同意用户协议')
+        return
+      }
+      this.$api.customerRegister(this.userEmail,this.password,this.emailCode).then(res=>{
+        if(res.data.success){
+          this.$message.success(res.data.message)
+          this.toLogin()
+        }else{
+          this.$message.error(res.data.message)
+        }
+      })
     }
   }
 }

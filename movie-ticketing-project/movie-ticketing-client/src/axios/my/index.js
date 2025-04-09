@@ -1,6 +1,14 @@
 import axios from "axios";
 import { myPath } from "./path";
-import { Message } from "element-ui";
+import CryptoJS from "crypto-js";
+
+const key = "movie-ticketing-project";
+
+function exportAxios(password){
+  let aesStr=CryptoJS.AES.encrypt(password,key).toString()
+  return aesStr
+}
+
 
 const instance = axios.create({
   baseURL: 'http://localhost:8080',
@@ -20,6 +28,13 @@ const api={
         return instance.post(myPath.sendMailVerifyCode,{
             email:email
         })
+    },
+    customerRegister(email,password,code){
+      return instance.post(myPath.customerRegister,{
+        email:email,
+        emailVerifyCode:code,
+        password:exportAxios(password)
+      })
     }
 }
 

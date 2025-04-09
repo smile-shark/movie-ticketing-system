@@ -39,6 +39,7 @@
           <element id="library" level="project" name="Maven: javax.activation:activation:1.1" />
           <element id="library" level="project" name="Maven: org.hibernate.validator:hibernate-validator:9.0.0.CR1" />
           <element id="library" level="project" name="Maven: org.jboss.logging:jboss-logging:3.6.1.Final" />
+          <element id="library" level="project" name="Maven: cn.hutool:hutool-all:5.8.36" />
         </element>
       </element>
     </root>
