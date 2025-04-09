@@ -4,6 +4,7 @@ public enum RespCode {
     SUCCESS(200, "成功"),
     SEND_EMAIL_SUCCESS(200, "验证码发送成功"),
     REGISTER_USER_SUCCESS(200, "注册成功"),
+    LOGIN_USER_SUCCESS(200, "登录成功"),
     ERROR(500, "失败"),
     DATABASE_ERROR(500, "数据库连接失败"),
     PARAM_ERROR(5001, "参数错误"),
@@ -12,6 +13,8 @@ public enum RespCode {
     DECRYPT_ERROR(5004, "解密失败"),
     EMAIL_VERIFY_CODE_LOSE_EFFICACY(5005, "邮件验证码失效"),
     EMAIL_VERIFICATION_CODE_INPUT_ERROR(5006, "邮箱验证码输入错误"),
+    NOT_FOUND_USER(5007, "未找到用户"),
+    PASSWORD_ERROR(5008, "密码错误"),
     ;
 
     private final int code;

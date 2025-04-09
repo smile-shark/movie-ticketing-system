@@ -1,5 +1,6 @@
 package com.movie.filter;
 
+import cn.hutool.extra.spring.SpringUtil;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.movie.common.resp.RespCode;
@@ -9,15 +10,15 @@ import com.movie.utils.AesUtils;
 import jakarta.servlet.*;
 import jakarta.servlet.annotation.WebFilter;
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletRequestWrapper;
-import org.springframework.core.annotation.Order;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
+import org.springframework.stereotype.Component;
 
 import java.io.IOException;
-@Order(1)
+
+
 @WebFilter(urlPatterns = "/customer/*")
 public class CustomerFilter implements Filter {
-    private final AesUtils aesUtils = new AesUtils();
-
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse,
                          FilterChain filterChain) throws IOException, ServletException {
@@ -46,14 +47,26 @@ public class CustomerFilter implements Filter {
                 // 2. 解析JSON
                 JSONObject json = JSON.parseObject(requestBody);
                 String encryptedPassword = json.getString("password");
+                String userPassword = json.getString("userPassword");
 
                 if(encryptedPassword != null && !encryptedPassword.isEmpty()) {
                     // 3. 解密密码
-                    String decryptedPassword = aesUtils.decrypt(encryptedPassword);
+                    String decryptedPassword = AesUtils.decrypt(encryptedPassword);
                     System.out.println("Decrypted password: " + decryptedPassword);
 
                     // 4. 替换密码字段
                     json.put("password", decryptedPassword);
+
+                    // 5. 更新请求体
+                    wrappedRequest.resetBody(json.toJSONString());
+                }else
+                if(userPassword != null && !userPassword.isEmpty()) {
+                    // 3. 解密密码
+                        String decryptedUserPassword = AesUtils.decrypt(userPassword);
+                    System.out.println("Decrypted password: " + decryptedUserPassword);
+
+                    // 4. 替换密码字段
+                    json.put("userPassword", decryptedUserPassword);
 
                     // 5. 更新请求体
                     wrappedRequest.resetBody(json.toJSONString());
@@ -63,7 +76,6 @@ public class CustomerFilter implements Filter {
                 throw new BusinessException(RespCode.DECRYPT_ERROR);
             }
         }
-
         filterChain.doFilter(wrappedRequest, servletResponse);
     }
 }

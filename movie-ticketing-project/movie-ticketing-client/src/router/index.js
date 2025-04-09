@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import CustomerLoginPage from '@/views/customer/CustomerLoginPage.vue'
+import CustomerHome from '@/views/customer/CustomerHome.vue'
 Vue.use(VueRouter)
 
 const routes = [
@@ -12,6 +13,11 @@ const routes = [
     path: '/customer/login',
     name: 'CustomerLoginPage',
     component: CustomerLoginPage
+  },
+  {
+    path: '/customer/home',
+    name: 'CustomerHome',
+    component: CustomerHome
   }
 ]
 

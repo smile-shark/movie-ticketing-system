@@ -35,6 +35,12 @@ const api={
         emailVerifyCode:code,
         password:exportAxios(password)
       })
+    },
+    customerLogin(email,password){
+      return instance.post(myPath.customerLogin,{
+        userEmail:email,
+        userPassword:exportAxios(password)
+      })
     }
 }
 

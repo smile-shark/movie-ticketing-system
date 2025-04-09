@@ -15,12 +15,10 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 @SpringJUnitWebConfig
 public class AllTest {
     @Autowired
-    private AesUtils aesUtils;
-    @Autowired
     private MD5Utils md5Utils;
     @Test
     public void aesTest() throws Exception {
-        String decrypt = aesUtils.decrypt("U2FsdGVkX1+lyGzhj+Nrr90rgKTR+LwDu4fxgB9Hj1M=");
+        String decrypt = AesUtils.decrypt("U2FsdGVkX1+lyGzhj+Nrr90rgKTR+LwDu4fxgB9Hj1M=");
         System.out.println(decrypt);
     }
     @Test

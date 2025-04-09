@@ -2,6 +2,8 @@ package com.movie.controller.customer;
 
 import com.movie.common.resp.Result;
 import com.movie.entity.EmailVerify;
+import com.movie.entity.User;
+import com.movie.entity.groups.CustomerLogin;
 import com.movie.entity.groups.SendEmail;
 import com.movie.entity.groups.VerifyEmail;
 import com.movie.service.EmailVerifyService;
@@ -28,7 +30,7 @@ public class CustomerController {
         return emailVerifyService.sentEmail(emailVerify);
     }
     @PostMapping("/login")
-    public Result login() {
-        return null;
+    public Result login(@Validated(CustomerLogin.class) @RequestBody User user) {
+        return userService.login(user);
     }
 }
