@@ -4,4 +4,10 @@
     <select id="selectUserByEmail" resultType="user">
         select * from user where user_email = #{userEmail}
     </select>
+    <insert id="insertUser">
+        insert into user (user_id, user_email, user_password, user_name, user_profile_picture, user_points, user_level, user_state)
+        values (#{user.userId},#{user.userEmail},#{user.userPassword},#{user.userName},
+                (select global_profile_picture from global_profile_picture order by rand() limit 1)
+                ,0,1,0)
+    </insert>
 </mapper>
