@@ -47,7 +47,7 @@ public class UserServiceImp implements UserService {
             setUserEmail(emailVerify.getEmail());
             setUserName(randomNameUtil.generateRandomName());
             setUserPassword(md5Utils.md5Encrypt(
-                    emailVerify.getPassword()+userId
+                    emailVerify.getPassword(),userId
             ));
         }};
         int i = userMapper.insertUser(newUser);
@@ -55,5 +55,22 @@ public class UserServiceImp implements UserService {
             throw new BusinessException(RespCode.DATABASE_ERROR);
         }
         return Result.success(RespCode.REGISTER_USER_SUCCESS);
+    }
+
+    @Override
+    public Result login(User user) {
+        // 1. 查询是否有该用户
+        User have = userMapper.selectUserByEmail(user.getUserEmail());
+        if(have == null){
+            throw new BusinessException(RespCode.NOT_FOUND_USER);
+        }
+        // 2. 将密码加密后与数据库中的密码进行比对
+        String password = md5Utils.md5Encrypt(user.getUserPassword() , have.getUserId());
+        if(!have.getUserPassword().equals(password)){
+            throw new BusinessException(RespCode.PASSWORD_ERROR);
+        }
+        have.setUserPassword(null);
+        // 3. 登录成功
+        return Result.success(RespCode.LOGIN_USER_SUCCESS,have);
     }
 }

@@ -5,10 +5,10 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class MD5Utils {
-    public String md5Encrypt(String input){
+    public String md5Encrypt(String input,String salt){
         if(input == null){
             return null;
         }
-       return DigestUtil.md5Hex(input);
+       return DigestUtil.md5Hex(input+salt);
     }
 }

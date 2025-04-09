@@ -12,11 +12,10 @@ import java.security.DigestException;
 import java.security.MessageDigest;
 import java.util.Arrays;
 import java.util.Base64;
-
-@Component
 public class AesUtils {
-    private String KEY = "movie-ticketing-project";
-    public String decrypt(String encryptedText) {
+    private static String aesKey="movie-ticketing-project";
+
+    public static String decrypt(String encryptedText) {
         try {
             byte[] cipherData = Base64.getDecoder().decode(encryptedText);
 
@@ -25,7 +24,7 @@ public class AesUtils {
             MessageDigest md5 = MessageDigest.getInstance("MD5");
 
             final byte[][] keyAndIV = GenerateKeyAndIV(32, 16, 1,
-                    saltData, KEY.getBytes(StandardCharsets.UTF_8),
+                    saltData, aesKey.getBytes(StandardCharsets.UTF_8),
                     md5);
 
             SecretKeySpec key = new SecretKeySpec(keyAndIV[0], "AES");

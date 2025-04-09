@@ -14,7 +14,7 @@ import java.util.Collections;
 import java.util.List;
 
 @Configuration
-@ComponentScan("com.movie.controller")
+@ComponentScan(basePackages = {"com.movie.controller","com.movie.utils"})
 @EnableWebMvc
 public class SpringMVCConfig implements WebMvcConfigurer {
 

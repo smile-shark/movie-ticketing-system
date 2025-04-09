@@ -1,5 +1,6 @@
 package com.movie.common.resp;
 
+import com.movie.entity.User;
 import lombok.Data;
 import org.springframework.stereotype.Component;
 @Data
@@ -28,6 +29,14 @@ public class Result {
                 .setSuccess(true)
                 .setCode(code.getCode())
                 .setMessage(code.getMessage());
+    }
+
+    public static Result success(RespCode code, User have) {
+        return new Result()
+                .setSuccess(true)
+                .setCode(code.getCode())
+                .setMessage(code.getMessage())
+                .setData(have);
     }
     public static  Result error() {
         return new Result()
