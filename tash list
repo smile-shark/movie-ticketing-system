@@ -1,0 +1,41 @@
+[33mcommit 726720a1b060981f316506aec49b48e6526db46c[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m)[m
+Author: smile-shark <488089248@qq.com>
+Date:   Wed Apr 9 11:33:24 2025 +0800
+
+    添加登录功能，优化加密方式
+
+[33mcommit 50393f8919ed7eeec3412f61443828376f6875d0[m
+Author: smile-shark <488089248@qq.com>
+Date:   Wed Apr 9 09:40:40 2025 +0800
+
+    添加AES加密，注册用户密码使用MD5加盐加密
+
+[33mcommit 23c77c17abe6b53a80781f15a791d73449757035[m
+Author: smile-shark <488089248@qq.com>
+Date:   Tue Apr 8 10:56:05 2025 +0800
+
+    添加邮箱验证码验证
+
+[33mcommit b75ef6488bf635e44d3b7aa16bb93e5007a08a3b[m
+Author: smile-shark <488089248@qq.com>
+Date:   Mon Apr 7 23:33:51 2025 +0800
+
+    客户注册添加图形验证码进行人机验证
+
+[33mcommit 8c57830f8a4eb3497807165bead14e54fdb96367[m
+Author: smile-shark <488089248@qq.com>
+Date:   Mon Apr 7 17:38:53 2025 +0800
+
+    创建前端项目，完成springmvc和mybatis的基本配置
+
+[33mcommit 1c6b2a641e738def144e0bdb630dd7a110113074[m
+Author: smile-shark <488089248@qq.com>
+Date:   Mon Apr 7 00:04:04 2025 +0800
+
+    设计数据库，分析项目需求
+
+[33mcommit 2b2a7eb911510720b029e6b78f3653630f40236b[m
+Author: smile-shark <160692158+smile-shark@users.noreply.github.com>
+Date:   Sun Apr 6 23:38:17 2025 +0800
+
+    Initial commit

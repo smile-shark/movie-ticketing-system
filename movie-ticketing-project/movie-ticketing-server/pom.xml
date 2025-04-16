@@ -101,6 +101,16 @@
             <artifactId>hutool-all</artifactId>
             <version>5.8.36</version>
         </dependency>
+        <dependency>
+            <groupId>com.aliyun.oss</groupId>
+            <artifactId>aliyun-sdk-oss</artifactId>
+            <version>3.18.1</version>
+        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>commons-fileupload</groupId>-->
+<!--            <artifactId>commons-fileupload</artifactId>-->
+<!--            <version>1.5</version>-->
+<!--        </dependency>-->
     </dependencies>
 
 </project>

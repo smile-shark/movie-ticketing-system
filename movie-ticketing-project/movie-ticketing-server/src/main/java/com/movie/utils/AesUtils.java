@@ -8,14 +8,16 @@ import javax.crypto.*;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
 import java.nio.charset.StandardCharsets;
-import java.security.DigestException;
-import java.security.MessageDigest;
+import java.security.*;
 import java.util.Arrays;
 import java.util.Base64;
+@Component
+@PropertySource("classpath:aes-config.properties")
 public class AesUtils {
-    private static String aesKey="movie-ticketing-project";
-
-    public static String decrypt(String encryptedText) {
+//    private static String aesKey="movie-ticketing-project";
+    @Value("${KEY}")
+    private String aesKey;
+    public String decrypt(String encryptedText) {
         try {
             byte[] cipherData = Base64.getDecoder().decode(encryptedText);
 
@@ -85,5 +87,44 @@ public class AesUtils {
             Arrays.fill(generatedData, (byte) 0);
         }
 
+    }
+
+    public static void main(String[] args) throws Exception {
+        KeyPair keyPair = generateKeyPair();
+        PublicKey publicKey = keyPair.getPublic();//获取公钥
+        System.out.println("公钥: " + java.util.Base64.getEncoder().encodeToString(publicKey.getEncoded()));
+
+        PrivateKey privateKey = keyPair.getPrivate();//获取私钥
+        System.out.println("私钥: " + java.util.Base64.getEncoder().encodeToString(privateKey.getEncoded()));
+
+        String plaintext = "Hello, world!";
+        String encrypt = encrypt(plaintext, publicKey);
+        System.out.println("加密后: " + encrypt);
+
+        String decrypt = decrypt(encrypt, privateKey);
+        System.out.println("解密后: " + decrypt);
+
+    }
+    private static final String ALGORITHM = "RSA";
+    private static final String TRANSFORMATION = "RSA/ECB/PKCS1Padding";
+
+    public static KeyPair generateKeyPair() throws Exception {
+        KeyPairGenerator keyPairGenerator = KeyPairGenerator.getInstance(ALGORITHM);
+        keyPairGenerator.initialize(1024);
+        return keyPairGenerator.generateKeyPair();
+    }
+    public static String encrypt(String plaintext, PublicKey publicKey) throws Exception {
+        Cipher cipher = Cipher.getInstance(TRANSFORMATION);
+        cipher.init(Cipher.ENCRYPT_MODE, publicKey);
+        byte[] encryptedBytes = cipher.doFinal(plaintext.getBytes(StandardCharsets.UTF_8));
+        return Base64.getEncoder().encodeToString(encryptedBytes);
+    }
+
+    public static String decrypt(String encryptedText, PrivateKey privateKey) throws Exception {
+        Cipher cipher = Cipher.getInstance(TRANSFORMATION);
+        cipher.init(Cipher.DECRYPT_MODE, privateKey);
+        byte[] decodedBytes = Base64.getDecoder().decode(encryptedText);
+        byte[] decryptedBytes = cipher.doFinal(decodedBytes);
+        return new String(decryptedBytes, StandardCharsets.UTF_8);
     }
 }

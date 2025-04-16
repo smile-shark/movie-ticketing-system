@@ -8,16 +8,12 @@ import com.movie.filter.request.RequestWrapper;
 import com.movie.utils.AesUtils;
 import jakarta.servlet.*;
 import jakarta.servlet.http.HttpServletRequest;
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 
-
-//@WebFilter(urlPatterns = "/customer/*")
-public class CustomerFilter implements Filter {
+public class PlatformManagementFilter implements Filter {
     private final AesUtils aesUtils;
-    public CustomerFilter(AesUtils aesUtils) {
+    public PlatformManagementFilter(AesUtils aesUtils) {
         this.aesUtils = aesUtils;
     }
 
@@ -28,19 +24,11 @@ public class CustomerFilter implements Filter {
         HttpServletRequest httpRequest = (HttpServletRequest) servletRequest;
         String requestURI = httpRequest.getRequestURI();
 
-        // 跳过验证码接口
-        if(requestURI.endsWith("/customer/email/verification/code")) {
-            filterChain.doFilter(servletRequest, servletResponse);
-            return;
-        }
-
         // 包装请求以便多次读取body
         RequestWrapper wrappedRequest = new RequestWrapper(httpRequest);
-
         // 处理注册/登录
         if(("POST".equalsIgnoreCase(httpRequest.getMethod()) &&
-                (requestURI.endsWith("/customer/register") ||
-                        requestURI.endsWith("/customer/login")))) {
+                        requestURI.endsWith("/platform/login"))) {
             try {
                 // 1. 获取原始请求体
                 String requestBody = wrappedRequest.getBody();
@@ -48,27 +36,15 @@ public class CustomerFilter implements Filter {
 
                 // 2. 解析JSON
                 JSONObject json = JSON.parseObject(requestBody);
-                String encryptedPassword = json.getString("password");
-                String userPassword = json.getString("userPassword");
+                String userPassword = json.getString("platformManagementPassword");
 
-                if(encryptedPassword != null && !encryptedPassword.isEmpty()) {
-                    // 3. 解密密码
-                    String decryptedPassword = aesUtils.decrypt(encryptedPassword);
-                    System.out.println("Decrypted password: " + decryptedPassword);
-
-                    // 4. 替换密码字段
-                    json.put("password", decryptedPassword);
-
-                    // 5. 更新请求体
-                    wrappedRequest.resetBody(json.toJSONString());
-                }else
                 if(userPassword != null && !userPassword.isEmpty()) {
                     // 3. 解密密码
-                        String decryptedUserPassword = aesUtils.decrypt(userPassword);
+                    String decryptedUserPassword = aesUtils.decrypt(userPassword);
                     System.out.println("Decrypted password: " + decryptedUserPassword);
 
                     // 4. 替换密码字段
-                    json.put("userPassword", decryptedUserPassword);
+                    json.put("platformManagementPassword", decryptedUserPassword);
 
                     // 5. 更新请求体
                     wrappedRequest.resetBody(json.toJSONString());

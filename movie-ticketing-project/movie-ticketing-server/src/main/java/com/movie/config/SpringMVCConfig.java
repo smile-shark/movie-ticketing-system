@@ -2,21 +2,33 @@ package com.movie.config;
 
 import com.alibaba.fastjson.support.config.FastJsonConfig;
 import com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter;
+import com.movie.filter.CustomerFilter;
+import com.movie.filter.GlobalFilter;
+import com.movie.filter.PlatformManagementFilter;
+import com.movie.utils.AesUtils;
+import jakarta.servlet.*;
+import jakarta.servlet.annotation.MultipartConfig;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.HttpMessageConverter;
+import org.springframework.web.WebApplicationInitializer;
+import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
+import org.springframework.web.filter.DelegatingFilterProxy;
+import org.springframework.web.multipart.MultipartResolver;
+import org.springframework.web.multipart.support.StandardServletMultipartResolver;
+import org.springframework.web.servlet.DispatcherServlet;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import java.util.Collections;
 import java.util.List;
-
 @Configuration
-@ComponentScan(basePackages = {"com.movie.controller","com.movie.utils"})
+@ComponentScan(basePackages = {"com.movie.controller","com.movie.utils","com.movie.config"})
 @EnableWebMvc
-public class SpringMVCConfig implements WebMvcConfigurer {
+public class SpringMVCConfig implements WebApplicationInitializer, WebMvcConfigurer {
 
     @Override
     public void addCorsMappings(CorsRegistry registry) {
@@ -38,5 +50,33 @@ public class SpringMVCConfig implements WebMvcConfigurer {
 
         fastJsonHttpMessageConverter.setFastJsonConfig(fastJsonConfig);
         converters.addFirst(fastJsonHttpMessageConverter);
+    }
+
+    @Override
+    public void onStartup(ServletContext servletContext) throws ServletException {
+        // 获取 Spring 应用上下文
+        AnnotationConfigWebApplicationContext context = new AnnotationConfigWebApplicationContext();
+        context.register(SpringMVCConfig.class);
+
+        // 注册 DelegatingFilterProxy
+        DelegatingFilterProxy customerFilter = new DelegatingFilterProxy("customerFilter");
+        servletContext.addFilter("customerFilter", customerFilter)
+                .addMappingForUrlPatterns(null, false, "/customer/*");
+        DelegatingFilterProxy platformManagementFilter = new DelegatingFilterProxy("platformManagementFilter");
+        servletContext.addFilter("platformManagementFilter", platformManagementFilter)
+                .addMappingForUrlPatterns(null, false, "/platform/*");
+
+    }
+    @Bean
+    public Filter customerFilter(AesUtils aesUtils) {
+        return new CustomerFilter(aesUtils);
+    }
+    @Bean
+    public Filter platformManagementFilter(AesUtils aesUtils) {
+        return new PlatformManagementFilter(aesUtils);
+    }
+    @Bean
+    public MultipartResolver multipartResolver(){
+        return new StandardServletMultipartResolver();//文件解析对象
     }
 }

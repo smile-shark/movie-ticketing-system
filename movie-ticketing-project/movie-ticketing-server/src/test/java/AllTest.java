@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.web.SpringJUnitWebConfig;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.web.multipart.MultipartResolver;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = SpringConfig.class)
@@ -16,14 +17,32 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 public class AllTest {
     @Autowired
     private MD5Utils md5Utils;
+    @Autowired
+    private AesUtils aesUtils;
     @Test
     public void aesTest() throws Exception {
-        String decrypt = AesUtils.decrypt("U2FsdGVkX1+lyGzhj+Nrr90rgKTR+LwDu4fxgB9Hj1M=");
+        String decrypt = aesUtils.decrypt("U2FsdGVkX1+lyGzhj+Nrr90rgKTR+LwDu4fxgB9Hj1M=");
         System.out.println(decrypt);
     }
     @Test
     public void md5Test() throws Exception {
         System.out.println(DigestUtil.md5Hex("qq123456"));
         System.out.println(UUIDUtils.generateUUID());
+    }
+    @Autowired
+    private MultipartResolver multipartResolver;
+    @Test
+    public void multipartTest() throws Exception {
+        if (multipartResolver == null) {
+            throw new IllegalStateException("MultipartResolver is not initialized");
+        }else {
+            System.out.println("MultipartResolver is initialized");
+        }
+    }
+    @Test
+    public void UUIDTest(){
+        for(int i=0;i<10;i++){
+            System.out.println(UUIDUtils.generateUUID());
+        }
     }
 }

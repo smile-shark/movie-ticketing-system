@@ -23,7 +23,7 @@ instance.interceptors.response.use(
   }
 );
 
-const api={
+export const myApi={
     sendMailVerifyCode(email){
         return instance.post(myPath.sendMailVerifyCode,{
             email:email
@@ -41,7 +41,29 @@ const api={
         userEmail:email,
         userPassword:exportAxios(password)
       })
+    },
+    platformLogin(account,password){
+      return instance.post(myPath.platformLogin,{
+        platformManagementAccount:account,
+        platformManagementPassword:exportAxios(password)
+      })
+    },
+    selectAllMovieType(){
+      return instance.get(myPath.selectAllMovieType)
+    },
+    fileUpload(file){
+      return instance.post(myPath.fileUpload,file,{
+        headers:{
+          'Content-Type':'multipart/form-data'
+        }
+      })
+    },
+    fileDelete(fileName){
+      console.log(fileName)
+      return instance.get(myPath.fileDelete,{
+        params:{
+          fileName:fileName
+        }
+      })
     }
 }
-
-export default api;

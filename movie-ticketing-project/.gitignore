@@ -12,6 +12,9 @@ target/
 *.iml
 *.ipr
 
+movie-ticketing-server/src/main/resources/aliyunoss-config.properties
+out/
+
 ### Eclipse ###
 .apt_generated
 .classpath
