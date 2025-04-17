@@ -6,6 +6,7 @@ import com.movie.entity.EmailVerify;
 import com.movie.entity.User;
 import com.movie.exception.BusinessException;
 import com.movie.mapper.EmailVerifyMapper;
+import com.movie.mapper.MarketMapper;
 import com.movie.mapper.UserMapper;
 import com.movie.service.UserService;
 import com.movie.utils.MD5Utils;
@@ -23,6 +24,7 @@ public class UserServiceImp implements UserService {
     private final UserMapper userMapper;
     private final MD5Utils md5Utils;
     private final RandomNameUtil randomNameUtil;
+    private final MarketMapper marketMapper;
     @Override
     public Result register(EmailVerify emailVerify) {
         // 1. 查看数据库中是否账号已存在
@@ -70,7 +72,23 @@ public class UserServiceImp implements UserService {
             throw new BusinessException(RespCode.PASSWORD_ERROR);
         }
         have.setUserPassword(null);
+        if(have.getMarketId() != null){
+            have.setMarket(marketMapper.selectMarketById(have.getMarketId()));
+        }
         // 3. 登录成功
         return Result.success(RespCode.LOGIN_USER_SUCCESS,have);
+    }
+
+    @Override
+    public Result updateUserByUserId(User user) {
+        try {
+            if(userMapper.updateUserByUserId(user)<=0){
+                throw new BusinessException(RespCode.UPDATE_USER_INFO_ERROR);
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+            throw new BusinessException(RespCode.UPDATE_USER_INFO_ERROR);
+        }
+        return Result.success(RespCode.UPDATE_USER_INFO_SUCCESS);
     }
 }

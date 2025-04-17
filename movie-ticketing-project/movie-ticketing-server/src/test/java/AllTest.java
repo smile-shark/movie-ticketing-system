@@ -41,7 +41,7 @@ public class AllTest {
     }
     @Test
     public void UUIDTest(){
-        for(int i=0;i<10;i++){
+        for(int i=0;i<27;i++){
             System.out.println(UUIDUtils.generateUUID());
         }
     }

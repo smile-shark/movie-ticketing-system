@@ -10,4 +10,34 @@
                 (select global_profile_picture from global_profile_picture order by rand() limit 1)
                 ,0,1,0)
     </insert>
+    <update id="updateUserByUserId">
+        update user
+        <set>
+            <if test="user.userEmail">
+                user_email=#{user.userEmail},
+            </if>
+            <if test="user.userPassword">
+                user_password=#{user.userPassword},
+            </if>
+            <if test="user.userName">
+                user_name=#{user.userName},
+            </if>
+            <if test="user.userProfilePicture">
+                user_profile_picture=#{user.userProfilePicture},
+            </if>
+            <if test="user.userPoints">
+                user_points=#{user.userPoints},
+            </if>
+            <if test="user.userLevel">
+                user_level=#{user.userLevel},
+            </if>
+            <if test="user.userState">
+                user_state=#{user.userState},
+            </if>
+            <if test="user.marketId">
+                market_id=#{user.marketId},
+            </if>
+        </set>
+        where user_id=#{user.userId}
+    </update>
 </mapper>

@@ -79,5 +79,14 @@ export const myApi={
     },
     insertMovie(movie){
       return instance.post(myPath.insertMovie,movie)
+    },
+    selectAllMarket(){
+      return instance.get(myPath.selectAllMarket)
+    },
+    updateUserMarket(userId,marketId){
+      return instance.put(myPath.updateUserByUserId,{
+        userId:userId,
+        marketId:marketId
+      })
     }
 }

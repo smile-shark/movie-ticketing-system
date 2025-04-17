@@ -7,4 +7,5 @@ import com.movie.entity.User;
 public interface UserService {
      Result register(EmailVerify emailVerify);
      Result login(User user);
+     Result updateUserByUserId(User user);
 }

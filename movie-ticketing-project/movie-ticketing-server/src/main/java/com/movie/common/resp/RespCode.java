@@ -21,7 +21,10 @@ public enum RespCode {
     DELETE_FILE_ERROR(5010,"删除文件失败" ),
     DELETE_FILE_SUCCESS(200, "删除文件成功"),
     ADD_MOVIE_ERROR(5011, "添加电影失败"),
-    ADD_MOVIE_SUCCESS(200, "添加电影成功");
+    ADD_MOVIE_SUCCESS(200, "添加电影成功"),
+    FIND_ERROR(5012, "查询失败"),
+    UPDATE_USER_INFO_ERROR(5013, "用户信息修改失败"),
+    UPDATE_USER_INFO_SUCCESS(200, "用户信息修改成功");
 
     private final int code;
     private final String message;

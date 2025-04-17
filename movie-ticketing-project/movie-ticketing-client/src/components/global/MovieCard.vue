@@ -20,7 +20,7 @@
                 <el-tag type="success" size="mini" class="movie-tag">{{ movie.movieDuration }}</el-tag>
             </div>
             <p class="movie-director">导演: {{ movie.director }}</p>
-            <p class="movie-actors">主演: {{ movie.stars }}</p>
+            <p class="movie-actors">主演: {{ movie.star }}</p>
             <p class="movie-actors">上映时间: {{ formatDate(movie.movieStartTime) }}</p>
             <p class="movie-actors">剧情介绍: {{ movie.introduction }}</p>
           </div>
