@@ -7,5 +7,6 @@ export const myPath={
     customerLogin:'/customer/login',
 
     platformLogin:'/platform/login',
-    selectAllMovieType:'/platform/movie/types'
+    selectAllMovieType:'/platform/movie/types',
+    insertMovie:'/platform/movie',
 }

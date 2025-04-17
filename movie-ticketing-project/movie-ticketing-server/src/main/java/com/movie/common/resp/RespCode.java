@@ -19,7 +19,9 @@ public enum RespCode {
     UPLOAD_FILE_ERROR(5009, "上传文件失败"),
     FIND_SUCCESS(200, "查询成功"),
     DELETE_FILE_ERROR(5010,"删除文件失败" ),
-    DELETE_FILE_SUCCESS(200, "删除文件成功");
+    DELETE_FILE_SUCCESS(200, "删除文件成功"),
+    ADD_MOVIE_ERROR(5011, "添加电影失败"),
+    ADD_MOVIE_SUCCESS(200, "添加电影成功");
 
     private final int code;
     private final String message;

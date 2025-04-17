@@ -1,6 +1,7 @@
 import axios from "axios";
 import { myPath } from "./path";
 import CryptoJS from "crypto-js";
+import { Loading } from "element-ui";
 
 const key = "movie-ticketing-project";
 
@@ -8,17 +9,27 @@ function exportAxios(password){
   let aesStr=CryptoJS.AES.encrypt(password,key).toString()
   return aesStr
 }
-
+let loadingInstance
 
 const instance = axios.create({
   baseURL: 'http://localhost:8080',
 });
-
+instance.interceptors.request.use(
+  (config) => {
+    loadingInstance = Loading.service()
+    return config;
+  },
+  (error) => {
+    return Promise.reject(error);
+  }
+)
 instance.interceptors.response.use(
   (response) => {
+    loadingInstance.close()
     return response;
   },
   (error) => {
+    loadingInstance.close()
     return Promise.reject(error);
   }
 );
@@ -65,5 +76,8 @@ export const myApi={
           fileName:fileName
         }
       })
+    },
+    insertMovie(movie){
+      return instance.post(myPath.insertMovie,movie)
     }
 }
