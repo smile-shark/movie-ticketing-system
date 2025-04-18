@@ -31,6 +31,7 @@
                         <el-submenu index="1-1">
                             <span slot="title">电影管理</span>
                             <el-menu-item index="/platform/home/insert-movie">新增电影</el-menu-item>
+                            <el-menu-item >电影信息校正</el-menu-item>
                             <el-menu-item >电影下架</el-menu-item>
                         </el-submenu>
 					</el-submenu>

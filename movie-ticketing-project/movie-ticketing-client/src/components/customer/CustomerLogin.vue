@@ -61,7 +61,11 @@
           this.$api.customerLogin(this.email,this.password).then(res=>{
             if(res.data.code === 200){
               localStorage.setItem('customerInfo',JSON.stringify(res.data.data))
-              this.$message.success(res.data.message)
+              this.$message({
+                type:'success',
+                message: '登录成功',
+                duration: 1000
+              })
               this.$router.push('/customer/home')
               if(this.remember){
                 localStorage.setItem('customerEmail',this.email)

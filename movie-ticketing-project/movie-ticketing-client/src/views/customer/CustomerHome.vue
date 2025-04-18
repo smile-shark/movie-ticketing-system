@@ -1,7 +1,7 @@
 <template>
   <div id="app">
-    <el-container>
-      <el-header class="header" style="padding-left:300px;padding-right:300px;">
+    <el-container style="background-color: #f0f2f5;height: 100vh;">
+      <el-header class="header" style="padding:0 18%;">
         <el-row style="height: 9vh;">
             <el-col :span="24" class="title-container">
                 <div style="padding:5px;display: flex;align-items: center;">
@@ -31,6 +31,15 @@
         <el-button v-else type="text" class="login-button" @click="$router.push('/customer/login')">请登录</el-button>
         <el-button  v-if="customerInfo" type="text" class="login-button" @click="$router.push('/customer/login')" icon="el-icon-right">退出</el-button>
       </el-header>
+      <el-main >
+        <div style="padding:0 18%;">
+          <router-view style="background-color: white;"></router-view>
+          
+        <div style="padding: 10px;text-align: center;font-size: 14px;color: #999;">
+          看吧电影-相约电影院，享受好时光！
+        </div>
+        </div>
+      </el-main>
     </el-container>
     <el-dialog
       title="选择所在的城市"

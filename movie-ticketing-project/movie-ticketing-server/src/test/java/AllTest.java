@@ -1,5 +1,8 @@
 import cn.hutool.crypto.digest.DigestUtil;
 import com.movie.config.SpringConfig;
+import com.movie.entity.Movie;
+import com.movie.service.MobileDisplayService;
+import com.movie.service.MovieService;
 import com.movie.utils.AesUtils;
 import com.movie.utils.MD5Utils;
 import com.movie.utils.UUIDUtils;
@@ -19,6 +22,10 @@ public class AllTest {
     private MD5Utils md5Utils;
     @Autowired
     private AesUtils aesUtils;
+    @Autowired
+    private MobileDisplayService mobileDisplayService;
+    @Autowired
+    private MovieService movieService;
     @Test
     public void aesTest() throws Exception {
         String decrypt = aesUtils.decrypt("U2FsdGVkX1+lyGzhj+Nrr90rgKTR+LwDu4fxgB9Hj1M=");
@@ -44,5 +51,13 @@ public class AllTest {
         for(int i=0;i<27;i++){
             System.out.println(UUIDUtils.generateUUID());
         }
+    }
+    @Test
+    public void selectAllAllowedMobileDisplaysTest(){
+        System.out.println(mobileDisplayService.selectAllAllowedMobileDisplays());
+    }
+    @Test
+    public void selectMovieListTest(){
+        System.out.println(movieService.selectMovieList(new Movie(),0,4,1));
     }
 }

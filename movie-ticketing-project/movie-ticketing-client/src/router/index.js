@@ -6,6 +6,7 @@ import PlatformLoginPage from '@/views/platform-management/PlatformLoginPage.vue
 import PlatformHomePage from '@/views/platform-management/PlatformHomePage.vue'
 import PlatformMovieInsertPage from '@/views/platform-management/child/movie-management/PlatformMovieInsertPage.vue'
 import PlatformMainPage from '@/views/platform-management/child/PlatformMainPage.vue'
+import CustomerHomePage from '@/views/customer/child/CustomerHomePage.vue'
 Vue.use(VueRouter)
 
 const routes = [
@@ -21,7 +22,14 @@ const routes = [
   {
     path: '/customer/home',
     name: 'CustomerHome',
-    component: CustomerHome
+    component: CustomerHome,
+    children:[
+      {
+        path: '/',
+        name: 'CustomerHomePage',
+        component: CustomerHomePage,
+      }
+    ]
   },
   {
     path: '/all/admin',

@@ -1,5 +1,8 @@
 package com.movie.service.imp;
 
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.movie.common.resp.RespCode;
 import com.movie.common.resp.Result;
 import com.movie.entity.Movie;
@@ -12,6 +15,8 @@ import com.movie.utils.UUIDUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -38,5 +43,18 @@ public class MovieServiceImp implements MovieService {
                throw new BusinessException(RespCode.ADD_MOVIE_ERROR);
           }
           return Result.success(RespCode.ADD_MOVIE_SUCCESS);
+     }
+
+     @Override
+     public Result selectMovieList(Movie movie, Integer already, Integer size, Integer page) {
+          List<Movie> movies;
+          try{
+               PageHelper.startPage(page, size);
+               movies = movieMapper.selectMovieList(movie, already);
+          }catch (Exception e){
+               e.printStackTrace();
+               throw new BusinessException(RespCode.FIND_ERROR);
+          }
+          return Result.success(RespCode.FIND_SUCCESS).setData(PageInfo.of(movies));
      }
 }

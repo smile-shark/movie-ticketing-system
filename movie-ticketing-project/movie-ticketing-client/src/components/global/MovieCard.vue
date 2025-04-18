@@ -84,9 +84,16 @@
   .movie-plot {
     margin-bottom: 10px;
     color: #666;
-    width: 80%
+    width: 80%;
+    display: -webkit-box; /* 用于旧版 Safari */
+    -webkit-line-clamp: 2; /* 限制两行 */
+    -webkit-box-orient: vertical; /* 垂直排列 */
+    overflow: hidden; /* 隐藏溢出的内容 */
+    text-overflow: ellipsis; /* 使用省略号表示溢出的内容 */
+    white-space: normal; /* 允许换行 */
+    line-height: 1.5; /* 设置行高，根据需要调整 */
+    max-height: 3em; /* 两行的最大高度，根据行高调整 */
   }
-  
   .el-button {
     margin-right: 10px;
   }

@@ -11,4 +11,35 @@
             #{movie.movieDuration}, #{movie.director}, #{movie.star}, #{movie.introduction},
             #{movie.score}, #{movie.posterImage}, #{movie.issuingRegion})
    </insert>
+    <select id="selectMovieById" resultType="movie">
+        select * from movie where movie_id = #{movieId}
+    </select>
+    <select id="selectMovieList" resultType="movie">
+        select * from movie
+        <where>
+            <if test="movie.movieId">
+                movie_id = #{movie.movieId} and
+            </if>
+            <if test="movie.movieName">
+                movie_name like #{movie.movieName} and
+            </if>
+            <if test="movie.director">
+                director like concat('%', #{movie.director}, '%') and
+            </if>
+            <if test="movie.star">
+                star like concat('%', #{movie.star}, '%') and
+            </if>
+            <if test="movie.issuingRegion">
+                issuing_region like concat('%', #{movie.issuingRegion}, '%') and
+            </if>
+            <if test="already!=null">
+                <if test="already==0">
+                    movie_start_time &lt;= now()
+                </if>
+                <if test="already==1">
+                    movie_start_time &gt; now()
+                </if>
+            </if>
+        </where>
+    </select>
 </mapper>

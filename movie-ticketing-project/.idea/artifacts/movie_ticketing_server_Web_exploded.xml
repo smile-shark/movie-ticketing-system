@@ -65,6 +65,8 @@
           <element id="library" level="project" name="Maven: org.jdom:jdom2:2.0.6.1" />
           <element id="library" level="project" name="Maven: org.reactivestreams:reactive-streams:1.0.3" />
           <element id="library" level="project" name="Maven: org.slf4j:slf4j-api:1.7.30" />
+          <element id="library" level="project" name="Maven: com.github.jsqlparser:jsqlparser:4.7" />
+          <element id="library" level="project" name="Maven: com.github.pagehelper:pagehelper:6.1.0" />
         </element>
       </element>
     </root>
