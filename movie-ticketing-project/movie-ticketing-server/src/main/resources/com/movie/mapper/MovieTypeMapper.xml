@@ -4,4 +4,10 @@
     <select id="selectAllMovieType" resultType="movieType">
         select * from movie_type
     </select>
+    <select id="selectMovieTypesInMovieTypeIds" resultType="movieType">
+        select * from movie_type where movie_type_id in
+        <foreach collection="movieTypeMiddles" item="movieTypeMiddle" separator="," open="(" close=")">
+            #{movieTypeMiddle.movieTypeId}
+        </foreach>
+    </select>
 </mapper>

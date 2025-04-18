@@ -24,7 +24,9 @@ public enum RespCode {
     ADD_MOVIE_SUCCESS(200, "添加电影成功"),
     FIND_ERROR(5012, "查询失败"),
     UPDATE_USER_INFO_ERROR(5013, "用户信息修改失败"),
-    UPDATE_USER_INFO_SUCCESS(200, "用户信息修改成功");
+    UPDATE_USER_INFO_SUCCESS(200, "用户信息修改成功"),
+    UPDATE_MOVIE_ERROR(5014, "电影信息修改失败"),
+    UPDATE_MOVIE_SUCCESS(200, "电影信息修改成功");
 
     private final int code;
     private final String message;

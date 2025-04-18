@@ -93,7 +93,7 @@ export const myApi={
       return instance.get(myPath.selectAllAllowedMobileDisplays)
     },
     selectMovieList({movieId=null,movieName=null,director=null,star=null,issuingRegion=null,already=null,size=10,page=1}){
-      return instance.get(myPath.selectMovieList,{
+      return instance.get(myPath.selectMovieListCustomer,{
         params:{
           movieId,
           movieName,
@@ -105,5 +105,22 @@ export const myApi={
           page
         }
       })
+    },
+    selectMovieListPlatform({movieId=null,movieName=null,director=null,star=null,issuingRegion=null,already=null,size=10,page=1}){
+      return instance.get(myPath.selectMovieListPlatform,{
+        params:{
+          movieId,
+          movieName,
+          director,
+          star,
+          issuingRegion,
+          already,
+          size,
+          page
+        }
+      })
+    },
+    updateMovie(movie){
+      return instance.put(myPath.updateMovie,movie)
     }
 }

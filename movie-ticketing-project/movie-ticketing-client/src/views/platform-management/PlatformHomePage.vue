@@ -30,9 +30,9 @@
                         </template>
                         <el-submenu index="1-1">
                             <span slot="title">电影管理</span>
+                            <el-menu-item index="/platform/home/list-movie">电影信息列表</el-menu-item>
                             <el-menu-item index="/platform/home/insert-movie">新增电影</el-menu-item>
-                            <el-menu-item >电影信息校正</el-menu-item>
-                            <el-menu-item >电影下架</el-menu-item>
+                            <el-menu-item index="/platform/home/update-movie">电影信息校正</el-menu-item>
                         </el-submenu>
 					</el-submenu>
 				</el-menu>
@@ -40,9 +40,7 @@
 			<el-col :span="20" style="height: 100%;overflow: auto;">
 				<el-row>
                     <el-col :span="24" style="padding:10px;">
-                        <keep-alive>
-                            <router-view></router-view>
-                        </keep-alive>
+                        <router-view></router-view>
                     </el-col>
                 </el-row>
 			</el-col>
@@ -60,6 +58,21 @@ export default {
         }
     },
     methods:{
+    },
+    watch:{
+        '$route'(to,from){
+            let currentPath = to.path;
+            // 正则表达式匹配32位数字和小写字母组成的字符串
+            const regex = /\/[0-9a-z]{32}$/;
+            if (regex.test(currentPath)) {
+                // 如果匹配到，去掉最后符合条件的部分
+                currentPath = currentPath.replace(regex, '');
+            }
+            this.defaultActive = currentPath;
+        }
+    },
+    mounted(){
+        this.defaultActive=this.$route.path
     }
 }
 </script>

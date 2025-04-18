@@ -3,6 +3,7 @@ import com.movie.config.SpringConfig;
 import com.movie.entity.Movie;
 import com.movie.service.MobileDisplayService;
 import com.movie.service.MovieService;
+import com.movie.service.MovieTypeService;
 import com.movie.utils.AesUtils;
 import com.movie.utils.MD5Utils;
 import com.movie.utils.UUIDUtils;
@@ -26,6 +27,8 @@ public class AllTest {
     private MobileDisplayService mobileDisplayService;
     @Autowired
     private MovieService movieService;
+    @Autowired
+    private MovieTypeService movieTypeService;
     @Test
     public void aesTest() throws Exception {
         String decrypt = aesUtils.decrypt("U2FsdGVkX1+lyGzhj+Nrr90rgKTR+LwDu4fxgB9Hj1M=");
@@ -51,6 +54,10 @@ public class AllTest {
         for(int i=0;i<27;i++){
             System.out.println(UUIDUtils.generateUUID());
         }
+    }
+    @Test
+    public void selectAllMovieType(){
+        System.out.println(movieTypeService.selectAllMovieType());
     }
     @Test
     public void selectAllAllowedMobileDisplaysTest(){

@@ -9,7 +9,6 @@ import java.util.List;
 @Mapper
 public interface MovieMapper {
     int insertMovie(@Param("movie") Movie movie);
-    Movie selectMovieById(@Param("movieId") String movieId);
     /**
      * 查询电影列表。
      *
@@ -24,4 +23,6 @@ public interface MovieMapper {
     List<Movie> selectMovieList(@Param("movie") Movie movie,
                                 @Param("already") Integer already
     );
+    Movie selectMovieById(@Param("movieId") String movieId);
+    int updateMovie(@Param("movie") Movie movie);
 }

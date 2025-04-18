@@ -4,7 +4,8 @@
         <el-col :span="4">
           <el-image :src="movie.posterImage" alt="电影海报" class="movie-poster" style="height:280px;width:210px;">
             <div slot="error" class="image-slot" style="display:flex;align-items:center;justify-content:center;height:100%;
-            background-color:#c9c9c9;color:#ccc;font-size:24px;font-weight:bold">
+            background-color:#f5f7fa;
+            ;color:#ccc;font-size:24px;font-weight:bold">
                 <i class="el-icon-picture-outline"></i>
             </div>
           </el-image>
@@ -36,7 +37,19 @@
     props: {
       movie: {
         type: Object,
-        required: true
+        required: true,
+        default: () => ({
+            posterImage:'',
+            movieName: 'defaultName',
+            score: 0,
+            tags: [],
+            movieDuration: 'defaultDuration',
+            issuingRegion:'defaultRegion',
+            star: '',
+            director: '',
+            movieStartTime: '',
+            introduction: ''
+        })
       }
     },
     methods: {

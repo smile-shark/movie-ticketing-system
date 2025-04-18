@@ -8,10 +8,12 @@ export const myPath={
     selectAllMarket:'/customer/market',
     updateUserByUserId:'/customer/user',
     selectAllAllowedMobileDisplays:'/customer/mobile/display',
-    selectMovieList:'/customer/movie',
+    selectMovieListCustomer:'/customer/movie',
 
     platformLogin:'/platform/login',
     selectAllMovieType:'/platform/movie/types',
     insertMovie:'/platform/movie',
+    selectMovieListPlatform:'/platform/movie/list',
+    updateMovie:'/platform/movie',
     
 }

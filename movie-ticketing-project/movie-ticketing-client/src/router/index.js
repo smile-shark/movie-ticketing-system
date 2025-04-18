@@ -7,6 +7,8 @@ import PlatformHomePage from '@/views/platform-management/PlatformHomePage.vue'
 import PlatformMovieInsertPage from '@/views/platform-management/child/movie-management/PlatformMovieInsertPage.vue'
 import PlatformMainPage from '@/views/platform-management/child/PlatformMainPage.vue'
 import CustomerHomePage from '@/views/customer/child/CustomerHomePage.vue'
+import PlatformMovieListPage from '@/views/platform-management/child/movie-management/PlatformMovieListPage.vue'
+import PlatformMovieUpdatePage from '@/views/platform-management/child/movie-management/PlatformMovieUpdatePage.vue'
 Vue.use(VueRouter)
 
 const routes = [
@@ -49,14 +51,22 @@ const routes = [
         path: '',
         name: 'PlatformMainPage',
         component: PlatformMainPage,
-        meta: '首页'
       },
       {
         path: 'insert-movie',
         name: 'PlatformMovieInsertPage',
         component: PlatformMovieInsertPage,
-        meta: '新增电影'
       },
+      {
+        path: 'list-movie',
+        name: 'PlatformMovieListPage',
+        component: PlatformMovieListPage,
+      },
+      {
+        path: 'update-movie/:movieId?',
+        name: 'PlatformMovieUpdatePage',
+        component: PlatformMovieUpdatePage,
+      }
     ]
   }
 ]

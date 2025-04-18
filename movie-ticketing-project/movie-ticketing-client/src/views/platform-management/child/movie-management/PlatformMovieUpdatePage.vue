@@ -2,7 +2,18 @@
   <div>
     <MovieCard :movie="movieData" />
     <FillMovieInfo :movie-data="movieData"/>
-    <el-button type="primary" @click="insertMovie">立即添加</el-button>
+    <el-button type="primary" @click="updateMovie">提交修改信息</el-button>
+    <el-dialog title="请选择需要修改数据的电影"
+      width="14%"
+      :visible.sync="notSelectedMovie"
+      :close-on-click-modal="false"
+      :close-on-press-escape="false"
+      :show-close="false"
+      :modal-append-to-body="false">
+      <el-button type="primary" style="width: 100%;" @click="$router.push({name:'PlatformMovieListPage'})">去选择</el-button>
+
+      </el-dialog>
+
   </div>
 </template>
 
@@ -13,31 +24,30 @@ import FillMovieInfo from '@/components/global/FillMovieInfo.vue';
 
 export default {
   components: {
-    MovieCard,FillMovieInfo
+    MovieCard,
+    FillMovieInfo
   },
   data() {
     return {
+      notSelectedMovie:false,
+      movieId:'',
       movieData: {
-        posterImage:'https://pic3.yzzyimg.online/upload/vod/2022-03-21/202203211647870271.jpg',
-        movieName: '流浪地球',
-        score: 9.3,
-        tags: [
-          {
-            movieTypeId:"106dee87d0c64094a31f114381999b51",
-            movieTypeName:"惊悚"
-          }
-        ],
-        movieDuration: '120分钟',
-        issuingRegion:'中国大陆',
-        star: '张艺谋、张译、刘昊然',
-        director: '郭帆',
-        movieStartTime: '2022-03-22',
-        introduction: '太阳即将毁灭，人类在地球表面建造出巨大的推进器，寻找新家园。然而宇宙之路危机四伏，为了拯救地球，为了人类能在漫长的2500年后抵达新的家园，流浪地球时代的年轻人挺身而出...'
+        movieId:'',
+        posterImage:'',
+        movieName: 'defaultName',
+        score: 0,
+        tags: [],
+        movieDuration: 'defaultDuration',
+        issuingRegion:'defaultRegion',
+        star: '',
+        director: '',
+        movieStartTime: '',
+        introduction: ''
       },
     };
   },
   methods:{
-    insertMovie(){
+    updateMovie(){
       {
         if(this.movieData.posterImage.trim()=='') {
           this.$message.error('图片不能为空')
@@ -80,7 +90,7 @@ export default {
           return
         }
       }
-      myApi.insertMovie(this.movieData).then(res=>{
+      myApi.updateMovie(this.movieData).then(res=>{
         if(res.data.code==200){
           this.$message.success(res.data.message)
         }else{
@@ -92,6 +102,17 @@ export default {
     }
   },
   mounted(){
+    this.movieId = this.$route.params.movieId
+    if(!this.movieId){
+      this.notSelectedMovie=true
+      return
+    }else{
+      myApi.selectMovieList({movieId:this.movieId,page:1,size:1}).then(res=>{
+        if(res.data.code==200){
+          this.movieData=res.data.data.list[0]
+        }
+      })
+    }
   },
   watch:{
     movieData(newValue,oldValue){
