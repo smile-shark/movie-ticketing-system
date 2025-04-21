@@ -16,14 +16,18 @@
             {{ city.marketName }}<i class="el-icon-arrow-down el-icon--right"></i>
           </span>
           <el-dropdown-menu slot="dropdown">
-            <el-dropdown-item :command="market" v-for="market in markets" :key="market.marketId">{{ market.marketName }}</el-dropdown-item>
+            <el-dropdown-item :command="market" v-for="market in markets" :key="market.marketId">
+              {{ market.marketName }}
+            </el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>
-        <el-menu :default-active="activeIndex" class="nav-menu" mode="horizontal" background-color="#03071E" text-color="#fff" active-text-color="#ff7b32">
-          <el-menu-item index="1">首页</el-menu-item>
-          <el-menu-item index="2">影片</el-menu-item>
-          <el-menu-item index="3">影院</el-menu-item>
-          <el-menu-item index="4">口碑榜</el-menu-item>
+        <el-menu :default-active="activeIndex" class="nav-menu" mode="horizontal" 
+        background-color="#03071E" text-color="#fff" active-text-color="#ff7b32"
+        router>
+          <el-menu-item index="/customer/home">首页</el-menu-item>
+          <el-menu-item index="/customer/home/movie">影片</el-menu-item>
+          <el-menu-item >影院</el-menu-item>
+          <el-menu-item >口碑榜</el-menu-item>
         </el-menu>
         <el-input placeholder="请输入电影名称" prefix-icon="el-icon-search" class="search-input"></el-input>
         <el-avatar  :src="circleUrl"></el-avatar>
@@ -34,7 +38,6 @@
       <el-main >
         <div style="padding:0 18%;">
           <router-view style="background-color: white;"></router-view>
-          
         <div style="padding: 10px;text-align: center;font-size: 14px;color: #999;">
           看吧电影-相约电影院，享受好时光！
         </div>
@@ -62,7 +65,7 @@ import { myApi } from '@/axios/my';
 export default {
   data() {
     return {
-      activeIndex: '1',
+      activeIndex: '/customer/home',
       circleUrl: "https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png",
       city: {
         marketId: "bacf76f7b4d34e64ba15f11d7ca54eb7",
@@ -92,6 +95,7 @@ export default {
     }
   },
   mounted(){
+    this.defaultActive=this.$route.path
     this.customerInfo=JSON.parse(localStorage.getItem('customerInfo'))
     if(this.customerInfo){
       this.circleUrl=this.customerInfo.userProfilePicture
@@ -107,7 +111,22 @@ export default {
         this.markets = res.data.data
       }
     })
-  }
+  },
+  watch:{
+    '$route'(to,from){
+        let currentPath = to.path;
+        // 正则表达式匹配32位数字和小写字母组成的字符串
+        const regex = /\/[0-9a-z]{32}$/;
+        if (regex.test(currentPath)) {
+            // 如果匹配到，去掉最后符合条件的部分
+            currentPath = currentPath.replace(regex, '');
+        }
+        this.defaultActive = currentPath;
+        if(currentPath=='/customer/home/movie/detail'){
+          this.activeIndex='/customer/home/movie'
+        }
+    }
+  },
 };
 </script>
 <style scoped>

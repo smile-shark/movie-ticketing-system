@@ -23,6 +23,7 @@ public class CustomerController {
     private final MarketService marketService;
     private final MobileDisplayService mobileDisplayService;
     private final MovieService movieService;
+    private final AdvertisementService advertisementService;
     @PostMapping("/register")
     public Result register(@Validated(VerifyEmail.class) @RequestBody EmailVerify emailVerify) {
        return userService.register(emailVerify);
@@ -70,5 +71,9 @@ public class CustomerController {
                 size,
                 page
         );
+    }
+    @GetMapping("/advertisement")
+    public Result selectOneAdvertisementByRandom(){
+        return advertisementService.selectOneAdvertisementByRandom();
     }
 }

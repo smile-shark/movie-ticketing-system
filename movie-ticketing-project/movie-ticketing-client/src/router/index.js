@@ -9,11 +9,14 @@ import PlatformMainPage from '@/views/platform-management/child/PlatformMainPage
 import CustomerHomePage from '@/views/customer/child/CustomerHomePage.vue'
 import PlatformMovieListPage from '@/views/platform-management/child/movie-management/PlatformMovieListPage.vue'
 import PlatformMovieUpdatePage from '@/views/platform-management/child/movie-management/PlatformMovieUpdatePage.vue'
+import CustomerMoviePage from '@/views/customer/child/CustomerMoviePage.vue'
+import CustomerMovieListPage from '@/views/customer/child/moviePageChild/CustomerMovieListPage.vue'
+import CustomerMovieDetailPage from '@/views/customer/child/moviePageChild/CustomerMovieDetailPage.vue'
 Vue.use(VueRouter)
 
 const routes = [
   {
-    path: '/',
+    path: '',
     redirect: '/customer/login'
   },
   {
@@ -27,9 +30,26 @@ const routes = [
     component: CustomerHome,
     children:[
       {
-        path: '/',
+        path: '',
         name: 'CustomerHomePage',
         component: CustomerHomePage,
+      },
+      {
+        path:'movie',
+        name: 'CustomerMoviePage',
+        component: CustomerMoviePage,
+        children:[
+          {
+            path: '',
+            name: 'CustomerMovieListPage',
+            component: CustomerMovieListPage,
+          },
+          {
+            path:'detail/:movieId',
+            name: 'CustomerMovieDetailPage',
+            component: CustomerMovieDetailPage,
+          }
+        ]
       }
     ]
   },

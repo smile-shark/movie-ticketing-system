@@ -103,7 +103,6 @@ export default {
                 }else{
                 this.$message.error(resp.data.message)
                 }
-                console.log(this.fileList)
             }).catch(e=>{
                 console.log(e)
             })

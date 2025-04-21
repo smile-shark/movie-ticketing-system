@@ -9,6 +9,7 @@ export const myPath={
     updateUserByUserId:'/customer/user',
     selectAllAllowedMobileDisplays:'/customer/mobile/display',
     selectMovieListCustomer:'/customer/movie',
+    selectOneAdvertisementByRandom:'/customer/advertisement',
 
     platformLogin:'/platform/login',
     selectAllMovieType:'/platform/movie/types',

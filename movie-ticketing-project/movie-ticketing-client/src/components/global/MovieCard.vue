@@ -2,7 +2,7 @@
     <div class="movie-info">
       <el-row>
         <el-col :span="4">
-          <el-image :src="movie.posterImage" alt="电影海报" class="movie-poster" style="height:280px;width:210px;">
+          <el-image :src="movie.posterImage" alt="电影海报" class="movie-poster" style="height:100%;width:100%">
             <div slot="error" class="image-slot" style="display:flex;align-items:center;justify-content:center;height:100%;
             background-color:#f5f7fa;
             ;color:#ccc;font-size:24px;font-weight:bold">
@@ -97,7 +97,7 @@
   .movie-plot {
     margin-bottom: 10px;
     color: #666;
-    width: 80%;
+    width: 100%;
     display: -webkit-box; /* 用于旧版 Safari */
     -webkit-line-clamp: 2; /* 限制两行 */
     -webkit-box-orient: vertical; /* 垂直排列 */

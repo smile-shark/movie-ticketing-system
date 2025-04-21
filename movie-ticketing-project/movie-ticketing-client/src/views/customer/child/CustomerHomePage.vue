@@ -4,8 +4,9 @@
         <el-col :span="24">
             <!-- <el-carousel height="52vh"> -->
             <el-carousel height="30vh" type="card">
-                <el-carousel-item v-for="(mobileDispaly,index) in mobileDisplays" :key="index" style="height: 100%;">
-                    <el-image :src="mobileDispaly.mobileDisplayImage" style="width: 100%;height: 100%" fit="fill">
+                <el-carousel-item v-for="(mobileDispaly,index) in mobileDisplays" :key="index" style="height: 100%;" >
+                    <el-image :src="mobileDispaly.mobileDisplayImage" style="width: 100%;height: 100%" fit="fill"
+                     @click="$router.push({name:'CustomerMovieDetailPage',params:{movieId:mobileDispaly.movieId}})">
                         <div slot="error" class="image-slot" style="background-color: #f9f9f9;display: flex;align-items: center;justify-content: center;">
                             <i class="el-icon-picture-outline"></i>
                         </div>
@@ -98,7 +99,6 @@ export default {
                 if(res.data.code==200){
                     this.hotScreeningInProgresData=res.data.data
                 }
-                console.log(this.hotScreeningInProgresData)
             })
         }
     },

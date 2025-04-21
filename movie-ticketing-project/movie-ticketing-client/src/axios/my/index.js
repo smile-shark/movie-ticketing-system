@@ -100,7 +100,7 @@ export const myApi={
           director,
           star,
           issuingRegion,
-          already,
+          already,// 0已上映的,1未上映的,null全部
           size,
           page
         }
@@ -122,5 +122,8 @@ export const myApi={
     },
     updateMovie(movie){
       return instance.put(myPath.updateMovie,movie)
+    },
+    selectOneAdvertisementByRandom(){
+      return instance.get(myPath.selectOneAdvertisementByRandom)
     }
 }

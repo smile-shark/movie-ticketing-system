@@ -1,6 +1,6 @@
 <template>
     <el-card class="movie-card" :body-style="{ padding: '0px' }" shadow="hover">
-        <div style="position: relative;height: 45vh;">
+        <div style="position: relative;height: 45vh;" @click="toMovieDetail">
             <el-image :src="movie.posterImage" fit="fill" style="height: 100%;">
                 <div slot="error" class="image-slot">
                     <i class="el-icon-picture-outline"></i>
@@ -12,7 +12,7 @@
                     <span class="movie-rating">{{ movie.score }}</span>
                 </div>
             </div>
-        <el-button @click="buyTickets" 
+        <el-button @click="toMovieDetail"
         style="color: #ff7140;border:none;width: 100%;font-size: 18px;font-weight: bold;">选座购票</el-button>
     </el-card>
   </template>
@@ -23,9 +23,8 @@
       movie: Object,
     },
     methods: {
-      buyTickets() {
-        console.log('购票按钮被点击');
-        // 这里可以添加购票逻辑
+      toMovieDetail(){
+        this.$router.push({name: "CustomerMovieDetailPage", params: {movieId: this.movie.movieId}})
       }
     }
   };
