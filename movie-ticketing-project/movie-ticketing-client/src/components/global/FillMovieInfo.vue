@@ -52,8 +52,8 @@
             :limit="1"
             class="upload-demo"
             :file-list="fileList">
-            <el-button size="small" type="primary">点击上传</el-button>
-            <span slot="tip" class="el-upload__tip" style="margin-left: 10px;">只能上传jpg/png文件，且不超过500kb</span>
+                <el-button size="small" type="primary">点击上传</el-button>
+                <span slot="tip" class="el-upload__tip" style="margin-left: 10px;">只能上传jpg/png文件，且不超过500kb</span>
             </el-upload>
         </el-form-item>
         </el-col>

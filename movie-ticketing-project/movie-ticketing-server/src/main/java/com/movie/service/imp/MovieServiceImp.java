@@ -50,8 +50,9 @@ public class MovieServiceImp implements MovieService {
     @Override
     public Result selectMovieList(Movie movie, Integer already, Integer size, Integer page) {
         List<Movie> movies;
+        Page<Object> startPage;
         try {
-            PageHelper.startPage(page, size);
+            startPage = PageHelper.startPage(page, size);
             movies = movieMapper.selectMovieList(movie, already);
             for (Movie movieItem : movies) {
                 movieItem.setTags(
@@ -66,7 +67,7 @@ public class MovieServiceImp implements MovieService {
             e.printStackTrace();
             throw new BusinessException(RespCode.FIND_ERROR);
         }
-        return Result.success(RespCode.FIND_SUCCESS).setData(PageInfo.of(movies));
+        return Result.success(RespCode.FIND_SUCCESS).setData(PageInfo.of(startPage));
     }
 
     @Override
@@ -92,5 +93,17 @@ public class MovieServiceImp implements MovieService {
             throw new BusinessException(RespCode.UPDATE_MOVIE_ERROR);
         }
         return Result.success(RespCode.UPDATE_MOVIE_SUCCESS);
+    }
+
+    @Override
+    public Result selectSimpleMovieList() {
+        List<Movie> movies;
+        try {
+            movies= movieMapper.selectSimpleMovieList();
+            return Result.success(RespCode.FIND_SUCCESS).setData(movies);
+        }catch (Exception e){
+            e.printStackTrace();
+            throw new BusinessException(RespCode.FIND_ERROR);
+        }
     }
 }

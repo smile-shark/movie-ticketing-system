@@ -11,4 +11,5 @@ public interface MovieTypeMiddleMapper {
     int insertMovieTypeMiddle(@Param("movieId") String movieId,@Param("movieTypeId") String movieTypeId);
     List<MovieTypeMiddle> selectMovieTypeMiddlesByMovieId(@Param("movieId") String movieId);
     int deleteMovieTypeMiddlesByMovieId(@Param("movieId") String movieId);
+    int deleteMovieTypeMiddlesByMovieTypeId(@Param("movieTypeId") String movieTypeId);
 }

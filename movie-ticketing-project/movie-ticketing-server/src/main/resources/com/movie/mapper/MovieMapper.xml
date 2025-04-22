@@ -43,4 +43,20 @@
     <select id="selectMovieById" resultType="movie">
         select * from movie where movie_id = #{movieId}
     </select>
+    <update id="updateMovie">
+        update movie
+        set movie_name=#{movie.movieName},
+        movie_start_time=#{movie.movieStartTime},
+        movie_duration=#{movie.movieDuration},
+        director=#{movie.director},
+        star=#{movie.star},
+        introduction=#{movie.introduction},
+        score=#{movie.score},
+        poster_image=#{movie.posterImage},
+        issuing_region=#{movie.issuingRegion}
+        where movie_id=#{movie.movieId}
+    </update>
+    <select id="selectSimpleMovieList" resultType="movie">
+        select movie_id,movie_name from movie
+    </select>
 </mapper>

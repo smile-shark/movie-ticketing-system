@@ -25,4 +25,5 @@ public interface MovieMapper {
     );
     Movie selectMovieById(@Param("movieId") String movieId);
     int updateMovie(@Param("movie") Movie movie);
+    List<Movie> selectSimpleMovieList();
 }

@@ -1,5 +1,7 @@
 package com.movie.service.imp;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.movie.common.resp.RespCode;
 import com.movie.common.resp.Result;
 import com.movie.entity.EmailVerify;
@@ -90,5 +92,19 @@ public class UserServiceImp implements UserService {
             throw new BusinessException(RespCode.UPDATE_USER_INFO_ERROR);
         }
         return Result.success(RespCode.UPDATE_USER_INFO_SUCCESS);
+    }
+
+    @Override
+    public Result selectUsersByUser(User user,Integer size,Integer page) {
+        try {
+            PageHelper.startPage(page,size);
+            List<User> users = userMapper.selectUsersByUser(user);
+            return Result.success(RespCode.FIND_SUCCESS).setData(
+                    PageInfo.of(users)
+            );
+        }catch (Exception e){
+            e.printStackTrace();
+            throw new BusinessException(RespCode.FIND_ERROR);
+        }
     }
 }

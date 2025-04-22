@@ -64,7 +64,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 .el-pagination.is-background .btn-next, 
 .el-pagination.is-background .btn-prev, 
 .el-pagination.is-background .el-pager li{

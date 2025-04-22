@@ -14,4 +14,7 @@
     <delete id="deleteMovieTypeMiddlesByMovieId">
         delete from movie_type_middle where movie_id = #{movieId}
     </delete>
+    <delete id="deleteMovieTypeMiddlesByMovieTypeId">
+        delete from movie_type_middle where movie_type_id = #{movieTypeId}
+    </delete>
 </mapper>

@@ -12,6 +12,10 @@ import PlatformMovieUpdatePage from '@/views/platform-management/child/movie-man
 import CustomerMoviePage from '@/views/customer/child/CustomerMoviePage.vue'
 import CustomerMovieListPage from '@/views/customer/child/moviePageChild/CustomerMovieListPage.vue'
 import CustomerMovieDetailPage from '@/views/customer/child/moviePageChild/CustomerMovieDetailPage.vue'
+import PlatformMovieTypePage from '@/views/platform-management/child/movie-management/PlatformMovieTypePage.vue'
+import PlatformUserListPage from '@/views/platform-management/child/user-management/PlatformUserListPage.vue'
+import PlatformUserDetailPage from '@/views/platform-management/child/user-management/PlatformUserDetailPage.vue'
+import PlatformMobileDisplayPage from '@/views/platform-management/child/other-management/PlatformMobileDisplayPage.vue'
 Vue.use(VueRouter)
 
 const routes = [
@@ -86,6 +90,26 @@ const routes = [
         path: 'update-movie/:movieId?',
         name: 'PlatformMovieUpdatePage',
         component: PlatformMovieUpdatePage,
+      },
+      {
+        path: 'type-movie',
+        name: 'PlatformMovieTypePage',
+        component: PlatformMovieTypePage,
+      },
+      {
+        path: 'list-user',
+        name: 'PlatformUserListPage',
+        component: PlatformUserListPage,
+      },
+      {
+        path: 'detail-user/:userId?',
+        name: 'PlatformUserDetailPage',
+        component: PlatformUserDetailPage,
+      },
+      {
+        path: 'mobile-display',
+        name: 'PlatformMobileDisplayPage',
+        component: PlatformMobileDisplayPage,
       }
     ]
   }

@@ -4,7 +4,7 @@
         <el-col :span="4">
           <el-image :src="movie.posterImage" alt="电影海报" class="movie-poster" style="height:100%;width:100%">
             <div slot="error" class="image-slot" style="display:flex;align-items:center;justify-content:center;height:100%;
-            background-color:#f5f7fa;
+            background-color:#f5f7fa;min-height:35vh;
             ;color:#ccc;font-size:24px;font-weight:bold">
                 <i class="el-icon-picture-outline"></i>
             </div>

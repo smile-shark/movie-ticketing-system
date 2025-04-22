@@ -11,4 +11,25 @@
     <select id="selectAllAllowedMobileDisplays" resultMap="selectAllAllowedMobileDisplaysMap">
         select * from mobile_display where mobile_display_end_time > now()
     </select>
+    <insert id="insertMobileDisplay">
+        insert into mobile_display
+        (movie_id, mobile_display_image, mobile_display_end_time)
+        values
+        (#{mobileDisplay.movieId},#{mobileDisplay.mobileDisplayImage},#{mobileDisplay.mobileDisplayEndTime})
+    </insert>
+    <update id="updateMobileDisplay">
+        update mobile_display
+        <set>
+            <if test="mobileDisplay.mobileDisplayImage!=null and mobileDisplay.mobileDisplayImage!=''">
+                mobile_display_image=#{mobileDisplay.mobileDisplayImage},
+            </if>
+            <if test="mobileDisplay.mobileDisplayEndTime!=null">
+                mobile_display_end_time=#{mobileDisplay.mobileDisplayEndTime}
+            </if>
+        </set>
+        where mobile_display_image=#{mobileDisplay.mobileDisplayImage}
+    </update>
+    <delete id="deleteMobileDisplay">
+        delete from mobile_display where mobile_display_image=#{image}
+    </delete>
 </mapper>

@@ -4,7 +4,7 @@
     <FillMovieInfo :movie-data="movieData"/>
     <el-button type="primary" @click="updateMovie">提交修改信息</el-button>
     <el-dialog title="请选择需要修改数据的电影"
-      width="14%"
+      width="20%"
       :visible.sync="notSelectedMovie"
       :close-on-click-modal="false"
       :close-on-press-escape="false"

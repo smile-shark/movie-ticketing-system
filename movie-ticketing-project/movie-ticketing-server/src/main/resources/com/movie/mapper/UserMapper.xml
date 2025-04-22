@@ -40,4 +40,34 @@
         </set>
         where user_id=#{user.userId}
     </update>
+    <select id="selectUsersByUser" resultType="user">
+        select user_id, user_email, user_name, user_profile_picture, user_points, user_level, user_state, market_id
+        from user
+        <where>
+            <if test="user.userId!=null and user.userId!=''">
+                and user_id=#{user.userId}
+            </if>
+            <if test="user.userEmail!=null and user.userEmail!=''">
+                and user_email=#{user.userEmail}
+            </if>
+            <if test="user.userName!=null and user.userName!=''">
+                and user_name like #{user.userName}
+            </if>
+            <if test="user.userProfilePicture!=null and user.userProfilePicture!=''">
+                and user_profile_picture=#{user.userProfilePicture}
+            </if>
+            <if test="user.userPoints!=null and user.userPoints!=''">
+                and user_points=#{user.userPoints}
+            </if>
+            <if test="user.userLevel!=null and user.userLevel!=''">
+                and user_level=#{user.userLevel}
+            </if>
+            <if test="user.userState!=null and user.userState!=''">
+                and user_state=#{user.userState}
+            </if>
+            <if test="user.marketId!=null and user.marketId!=''">
+                and market_id=#{user.marketId}
+            </if>
+        </where>
+    </select>
 </mapper>

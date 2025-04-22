@@ -10,4 +10,14 @@
             #{movieTypeMiddle.movieTypeId}
         </foreach>
     </select>
+    <select id="selectMovieTypesByName" resultType="movieType">
+        select * from movie_type where movie_type_name like #{movieTypeName}
+    </select>
+    <insert id="insertMovieType">
+        insert into movie_type(movie_type_id, movie_type_name)
+        values (#{movieType.movieTypeId},#{movieType.movieTypeName})
+    </insert>
+    <delete id="deleteMovieTypeById">
+        delete from movie_type where movie_type_id=#{movieTypeId}
+    </delete>
 </mapper>

@@ -40,7 +40,7 @@
         </el-col>
     </el-row>
     <el-row>
-        <el-col :span="24" style="padding:20px;">
+        <el-col :span="4" style="padding:20px;">
             <el-pagination
                 background
                 layout="prev, pager, next"
@@ -48,6 +48,12 @@
                 @current-change="selectMovieListPlatform"
                 :total="movieListInfo.total">
             </el-pagination>
+        </el-col>
+        <el-col :span="5" style="padding:20px;">
+            <el-input v-model="searchText" placeholder="请输入电影名称"></el-input>
+        </el-col>
+        <el-col :span="4" style="padding:20px;">
+            <el-button type="primary" @click="selectMovieListPlatform(1)">查询</el-button>
         </el-col>
     </el-row>
   </div>
@@ -67,13 +73,14 @@ export default {
             movieListInfo:{
                 total:0,
                 list:[]
-            }
+            },
+            searchText:''
         }
     },
     methods:{
         selectMovieListPlatform(page=1){
             this.page=page
-            myApi.selectMovieListPlatform({page:this.page,size:this.size}).then(res=>{
+            myApi.selectMovieListPlatform({page:this.page,size:this.size,movieName:this.searchText}).then(res=>{
                 if(res.data.code==200){
                     this.movieListInfo=res.data.data
                 }

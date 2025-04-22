@@ -95,7 +95,6 @@ export default {
     }
   },
   mounted(){
-    this.defaultActive=this.$route.path
     this.customerInfo=JSON.parse(localStorage.getItem('customerInfo'))
     if(this.customerInfo){
       this.circleUrl=this.customerInfo.userProfilePicture
@@ -111,6 +110,7 @@ export default {
         this.markets = res.data.data
       }
     })
+    this.defaultActive=this.$route.path
   },
   watch:{
     '$route'(to,from){

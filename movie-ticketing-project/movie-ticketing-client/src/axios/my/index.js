@@ -125,5 +125,56 @@ export const myApi={
     },
     selectOneAdvertisementByRandom(){
       return instance.get(myPath.selectOneAdvertisementByRandom)
+    },
+    selectMovieTypesByName(movieTypeName){
+      return instance.get(myPath.selectMovieTypesByName,{
+        params:{
+          movieTypeName
+        }
+      })
+    },
+    insertMovieType(movieTypeName){
+      return instance.post(myPath.insertMovieType,null,{
+        params:{
+          movieTypeName
+        }
+      })
+    },
+    deleteMovieType(movieTypeId){
+      return instance.delete(myPath.deleteMovieType,{
+        params:{
+          movieTypeId
+        }
+      })
+    },
+    selectUsersByUser(page=1,size=1,user=null){
+      return instance.post(myPath.selectUsersByUser,user,{
+        params:{
+          page,
+          size
+        }
+      })
+    },
+    platformUpdateUserByUserId(user){
+      return instance.put(myPath.platformUpdateUserByUserId,user)
+    },
+    getMobleDisplay(){
+      return instance.get(myPath.mobileDisplay)
+    },
+    insertMoblieDidpslay(mobileDisplay){
+      return instance.post(myPath.mobileDisplay,mobileDisplay)
+    },
+    updateMobileDisplay(mobileDisplay){
+      return instance.put(myPath.mobileDisplay,mobileDisplay)
+    },
+    deleteMobileDisplay(mobileDisplayImage){
+      return instance.delete(myPath.mobileDisplay,{
+        data: {
+          mobileDisplayImage: mobileDisplayImage
+        }// 这条数据删除了要补上去 https://wework.qpic.cn/wwpic3az/85526_8ph0ax1JQs2nj7__1735276298/0
+      })
+    },
+    selectSimpleMovieList(){
+      return instance.get(myPath.selectSimpleMovieList)
     }
 }

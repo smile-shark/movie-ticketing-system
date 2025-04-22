@@ -14,30 +14,42 @@
             </el-col>
         </el-row>
 		<el-row style="height: 91vh;">
-	  		<el-col :span="3"  
-			style="min-height: 100%; background-color: white;border-right:1px solid #c0c6cc;">
-				<el-menu :default-active="defaultActive" 
-				style="min-height: 100%;" router       
-				background-color="white"
-      			text-color="black">
-					<el-menu-item index="/platform/home">
-						<i class="el-icon-menu"></i>首页
-					</el-menu-item>
-					<el-submenu index="1">
-						<template slot="title">
-                            <i class="el-icon-s-data"></i>
-                            <span slot="title">数据管理</span>
-                        </template>
-                        <el-submenu index="1-1">
-                            <span slot="title">电影管理</span>
-                            <el-menu-item index="/platform/home/list-movie">电影信息列表</el-menu-item>
-                            <el-menu-item index="/platform/home/insert-movie">新增电影</el-menu-item>
-                            <el-menu-item index="/platform/home/update-movie">电影信息校正</el-menu-item>
-                        </el-submenu>
-					</el-submenu>
-				</el-menu>
-			</el-col>
-			<el-col :span="20" style="height: 100%;overflow: auto;">
+            <el-col :span="3" style="height: 100%;background-color: white; border-right: 1px solid #c0c6cc;">
+                <el-scrollbar   style="height: 100%;" wrap-class="scrollbar" view-class="scroll-view">
+                    <div>
+                        <el-menu :default-active="defaultActive"  router background-color="white" text-color="black">
+                                <el-menu-item index="/platform/home">
+                                <i class="el-icon-menu"></i>首页
+                                </el-menu-item>
+                                <el-submenu index="">
+                                <span slot="title"> <i class="el-icon-video-camera-solid"></i>电影管理</span>
+                                <el-menu-item index="/platform/home/list-movie">电影信息列表</el-menu-item>
+                                <el-menu-item index="/platform/home/insert-movie">新增电影</el-menu-item>
+                                <el-menu-item index="/platform/home/update-movie">电影信息校正</el-menu-item>
+                                <el-menu-item index="/platform/home/type-movie">电影类型管理</el-menu-item>
+                                </el-submenu>
+                                <el-submenu index="">
+                                <span slot="title"><i class="el-icon-user-solid"></i>用户管理</span>
+                                <el-menu-item index="/platform/home/list-user">用户列表</el-menu-item>
+                                <el-menu-item index="/platform/home/detail-user">用户详细</el-menu-item>
+                                </el-submenu>
+                                <el-submenu index="">
+                                <span slot="title"><i class="el-icon-s-cooperation"></i>影院管理</span>
+                                <el-menu-item>影院账号管理</el-menu-item>
+                                <el-menu-item>影院信息管理</el-menu-item>
+                                <el-menu-item>影院放映厅管理</el-menu-item>
+                                <el-menu-item>影院数据统计</el-menu-item>
+                                </el-submenu>
+                                <el-submenu index="">
+                                <span slot="title"><i class="el-icon-s-grid"></i>其他管理</span>
+                                <el-menu-item index="/platform/home/mobile-display">用户轮动图管理</el-menu-item>
+                                <el-menu-item>广告管理</el-menu-item>
+                                </el-submenu>
+                        </el-menu>
+                    </div>
+                </el-scrollbar>
+            </el-col>
+			<el-col :span="21" style="height: 100%;overflow: auto;">
 				<el-row>
                     <el-col :span="24" style="padding:10px;">
                         <router-view></router-view>

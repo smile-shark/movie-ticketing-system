@@ -11,4 +11,7 @@ import java.util.List;
 public interface MovieTypeMapper {
     List<MovieType> selectAllMovieType();
     List<MovieType> selectMovieTypesInMovieTypeIds(@Param("movieTypeMiddles") List<MovieTypeMiddle> movieTypeMiddles);
+    List<MovieType> selectMovieTypesByName(@Param("movieTypeName") String movieTypeName);
+    int insertMovieType(@Param("movieType")MovieType movieType);
+    int deleteMovieTypeById(@Param("movieTypeId") String movieTypeId);
 }
