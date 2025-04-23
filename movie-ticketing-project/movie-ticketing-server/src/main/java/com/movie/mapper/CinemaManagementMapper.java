@@ -7,4 +7,5 @@ import org.apache.ibatis.annotations.Param;
 @Mapper
 public interface CinemaManagementMapper {
     CinemaManagement selectCinemaManagementByEmail(@Param("email")String email);
+    int insertCinemaManagement(@Param("cinemaManagement")CinemaManagement cinemaManagement);
 }

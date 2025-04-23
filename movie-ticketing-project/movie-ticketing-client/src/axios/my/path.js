@@ -2,7 +2,8 @@ export const myPath={
     fileUpload:'/file/upload',
     fileDelete:'/file/delete',
 
-    sendMailVerifyCode:'/customer/email/verification/code',
+    sendMailVerifyCode:'/global/email/verification/code',
+
     customerRegister:'/customer/register',
     customerLogin:'/customer/login',
     selectAllMarket:'/customer/market',
@@ -22,5 +23,8 @@ export const myPath={
     selectUsersByUser:'/platform/user',
     platformUpdateUserByUserId:'/platform/user',
     mobileDisplay:'/platform/mobile/display',
-    selectSimpleMovieList:'/platform/movie/simple/list'
+    selectSimpleMovieList:'/platform/movie/simple/list',
+
+    cinemaManagementRegister:'/cinema/management/register',
+    cinemaManagementLogin:'/cinema/management/login',
 }

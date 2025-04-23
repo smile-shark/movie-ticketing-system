@@ -36,9 +36,8 @@ public enum RespCode {
     UPDATE_SUCCESS(200, "修改成功"),
     UPDATE_ERROR(5018, "修改失败"),
     DELETE_SUCCESS(200, "删除成功"),
-    DELETE_ERROR(5019, "删除失败")
-
-    ;
+    DELETE_ERROR(5019, "删除失败"),
+    TOKEN_VERIFY_ERROR(401, "token验证失败");
 
     private final int code;
     private final String message;

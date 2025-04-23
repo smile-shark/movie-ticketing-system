@@ -4,5 +4,6 @@ import com.movie.common.resp.Result;
 import com.movie.entity.EmailVerify;
 
 public interface EmailVerifyService {
-    public Result sentEmail(EmailVerify emailVerify);
+    Result sentEmail(EmailVerify emailVerify);
+    void verifyEmail(EmailVerify emailVerify);
 }

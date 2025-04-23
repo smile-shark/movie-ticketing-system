@@ -12,10 +12,9 @@ import java.security.*;
 import java.util.Arrays;
 import java.util.Base64;
 @Component
-@PropertySource("classpath:aes-config.properties")
+@PropertySource("classpath:KEY.properties")
 public class AesUtils {
-//    private static String aesKey="movie-ticketing-project";
-    @Value("${KEY}")
+    @Value("${AES_KEY}")
     private String aesKey;
     public String decrypt(String encryptedText) {
         try {

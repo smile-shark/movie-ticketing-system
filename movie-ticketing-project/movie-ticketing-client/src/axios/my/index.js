@@ -2,6 +2,7 @@ import axios from "axios";
 import { myPath } from "./path";
 import CryptoJS from "crypto-js";
 import { Loading } from "element-ui";
+import router from "@/router";
 
 const key = "movie-ticketing-project";
 
@@ -17,6 +18,13 @@ const instance = axios.create({
 instance.interceptors.request.use(
   (config) => {
     loadingInstance = Loading.service()
+    // 验证请求路径为customer加上token
+    if (config.url.includes('customer')){
+      const token = localStorage.getItem("customerToken");
+      if (token) {
+        config.headers.Authorization = token;
+      }
+    }
     return config;
   },
   (error) => {
@@ -25,6 +33,9 @@ instance.interceptors.request.use(
 )
 instance.interceptors.response.use(
   (response) => {
+    if(response.data.code==401){
+      router.push('/')
+    }
     loadingInstance.close()
     return response;
   },
@@ -171,10 +182,23 @@ export const myApi={
       return instance.delete(myPath.mobileDisplay,{
         data: {
           mobileDisplayImage: mobileDisplayImage
-        }// 这条数据删除了要补上去 https://wework.qpic.cn/wwpic3az/85526_8ph0ax1JQs2nj7__1735276298/0
+        }
       })
     },
     selectSimpleMovieList(){
       return instance.get(myPath.selectSimpleMovieList)
+    },
+    cinemaManagementRegister(email,password,code){
+      return instance.post(myPath.cinemaManagementRegister,{
+        email:email,
+        emailVerifyCode:code,
+        password:exportAxios(password)
+      })
+    },
+    cinemaManagementLogin(cinemaManagementEmail,cinemaManagementPassword){
+      return instance.post(myPath.cinemaManagementLogin,{
+        cinemaManagementEmail:cinemaManagementEmail,
+        cinemaManagementPassword:exportAxios(cinemaManagementPassword)
+      })
     }
 }

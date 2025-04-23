@@ -7,7 +7,7 @@
       </el-row>
       <el-row style="margin-top: 3vh;">
           <el-col :span="24">
-              登录
+              影院管理登录
           </el-col>
       </el-row>
       <el-row style="margin-top: 20px;">
@@ -23,7 +23,7 @@
               <el-checkbox v-model="remember">记住我</el-checkbox>
             </el-form-item>
             <el-form-item>
-              <el-button type="warning" style="width: 100%;" @click="customerLogin">登录</el-button>
+              <el-button type="warning" style="width: 100%;" @click="cinemaManagementLogin">登录</el-button>
             </el-form-item>
           </el-form>
         </el-col>
@@ -49,7 +49,7 @@
         toRegister(){
             this.$emit('switch-another')
         },
-        customerLogin(){
+        cinemaManagementLogin(){
           if(!/^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/.test(this.email)){
             this.$message.error('请输入正确的邮箱格式')
             return
@@ -58,24 +58,24 @@
             this.$message.error('密码长度必须在6-20位之间')
             return
           }
-          this.$api.customerLogin(this.email,this.password).then(res=>{
+          this.$api.cinemaManagementLogin(this.email,this.password).then(res=>{
             if(res.data.code === 200){
-              localStorage.setItem('customerToken',res.data.data.token)
-              localStorage.setItem('customerInfo',JSON.stringify(res.data.data))
+              localStorage.setItem('cinemaManagementToken',res.data.data.token)
+              localStorage.setItem('cinemaManagementInfo',JSON.stringify(res.data.data))
               this.$message({
                 type:'success',
                 message: res.data.message,
                 duration: 1000
               })
-              this.$router.push('/customer/home')
+              this.$router.push('/cinema/home')
               if(this.remember){
-                localStorage.setItem('customerEmail',this.email)
-                localStorage.setItem('customerPassword',this.password)
-                localStorage.setItem('customerRemember',this.remember)
+                localStorage.setItem('cinemaManagementEmail',this.email)
+                localStorage.setItem('cinemaManagementPassword',this.password)
+                localStorage.setItem('cinemaManagementRemember',this.remember)
               }else{
-                localStorage.removeItem('customerEmail')
-                localStorage.removeItem('customerPassword')
-                localStorage.removeItem('customerRemember')
+                localStorage.removeItem('cinemaManagementEmail')
+                localStorage.removeItem('cinemaManagementPassword')
+                localStorage.removeItem('cinemaManagementRemember')
               }
             }else{
               this.$message.error(res.data.message)
@@ -85,10 +85,10 @@
     },
     mounted(){
       try{
-        if(localStorage.getItem('customerRemember')){
-          this.email = localStorage.getItem('customerEmail')
-          this.password = localStorage.getItem('customerPassword')
-          this.remember = Boolean(localStorage.getItem('customerRemember'))
+        if(localStorage.getItem('cinemaManagementRemember')){
+          this.email = localStorage.getItem('cinemaManagementEmail')
+          this.password = localStorage.getItem('cinemaManagementPassword')
+          this.remember = Boolean(localStorage.getItem('cinemaManagementRemember'))
         }
       }catch(e){
         console.log(e)

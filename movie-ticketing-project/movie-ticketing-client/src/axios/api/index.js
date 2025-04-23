@@ -7,7 +7,8 @@ const apis={
     getVerifyCode:function(url,code){
         return api.get(url,{
                     params:{
-                        verifycode:code
+                        verifycode:code,
+                        qskey:'redis-sk-MATKmIISApWiByAc'
                     }
                 })
     }

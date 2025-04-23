@@ -30,4 +30,5 @@ public class User {
     @Length(min=32,max = 32,message = "城市不符合规范",groups = {UpdateUserMarket.class})
     private String marketId;
     private Market market;
+    private String token;
 }

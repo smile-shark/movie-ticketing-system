@@ -4,4 +4,16 @@
     <select id="selectCinemaManagementByEmail" resultType="cinemaManagement">
         select * from cinema_management where cinema_management_email = #{email}
     </select>
+    <insert id="insertCinemaManagement">
+        insert into cinema_management
+        (cinema_management_id,
+         cinema_management_email,
+         cinema_management_password,
+         cinema_management_profile_picture)
+        values
+        (#{cinemaManagement.cinemaManagementId},
+         #{cinemaManagement.cinemaManagementEmail},
+         #{cinemaManagement.cinemaManagementPassword},
+         #{cinemaManagement.cinemaManagementProfilePicture})
+    </insert>
 </mapper>

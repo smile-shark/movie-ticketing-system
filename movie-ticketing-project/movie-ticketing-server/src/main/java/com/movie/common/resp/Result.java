@@ -31,12 +31,12 @@ public class Result {
                 .setMessage(code.getMessage());
     }
 
-    public static Result success(RespCode code, User have) {
+    public static Result success(RespCode code, Object o) {
         return new Result()
                 .setSuccess(true)
                 .setCode(code.getCode())
                 .setMessage(code.getMessage())
-                .setData(have);
+                .setData(o);
     }
     public static  Result error() {
         return new Result()

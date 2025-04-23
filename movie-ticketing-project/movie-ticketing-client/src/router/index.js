@@ -16,6 +16,8 @@ import PlatformMovieTypePage from '@/views/platform-management/child/movie-manag
 import PlatformUserListPage from '@/views/platform-management/child/user-management/PlatformUserListPage.vue'
 import PlatformUserDetailPage from '@/views/platform-management/child/user-management/PlatformUserDetailPage.vue'
 import PlatformMobileDisplayPage from '@/views/platform-management/child/other-management/PlatformMobileDisplayPage.vue'
+import CinemaLoginPage from '@/views/cinema-management/CinemaLoginPage.vue'
+import CinemaHomePage from '@/views/cinema-management/CinemaHomePage.vue'
 Vue.use(VueRouter)
 
 const routes = [
@@ -112,6 +114,19 @@ const routes = [
         component: PlatformMobileDisplayPage,
       }
     ]
+  },
+  {
+    path: '/cinema/admin',
+    redirect: '/cinema/login'
+  },
+  {
+    path: '/cinema/login',
+    name: 'CinemaLoginPage',
+    component: CinemaLoginPage
+  },{
+    path: '/cinema/home',
+    name: 'CinemaHomePage',
+    component: CinemaHomePage
   }
 ]
 

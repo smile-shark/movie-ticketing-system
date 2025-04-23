@@ -5,7 +5,6 @@ import com.movie.entity.EmailVerify;
 import com.movie.entity.Movie;
 import com.movie.entity.User;
 import com.movie.entity.groups.CustomerLogin;
-import com.movie.entity.groups.SendEmail;
 import com.movie.entity.groups.UpdateUserMarket;
 import com.movie.entity.groups.VerifyEmail;
 import com.movie.service.*;
@@ -18,7 +17,6 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 @RequestMapping("/customer")
 public class CustomerController {
-    private final EmailVerifyService emailVerifyService;
     private final UserService userService;
     private final MarketService marketService;
     private final MobileDisplayService mobileDisplayService;
@@ -27,10 +25,6 @@ public class CustomerController {
     @PostMapping("/register")
     public Result register(@Validated(VerifyEmail.class) @RequestBody EmailVerify emailVerify) {
        return userService.register(emailVerify);
-    }
-    @PostMapping("/email/verification/code")
-    public Result emailVerificationCode(@Validated(SendEmail.class) @RequestBody EmailVerify emailVerify) {
-        return emailVerifyService.sentEmail(emailVerify);
     }
     @PostMapping("/login")
     public Result login(@Validated(CustomerLogin.class) @RequestBody User user) {
