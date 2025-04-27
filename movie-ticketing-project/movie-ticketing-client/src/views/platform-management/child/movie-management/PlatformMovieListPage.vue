@@ -83,7 +83,11 @@ export default {
             myApi.selectMovieListPlatform({page:this.page,size:this.size,movieName:this.searchText}).then(res=>{
                 if(res.data.code==200){
                     this.movieListInfo=res.data.data
+                }else{
+                    this.$message.error(res.data.message)
                 }
+            }).catch(e=>{
+                console.log(e)
             })
         },
         handleEdit(movieId){

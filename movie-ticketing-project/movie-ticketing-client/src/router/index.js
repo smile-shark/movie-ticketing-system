@@ -19,6 +19,10 @@ import PlatformMobileDisplayPage from '@/views/platform-management/child/other-m
 import CinemaLoginPage from '@/views/cinema-management/CinemaLoginPage.vue'
 import CinemaHomePage from '@/views/cinema-management/CinemaHomePage.vue'
 import CinemaHomeChild from '@/views/cinema-management/child/CinemaHomeChild.vue'
+import CinemaScreeningRoomAddPage from '@/views/cinema-management/child/CinemaScreeningRoomAddPage.vue'
+import CinemaScreeningRoomListPage from '@/views/cinema-management/child/CinemaScreeningRoomListPage.vue'
+
+
 Vue.use(VueRouter)
 
 const routes = [
@@ -133,6 +137,16 @@ const routes = [
         path: '',
         name: 'CinemaHomeChild',
         component: CinemaHomeChild,
+      },
+      {
+        path: 'add-screening-room',
+        name: 'CinemaScreeningRoomAddPage',
+        component: CinemaScreeningRoomAddPage,
+      },
+      {
+        path: 'list-screening-room',
+        name: 'CinemaScreeningRoomListPage',
+        component: CinemaScreeningRoomListPage,
       }
     ]
   }

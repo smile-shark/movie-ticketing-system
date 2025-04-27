@@ -5,8 +5,8 @@ import com.movie.common.resp.Result;
 import com.movie.entity.Cinema;
 import com.movie.entity.CinemaManagement;
 import com.movie.entity.EmailVerify;
-import com.movie.entity.groups.CustomerLogin;
-import com.movie.entity.groups.VerifyEmail;
+import com.movie.entity.ScreeningRoom;
+import com.movie.entity.groups.*;
 import com.movie.service.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.validation.annotation.Validated;
@@ -22,6 +22,7 @@ public class CinemaManagementController {
     private final EconomizeService economizeService;
     private final MarketService marketService;
     private final CountyService countyService;
+    private final ScreeningRoomService screeningRoomService;
 
     @PostMapping("/register")
     public Result register(@Validated(VerifyEmail.class) @RequestBody EmailVerify emailVerify) {
@@ -51,8 +52,21 @@ public class CinemaManagementController {
     public Result selectCountyByMarketId(@RequestParam("marketId") String marketId){
         return countyService.selectCountyByMarketId(marketId);
     }
+
     @PostMapping("/cinema")
-    public Result insertCinema(@RequestBody Cinema cinema){
+    public Result insertCinema(@Validated(InsertCinema.class) @RequestBody Cinema cinema){
         return cinemaService.insertCinema(cinema);
+    }
+    @PostMapping("/screening-room")
+    public Result insertScreeningRoom(@Validated(InsertScreeningRoom.class)@RequestBody ScreeningRoom screeningRoom){
+        return screeningRoomService.insertScreeningRoom(screeningRoom);
+    }
+    @GetMapping("/screening-room/by/cinema/id")
+    public Result selectScreeningRoomByCinemaId(@RequestParam("cinemaId") String cinemaId){
+        return screeningRoomService.selectScreeningRoomByCinemaId(cinemaId);
+    }
+    @PutMapping("/screening-room")
+    public Result updateScreeningRoom(@Validated(UpdateScreeningRoom.class)@RequestBody ScreeningRoom screeningRoom){
+       return screeningRoomService.updateScreeningRoom(screeningRoom);
     }
 }

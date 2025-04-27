@@ -9,17 +9,18 @@
                   <span style="margin-left: 5px;color: #fdc31d;font-weight: bold;">
                     当前
                     <span style="font-size: 20px;color: #feac28;">
-                      {{ cinemaList.find(cinema=>cinema.cinemaId==cinemaId).cinemaName }}
+                      {{ cinemaList.find(cinema=>cinema.cinemaId==cinemaId) ? cinemaList.find(cinema=>cinema.cinemaId==cinemaId).cinemaName : '' }}
                     </span>
                     影院后台管理
                   </span>
                   <div style="display: inline-block;position: absolute;right: 20px;color:#3477f4">
                       <div v-if="cinemaManagementInfo" style="display: flex;align-items: center;">
                           <span style="margin-right: 20px;">
-                            <el-select v-model="cinemaId" filterable placeholder="选择影院">
-                            <el-option v-for="(cinema,index) in cinemaList" :key="index"
-                            :label="cinema.cinemaName" :value="cinema.cinemaId"></el-option>
-                          </el-select>
+                            <el-select v-model="cinemaId" filterable placeholder="选择影院"
+                            @change="updageLocalStorage(cinemaId)">
+                              <el-option v-for="(cinema,index) in cinemaList" :key="index"
+                              :label="cinema.cinemaName" :value="cinema.cinemaId"></el-option>
+                            </el-select>
                           </span>
                           <el-avatar :size="40" :src="cinemaManagementInfo.cinemaManagementProfilePicture"
                           style="margin-right: 20px;"></el-avatar>
@@ -42,7 +43,8 @@
                           </el-menu-item>
                           <el-submenu index="">
                           <span slot="title"> <i class="el-icon-video-camera-solid"></i>放映厅管理</span>
-                            <el-menu-item index="/platform/home/list-movie">放映厅添加</el-menu-item>
+                            <el-menu-item index="/cinema/home/add-screening-room">放映厅添加</el-menu-item>
+                            <el-menu-item index="/cinema/home/list-screening-room">放映厅列表</el-menu-item>
                           </el-submenu>
                           <el-submenu index="">
                           <span slot="title"><i class="el-icon-user-solid"></i>用户管理</span>
@@ -103,6 +105,9 @@ export default {
       }
   },
   methods:{
+    updageLocalStorage(cinemaId){
+        localStorage.setItem('cinemaId',cinemaId)
+    }
   },
   watch:{
       '$route'(to,from){
@@ -131,6 +136,7 @@ export default {
           }else{
             this.cinemaList=res.data.data
             this.cinemaId=this.cinemaList[0].cinemaId
+            this.updageLocalStorage(this.cinemaId)
           }
         }else{
           this.$message.error(res.data.message)

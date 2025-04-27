@@ -230,5 +230,18 @@ export const myApi={
     },
     insertCinema(cinema){
       return instance.post(myPath.insertCinema,cinema)
+    },
+    insertScreeningRoom(screeningRoom){
+      return instance.post(myPath.insertScreeningRoom,screeningRoom)
+    },
+    selectScreeningRoomByCinemaId(cinemaId){
+      return instance.get(myPath.selectScreeningRoomByCinemaId,{
+        params:{
+          cinemaId
+        }
+      })  
+    },
+    updateScreeningRoom(screeningRoom){
+      return instance.put(myPath.updateScreeningRoom,screeningRoom)
     }
 }

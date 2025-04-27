@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.movie.mapper.ScreeningRoomMapper">
+    <insert id="insertScreeningRoom">
+        insert into screening_room
+        (screening_room_id,
+         cinema_id,
+         screening_room_name,
+         row_all,
+         col_all,
+         layout)
+        values
+            (#{screeningRoom.screeningRoomId},
+             #{screeningRoom.cinemaId},
+             #{screeningRoom.screeningRoomName},
+             #{screeningRoom.rowAll},
+             #{screeningRoom.colAll},
+             #{screeningRoom.layout})
+    </insert>
+    <select id="selectScreeningRoomByCinemaId" resultType="screeningRoom">
+        select * from screening_room where cinema_id = #{cinemaId}
+        order by screening_room_name
+    </select>
+    <update id="updateScreeningRoom">
+        update screening_room
+        <set>
+            <if test="screeningRoom.cinemaId!=null and screeningRoom.cinemaId!=''">
+                cinema_id = #{screeningRoom.cinemaId},
+            </if>
+            <if test="screeningRoom.screeningRoomName!=null and screeningRoom.screeningRoomName!=''">
+                screening_room_name = #{screeningRoom.screeningRoomName},
+            </if>
+            <if test="screeningRoom.rowAll!=null">
+                row_all = #{screeningRoom.rowAll},
+            </if>
+            <if test="screeningRoom.colAll!=null">
+                col_all = #{screeningRoom.colAll},
+            </if>
+            <if test="screeningRoom.layout!=null and screeningRoom.layout!=''">
+                layout = #{screeningRoom.layout},
+            </if>
+        </set>
+        where screening_room_id = #{screeningRoom.screeningRoomId}
+    </update>
+</mapper>
