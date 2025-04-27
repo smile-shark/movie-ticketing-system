@@ -47,6 +47,7 @@ export default {
       myApi.platformLogin(this.account, this.password).then(res=>{
         if(res.data.code === 200){
           this.$message.success(res.data.message)
+          localStorage.setItem('platformInfo',JSON.stringify(res.data.data))
           this.$router.push('/platform/home')
           if(this.remember){
             localStorage.setItem('platformAccount', this.account)

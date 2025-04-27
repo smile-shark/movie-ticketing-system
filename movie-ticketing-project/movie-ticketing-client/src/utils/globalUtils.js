@@ -5,5 +5,11 @@ export const utils ={
     },
     formatTimestampToYYYMMDD(timestamp) {
         return dayjs(timestamp).format('YYYY-MM-DD');
+    },
+    verifyEmailFormat(email){
+        if(!/^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/.test(email)){
+            return false
+        }
+        return true
     }
 }

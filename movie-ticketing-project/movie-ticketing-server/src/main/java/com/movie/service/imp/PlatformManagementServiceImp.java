@@ -22,6 +22,7 @@ public class PlatformManagementServiceImp implements PlatformManagementService {
         if(!selectByAccount.getPlatformManagementPassword().equals(platformManagement.getPlatformManagementPassword())){
             throw new BusinessException(RespCode.PASSWORD_ERROR);
         }
-        return Result.success(RespCode.LOGIN_USER_SUCCESS);
+        selectByAccount.setPlatformManagementPassword(null);
+        return Result.success(RespCode.LOGIN_USER_SUCCESS,selectByAccount);
     }
 }

@@ -200,5 +200,35 @@ export const myApi={
         cinemaManagementEmail:cinemaManagementEmail,
         cinemaManagementPassword:exportAxios(cinemaManagementPassword)
       })
+    },
+    selectCinemaByCinemaManagementId(cinemaManagementId){
+      return instance.get(myPath.selectCinemaByCinemaManagementId,{
+        params:{
+          cinemaManagementId
+        }
+      })
+    },
+    selectAllCinemaBrand(){
+      return instance.get(myPath.selectAllCinemaBrand)
+    },
+    selectAllEconomize(){
+      return instance.get(myPath.selectAllEconomize)
+    },
+    selectMarketByEconomizeId(economizeId){
+      return instance.get(myPath.selectMarketByEconomizeId,{
+        params:{
+          economizeId
+        }
+      })
+    },
+    selectCountyByMarketId(marketId){
+      return instance.get(myPath.selectCountyByMarketId,{
+        params:{
+          marketId
+        }
+      })
+    },
+    insertCinema(cinema){
+      return instance.post(myPath.insertCinema,cinema)
     }
 }

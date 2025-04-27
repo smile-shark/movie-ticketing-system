@@ -8,7 +8,16 @@
                     </el-image>
                     <span style="margin-left: 5px;color: #fdc31d;font-weight: bold;">后台管理</span>
                     <div style="display: inline-block;position: absolute;right: 20px;color:#3477f4">
-						<el-link @click="$router.push('/all/admin')">退出</el-link>
+                        <div v-if="platformInfo.platformManagementName" style="display: flex;align-items: center;">
+                            <el-avatar :size="40" :src="platformInfo.platformManagementProfilePicture"></el-avatar>
+                            <span class="login-text" style="font-size: 14px;color:black;margin:0 20px;font-weight: bold;" >
+                                {{platformInfo.platformManagementName}}
+                            </span>
+                            <el-link @click="$router.push('/all/admin')">退出</el-link>
+                        </div>
+                        <div v-else>
+                            <el-link @click="$router.push('/all/admin')">去登录</el-link>
+                        </div>
 					</div>
                 </div>
             </el-col>
@@ -67,6 +76,7 @@ export default {
         return{
             defaultActive: '/platform/home',
             breadcrumbList: [],
+            platformInfo:{}
         }
     },
     methods:{
@@ -84,6 +94,9 @@ export default {
         }
     },
     mounted(){
+        if(localStorage.getItem('platformInfo')){
+            this.platformInfo=JSON.parse(localStorage.getItem('platformInfo'))
+        }
         this.defaultActive=this.$route.path
     }
 }

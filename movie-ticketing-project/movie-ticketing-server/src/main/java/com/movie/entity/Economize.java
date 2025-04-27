@@ -7,9 +7,8 @@ import java.util.List;
 
 @Data
 @Component
-public class Market {
-    private String marketId;
+public class Economize {
     private String economizeId;
-    private String marketName;
-    private List<County> counties;
+    private String economizeName;
+    private List<Market> markets;
 }

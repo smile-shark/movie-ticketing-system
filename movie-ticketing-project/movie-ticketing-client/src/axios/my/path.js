@@ -27,4 +27,10 @@ export const myPath={
 
     cinemaManagementRegister:'/cinema/management/register',
     cinemaManagementLogin:'/cinema/management/login',
+    selectCinemaByCinemaManagementId:'/cinema/management/cinema/by/management/id',
+    selectAllCinemaBrand:'/cinema/management/cinema/brand',
+    selectAllEconomize:'/cinema/management/all/economize',
+    selectMarketByEconomizeId:'/cinema/management/market/by/economize',
+    selectCountyByMarketId:'/cinema/management/county/by/market',
+    insertCinema:'/cinema/management/cinema'
 }

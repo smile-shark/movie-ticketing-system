@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.movie.mapper.CinemaMapper">
+    <select id="selectCinemaByCinemaManagementId" resultType="cinema">
+        select * from cinema where cinema_management_id=#{cinemaManagementId}
+    </select>
+    <insert id="insertCinema">
+        insert into cinema
+        (cinema_id, cinema_brand_id, cinema_management_id, county_id, cinema_name,
+         cinema_address, cinema_phone, cinema_email, cinema_url,
+         cinema_start_time, cinema_end_time)
+        values
+        (#{cinema.cinemaId},#{cinema.cinemaBrandId},#{cinema.cinemaManagementId},#{cinema.countyId},
+         #{cinema.cinemaName},#{cinema.cinemaAddress},#{cinema.cinemaPhone},#{cinema.cinemaEmail},
+         #{cinema.cinemaUrl},#{cinema.cinemaStartTime},#{cinema.cinemaEndTime})
+    </insert>
+</mapper>

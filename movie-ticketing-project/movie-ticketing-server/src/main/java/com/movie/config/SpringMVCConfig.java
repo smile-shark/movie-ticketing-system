@@ -1,12 +1,19 @@
 package com.movie.config;
 
+import com.alibaba.fastjson.parser.ParserConfig;
+import com.alibaba.fastjson.serializer.SerializeConfig;
 import com.alibaba.fastjson.support.config.FastJsonConfig;
 import com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter;
+import com.alibaba.fastjson2.JSONFactory;
+import com.alibaba.fastjson2.reader.ObjectReaderProvider;
+import com.alibaba.fastjson2.writer.ObjectWriterProvider;
 import com.movie.filter.CinemaManagementFilter;
 import com.movie.filter.CustomerFilter;
 import com.movie.filter.GlobalFilter;
 import com.movie.filter.PlatformManagementFilter;
 import com.movie.intercopter.CustomerJwtInterceptor;
+import com.movie.provide.LocalTimeReader;
+import com.movie.provide.LocalTimeWriter;
 import com.movie.utils.AesUtils;
 import jakarta.servlet.*;
 import jakarta.servlet.annotation.MultipartConfig;
@@ -28,6 +35,7 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+import java.time.LocalTime;
 import java.util.Collections;
 import java.util.List;
 @Configuration
@@ -53,17 +61,20 @@ public class SpringMVCConfig implements WebApplicationInitializer, WebMvcConfigu
                 .maxAge(3600);
     }
 
+
     @Override
     public void extendMessageConverters(List<HttpMessageConverter<?>> converters) {
-        FastJsonHttpMessageConverter fastJsonHttpMessageConverter = new FastJsonHttpMessageConverter();
-        FastJsonConfig fastJsonConfig = new FastJsonConfig();
+        // 注册全局序列化器和反序列化器
+        ObjectWriterProvider writerProvider = JSONFactory.getDefaultObjectWriterProvider();
+        writerProvider.register(LocalTime.class, new LocalTimeWriter());
 
-        fastJsonHttpMessageConverter.setSupportedMediaTypes(
-                Collections.singletonList(MediaType.APPLICATION_JSON)
-        );
+        ObjectReaderProvider readerProvider = JSONFactory.getDefaultObjectReaderProvider();
+        readerProvider.register(LocalTime.class, new LocalTimeReader());
 
-        fastJsonHttpMessageConverter.setFastJsonConfig(fastJsonConfig);
-        converters.addFirst(fastJsonHttpMessageConverter);
+        // 配置 FastJsonHttpMessageConverter
+        FastJsonHttpMessageConverter converter = new FastJsonHttpMessageConverter();
+        converter.setSupportedMediaTypes(Collections.singletonList(MediaType.APPLICATION_JSON));
+        converters.addFirst(converter);
     }
 
     @Override

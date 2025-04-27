@@ -3,6 +3,7 @@ package com.movie.service.imp;
 import com.movie.common.resp.RespCode;
 import com.movie.common.resp.Result;
 import com.movie.entity.Market;
+import com.movie.exception.BusinessException;
 import com.movie.mapper.MarketMapper;
 import com.movie.service.MarketService;
 import lombok.RequiredArgsConstructor;
@@ -26,5 +27,16 @@ public class MarketServiceImp implements MarketService {
         }
         return Result.success(RespCode.FIND_SUCCESS)
                 .setData(markets);
+    }
+
+    @Override
+    public Result selectMarketByEconomizeId(String economizeId) {
+        try {
+            List<Market> markets = marketMapper.selectMarketByEconomizeId(economizeId);
+            return Result.success(RespCode.FIND_SUCCESS,markets);
+        }catch (Exception e){
+            e.printStackTrace();
+            throw new BusinessException(RespCode.FIND_ERROR);
+        }
     }
 }

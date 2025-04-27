@@ -65,6 +65,7 @@
 </template>
 
 <script>
+import { utils } from '@/utils/globalUtils'
 export default {
   data(){
     return{
@@ -111,7 +112,7 @@ export default {
     getEmailVerifyCode(){
       // 如果没有通过人机验证就弹出人机验证的弹窗
       // 验证邮箱格式
-      if(!/^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/.test(this.userEmail)){
+      if(!utils.verifyEmailFormat(this.userEmail)){
         this.$message.error('请输入正确的邮箱格式')
         return
       }

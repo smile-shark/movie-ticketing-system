@@ -107,7 +107,7 @@ export default {
       this.notSelectedMovie=true
       return
     }else{
-      myApi.selectMovieList({movieId:this.movieId,page:1,size:1}).then(res=>{
+      myApi.selectMovieListPlatform({movieId:this.movieId,page:1,size:1}).then(res=>{
         if(res.data.code==200){
           this.movieData=res.data.data.list[0]
         }

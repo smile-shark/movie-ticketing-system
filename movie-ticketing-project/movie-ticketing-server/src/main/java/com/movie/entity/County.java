@@ -3,13 +3,10 @@ package com.movie.entity;
 import lombok.Data;
 import org.springframework.stereotype.Component;
 
-import java.util.List;
-
 @Data
 @Component
-public class Market {
+public class County {
+    private String countyId;
     private String marketId;
-    private String economizeId;
-    private String marketName;
-    private List<County> counties;
+    private String countyName;
 }

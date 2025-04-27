@@ -18,6 +18,7 @@ import PlatformUserDetailPage from '@/views/platform-management/child/user-manag
 import PlatformMobileDisplayPage from '@/views/platform-management/child/other-management/PlatformMobileDisplayPage.vue'
 import CinemaLoginPage from '@/views/cinema-management/CinemaLoginPage.vue'
 import CinemaHomePage from '@/views/cinema-management/CinemaHomePage.vue'
+import CinemaHomeChild from '@/views/cinema-management/child/CinemaHomeChild.vue'
 Vue.use(VueRouter)
 
 const routes = [
@@ -126,7 +127,14 @@ const routes = [
   },{
     path: '/cinema/home',
     name: 'CinemaHomePage',
-    component: CinemaHomePage
+    component: CinemaHomePage,
+    children:[
+      {
+        path: '',
+        name: 'CinemaHomeChild',
+        component: CinemaHomeChild,
+      }
+    ]
   }
 ]
 
