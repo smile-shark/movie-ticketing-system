@@ -47,21 +47,12 @@
                             <el-menu-item index="/cinema/home/list-screening-room">放映厅列表</el-menu-item>
                           </el-submenu>
                           <el-submenu index="">
-                          <span slot="title"><i class="el-icon-user-solid"></i>用户管理</span>
-                          <el-menu-item index="/platform/home/list-user">用户列表</el-menu-item>
-                          <el-menu-item index="/platform/home/detail-user">用户详细</el-menu-item>
+                            <span slot="title"><i class="el-icon-film"></i>排片管理</span>
+                            <el-menu-item index="/cinema/home/add-slice-arrangement">添加新的排片</el-menu-item>
+                            <el-menu-item index="/cinema/home/list-slice-arrangement">排片列表</el-menu-item>
                           </el-submenu>
                           <el-submenu index="">
-                          <span slot="title"><i class="el-icon-s-cooperation"></i>影院管理</span>
-                          <el-menu-item>影院账号管理</el-menu-item>
-                          <el-menu-item>影院信息管理</el-menu-item>
-                          <el-menu-item>影院放映厅管理</el-menu-item>
-                          <el-menu-item>影院数据统计</el-menu-item>
-                          </el-submenu>
-                          <el-submenu index="">
-                          <span slot="title"><i class="el-icon-s-grid"></i>其他管理</span>
-                          <el-menu-item index="/platform/home/mobile-display">用户轮动图管理</el-menu-item>
-                          <el-menu-item>广告管理</el-menu-item>
+                          <span slot="title"><i class="el-icon-s-grid"></i>其他管理</span>  
                           </el-submenu>
                       </el-menu>
                   </div>

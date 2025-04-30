@@ -2,6 +2,7 @@ import cn.hutool.crypto.digest.DigestUtil;
 import com.movie.config.SpringConfig;
 import com.movie.entity.Movie;
 import com.movie.entity.User;
+import com.movie.service.CinemaService;
 import com.movie.service.MobileDisplayService;
 import com.movie.service.MovieService;
 import com.movie.service.MovieTypeService;
@@ -33,6 +34,8 @@ public class AllTest {
     private MovieTypeService movieTypeService;
     @Autowired
     private TokenUtils tokenUtils;
+    @Autowired
+    private CinemaService cinemaService;
     @Test
     public void aesTest() throws Exception {
         String decrypt = aesUtils.decrypt("U2FsdGVkX1+lyGzhj+Nrr90rgKTR+LwDu4fxgB9Hj1M=");
@@ -87,5 +90,9 @@ public class AllTest {
         else System.out.println("验证失败");
         User user2 = tokenUtils.parseToken(token, User.class);
         System.out.println(user2);
+    }
+    @Test
+    public void customerSelectLowPriceCinema(){
+        System.out.println(cinemaService.customerSelectLowPriceCinema(null,null,"b6d825944ee241998d0723336c407f79",1,10));
     }
 }

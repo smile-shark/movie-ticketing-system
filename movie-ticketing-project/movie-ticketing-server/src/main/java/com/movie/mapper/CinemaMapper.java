@@ -10,5 +10,8 @@ import java.util.List;
 public interface CinemaMapper {
     List<Cinema> selectCinemaByCinemaManagementId(@Param("cinemaManagementId")String cinemaManagementId);
     int insertCinema(@Param("cinema")Cinema cinema);
-
+    Cinema selectCinemaByCinemaId(@Param("cinemaId")String cinemaId);
+    List<Cinema> customerSelectLowPriceCinema(@Param("countyId")String countyId,
+                                              @Param("cinemaBrandId") String cinemaBrandId,
+                                              @Param("movieId")String movieId);
 }

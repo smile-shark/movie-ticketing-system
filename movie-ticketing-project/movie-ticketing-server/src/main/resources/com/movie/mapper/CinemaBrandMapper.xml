@@ -4,4 +4,7 @@
     <select id="selectAllCinemaBrand" resultType="cinemaBrand">
         select * from cinema_brand
     </select>
+    <select id="selectCinemaBrandByCinemaBrandId" resultType="cinemaBrand">
+        select * from cinema_brand where cinema_brand_id=#{cinemaBrandId}
+    </select>
 </mapper>

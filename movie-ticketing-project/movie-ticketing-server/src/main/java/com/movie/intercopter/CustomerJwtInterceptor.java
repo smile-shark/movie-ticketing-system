@@ -45,30 +45,4 @@ public class CustomerJwtInterceptor implements HandlerInterceptor {
         System.out.println("验证token成功");
         return HandlerInterceptor.super.preHandle(request, response, handler);
     }
-
-    /**
-     * @deprecated 进入接口正常执行完毕进入的方法
-     * @param request
-     * @param response
-     * @param handler
-     * @param modelAndView
-     * @throws Exception
-     */
-    @Override
-    public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {
-        HandlerInterceptor.super.postHandle(request, response, handler, modelAndView);
-    }
-
-    /**
-     * @deprecated 接口进入接口之后执行的方法
-     * @param request
-     * @param response
-     * @param handler
-     * @param ex
-     * @throws Exception
-     */
-    @Override
-    public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) throws Exception {
-        HandlerInterceptor.super.afterCompletion(request, response, handler, ex);
-    }
 }

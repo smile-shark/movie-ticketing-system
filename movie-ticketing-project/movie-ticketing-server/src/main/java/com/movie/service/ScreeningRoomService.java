@@ -7,4 +7,6 @@ public interface ScreeningRoomService {
     Result insertScreeningRoom(ScreeningRoom screeningRoom);
     Result selectScreeningRoomByCinemaId(String cinemaId);
     Result updateScreeningRoom(ScreeningRoom screeningRoom);
+    Result selectSimpleScreeningRoom();
+    Result selectScreeningRoomByScreeningRoomId(String screeningRoomId);
 }

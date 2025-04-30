@@ -2,6 +2,7 @@ package com.movie.config;
 
 import com.alibaba.fastjson.parser.ParserConfig;
 import com.alibaba.fastjson.serializer.SerializeConfig;
+import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.alibaba.fastjson.support.config.FastJsonConfig;
 import com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter;
 import com.alibaba.fastjson2.JSONFactory;
@@ -15,6 +16,7 @@ import com.movie.intercopter.CustomerJwtInterceptor;
 import com.movie.provide.LocalTimeReader;
 import com.movie.provide.LocalTimeWriter;
 import com.movie.utils.AesUtils;
+import com.movie.utils.TokenUtils;
 import jakarta.servlet.*;
 import jakarta.servlet.annotation.MultipartConfig;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,14 +45,14 @@ import java.util.List;
 @EnableWebMvc
 public class SpringMVCConfig implements WebApplicationInitializer, WebMvcConfigurer {
 
-    @Autowired
-    private CustomerJwtInterceptor customerJwtInterceptor;
-    @Override
-    public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(customerJwtInterceptor)
-                .addPathPatterns("/customer/*")
-                .excludePathPatterns("/customer/login","/customer/register","/customer/email/verification/code");
-    }
+//    @Autowired
+//    private CustomerJwtInterceptor customerJwtInterceptor;
+//    @Override
+//    public void addInterceptors(InterceptorRegistry registry) {
+//        registry.addInterceptor(customerJwtInterceptor)
+//                .addPathPatterns("/customer/*")
+//                .excludePathPatterns("/customer/login","/customer/register","/customer/email/verification/code");
+//    }
 
     @Override
     public void addCorsMappings(CorsRegistry registry) {
@@ -61,19 +63,30 @@ public class SpringMVCConfig implements WebApplicationInitializer, WebMvcConfigu
                 .maxAge(3600);
     }
 
-
     @Override
     public void extendMessageConverters(List<HttpMessageConverter<?>> converters) {
-        // 注册全局序列化器和反序列化器
+        // 创建FastJson配置
+        FastJsonConfig config = new FastJsonConfig();
+
+        // 禁用循环引用检测（关闭$ref）
+        config.setSerializerFeatures(
+                SerializerFeature.DisableCircularReferenceDetect
+        );
+
+        // 注册自定义序列化器
         ObjectWriterProvider writerProvider = JSONFactory.getDefaultObjectWriterProvider();
         writerProvider.register(LocalTime.class, new LocalTimeWriter());
 
+        // 注册自定义反序列化器
         ObjectReaderProvider readerProvider = JSONFactory.getDefaultObjectReaderProvider();
         readerProvider.register(LocalTime.class, new LocalTimeReader());
 
-        // 配置 FastJsonHttpMessageConverter
+        // 配置HttpMessageConverter
         FastJsonHttpMessageConverter converter = new FastJsonHttpMessageConverter();
+        converter.setFastJsonConfig(config);
         converter.setSupportedMediaTypes(Collections.singletonList(MediaType.APPLICATION_JSON));
+
+        // 添加到转换器列表首位
         converters.addFirst(converter);
     }
 
@@ -96,8 +109,8 @@ public class SpringMVCConfig implements WebApplicationInitializer, WebMvcConfigu
 
     }
     @Bean
-    public Filter customerFilter(AesUtils aesUtils) {
-        return new CustomerFilter(aesUtils);
+    public Filter customerFilter(AesUtils aesUtils, TokenUtils tokenUtils) {
+        return new CustomerFilter(aesUtils,tokenUtils);
     }
     @Bean
     public Filter cinemaManagementFilter(AesUtils aesUtils){

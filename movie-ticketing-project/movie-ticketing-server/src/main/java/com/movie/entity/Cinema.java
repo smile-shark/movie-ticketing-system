@@ -33,4 +33,6 @@ public class Cinema {
     private LocalTime cinemaStartTime; // 影院开业时间
     @NotNull(message = "影院闭业时间不能为空",groups = {InsertCinema.class})
     private LocalTime cinemaEndTime; // 影院闭业时间
+    // 最低票价的排片
+    private Double lowestPrice;
 }

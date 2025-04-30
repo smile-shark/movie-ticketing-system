@@ -62,26 +62,29 @@ export default {
             return
         }
         this.cinemaId=cinemaId
-        myApi.selectScreeningRoomByCinemaId(this.cinemaId).then(res=>{
-            if(res.data.code==200){
-                this.screeningRooms=res.data.data
-                for(let screeningRoom of this.screeningRooms){
-                    screeningRoom.layout=JSON.parse(screeningRoom.layout)   
-                }
-            }else{
-                this.$message.error(res.data.message)
-            }
-        }).catch(e=>{
-            console.log(e)
-        })
+        this.selectScreeningRoomByCinemaId()
     },
     methods:{
+        selectScreeningRoomByCinemaId(){
+            myApi.selectScreeningRoomByCinemaId(this.cinemaId).then(res=>{
+                if(res.data.code==200){
+                    this.screeningRooms=res.data.data
+                    for(let screeningRoom of this.screeningRooms){
+                        screeningRoom.layout=JSON.parse(screeningRoom.layout)   
+                    }
+                }else{
+                    this.$message.error(res.data.message)
+                }
+            }).catch(e=>{
+                console.log(e)
+            })
+        },
         handleEdit(row){
             this.updateScreeningRoom=row
             this.updateScreeningRoomVisible=true
         },
         windowReload(){
-            window.location.reload()
+            this.selectScreeningRoomByCinemaId()
         },
         updateScreeningRoomFun(){
             if(this.rowAll<=0 || this.colAll<=0){

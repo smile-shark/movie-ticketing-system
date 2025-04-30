@@ -1,15 +1,24 @@
 import dayjs from "dayjs"
+import duration from 'dayjs/plugin/duration';
+
+dayjs.extend(duration);
 export const utils ={
     formatTimestampToYYYMMDDHHMMSS(timestamp) {
-        return dayjs(timestamp).format('YYYY-MM-DD HH:mm:ss');
+        return dayjs(timestamp).format('YYYY-MM-DD HH:mm:ss')
     },
     formatTimestampToYYYMMDD(timestamp) {
-        return dayjs(timestamp).format('YYYY-MM-DD');
+        return dayjs(timestamp).format('YYYY-MM-DD')
+    },
+    timeStampToMinutes(timestamp){
+        return dayjs.duration(timestamp).asMinutes()
     },
     verifyEmailFormat(email){
         if(!/^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/.test(email)){
             return false
         }
         return true
+    },
+    urbanConversion(date){
+        return dayjs(date).format('YYYY-MM-DDTHH:mm:ss')
     }
-}
+}   

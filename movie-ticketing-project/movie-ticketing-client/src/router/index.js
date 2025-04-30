@@ -21,7 +21,9 @@ import CinemaHomePage from '@/views/cinema-management/CinemaHomePage.vue'
 import CinemaHomeChild from '@/views/cinema-management/child/CinemaHomeChild.vue'
 import CinemaScreeningRoomAddPage from '@/views/cinema-management/child/CinemaScreeningRoomAddPage.vue'
 import CinemaScreeningRoomListPage from '@/views/cinema-management/child/CinemaScreeningRoomListPage.vue'
-
+import CinemaSliceArrangementAddPage from '@/views/cinema-management/child/CinemaSliceArrangementAddPage.vue'
+import CinemaSliceArrangementListPage from '@/views/cinema-management/child/CinemaSliceArrangementListPage.vue'
+import CustomerSelectScreeningRoomPage from '@/views/customer/child/moviePageChild/CustomerSelectScreeningRoomPage.vue'
 
 Vue.use(VueRouter)
 
@@ -59,6 +61,11 @@ const routes = [
             path:'detail/:movieId',
             name: 'CustomerMovieDetailPage',
             component: CustomerMovieDetailPage,
+          },
+          {
+            path: 'select-screening-room', 
+            name: 'CustomerSelectScreeningRoomPage',
+            component: CustomerSelectScreeningRoomPage
           }
         ]
       }
@@ -147,6 +154,16 @@ const routes = [
         path: 'list-screening-room',
         name: 'CinemaScreeningRoomListPage',
         component: CinemaScreeningRoomListPage,
+      },
+      {
+        path: 'add-slice-arrangement',
+        name: 'CinemaSliceArrangementAddPage',
+        component: CinemaSliceArrangementAddPage,
+      },
+      {
+        path: 'list-slice-arrangement',
+        name: 'CinemaSliceArrangementListPage',
+        component: CinemaSliceArrangementListPage
       }
     ]
   }

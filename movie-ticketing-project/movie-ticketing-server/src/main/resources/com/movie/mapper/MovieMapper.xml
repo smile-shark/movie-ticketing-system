@@ -59,4 +59,7 @@
     <select id="selectSimpleMovieList" resultType="movie">
         select movie_id,movie_name from movie
     </select>
+    <select id="selectMovieByMovieId" resultType="movie">
+        select * from movie where movie_id=#{moiveId}
+    </select>
 </mapper>

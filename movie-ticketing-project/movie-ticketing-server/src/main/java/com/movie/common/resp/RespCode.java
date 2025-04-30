@@ -39,7 +39,8 @@ public enum RespCode {
     DELETE_ERROR(5019, "删除失败"),
     TOKEN_VERIFY_ERROR(401, "token验证失败"),
     INSET_SUCCESS(200, "插入成功"),
-    INSET_ERROR(5020, "插入失败");
+    INSET_ERROR(5020, "插入失败"),
+    HAVE_SLICE_ARRANGEMENT_IN_THIS_TIME(5021, "该时间段已有排片");
 
     private final int code;
     private final String message;

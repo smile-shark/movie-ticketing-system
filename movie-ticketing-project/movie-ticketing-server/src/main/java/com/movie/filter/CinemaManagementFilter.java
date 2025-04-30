@@ -6,8 +6,10 @@ import com.movie.common.resp.RespCode;
 import com.movie.exception.BusinessException;
 import com.movie.filter.request.RequestWrapper;
 import com.movie.utils.AesUtils;
+import com.movie.utils.SendErrorResponseUtil;
 import jakarta.servlet.*;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 
@@ -23,6 +25,7 @@ public class CinemaManagementFilter implements Filter {
                          FilterChain filterChain) throws IOException, ServletException {
 
         HttpServletRequest httpRequest = (HttpServletRequest) servletRequest;
+        HttpServletResponse httpResponse = (HttpServletResponse) servletResponse;
         String requestURI = httpRequest.getRequestURI();
 
         // 包装请求以便多次读取body
@@ -66,7 +69,8 @@ public class CinemaManagementFilter implements Filter {
                 }
             } catch (Exception e) {
                 e.printStackTrace();
-                throw new BusinessException(RespCode.DECRYPT_ERROR);
+                SendErrorResponseUtil.sendErrorResponse(httpResponse,RespCode.DECRYPT_ERROR);
+                return;
             }
         }
         filterChain.doFilter(wrappedRequest, servletResponse);

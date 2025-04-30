@@ -49,11 +49,9 @@ public class MovieServiceImp implements MovieService {
 
     @Override
     public Result selectMovieList(Movie movie, Integer already, Integer size, Integer page) {
-        List<Movie> movies;
-        Page<Object> startPage;
         try {
-            startPage = PageHelper.startPage(page, size);
-            movies = movieMapper.selectMovieList(movie, already);
+            Page<Object> startPage = PageHelper.startPage(page, size);
+            List<Movie> movies = movieMapper.selectMovieList(movie, already);
             for (Movie movieItem : movies) {
                 movieItem.setTags(
                         movieTypeMapper.selectMovieTypesInMovieTypeIds(
@@ -63,11 +61,11 @@ public class MovieServiceImp implements MovieService {
                         )
                 );
             }
+            return Result.success(RespCode.FIND_SUCCESS).setData(PageInfo.of(startPage));
         } catch (Exception e) {
             e.printStackTrace();
             throw new BusinessException(RespCode.FIND_ERROR);
         }
-        return Result.success(RespCode.FIND_SUCCESS).setData(PageInfo.of(startPage));
     }
 
     @Override

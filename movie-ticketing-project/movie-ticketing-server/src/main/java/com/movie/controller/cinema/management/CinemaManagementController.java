@@ -2,15 +2,15 @@ package com.movie.controller.cinema.management;
 
 
 import com.movie.common.resp.Result;
-import com.movie.entity.Cinema;
-import com.movie.entity.CinemaManagement;
-import com.movie.entity.EmailVerify;
-import com.movie.entity.ScreeningRoom;
+import com.movie.entity.*;
 import com.movie.entity.groups.*;
 import com.movie.service.*;
+import com.movie.utils.VagueUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+
+import java.time.LocalDateTime;
 
 @RestController
 @RequiredArgsConstructor
@@ -23,6 +23,8 @@ public class CinemaManagementController {
     private final MarketService marketService;
     private final CountyService countyService;
     private final ScreeningRoomService screeningRoomService;
+    private final MovieService movieService;
+    private final SliceArrangementService sliceArrangementService;
 
     @PostMapping("/register")
     public Result register(@Validated(VerifyEmail.class) @RequestBody EmailVerify emailVerify) {
@@ -68,5 +70,69 @@ public class CinemaManagementController {
     @PutMapping("/screening-room")
     public Result updateScreeningRoom(@Validated(UpdateScreeningRoom.class)@RequestBody ScreeningRoom screeningRoom){
        return screeningRoomService.updateScreeningRoom(screeningRoom);
+    }
+    @GetMapping("/movie/list")
+    public Result selectMovieList(
+            @RequestParam(value = "movieId", required = false) String movieId,
+            @RequestParam(value = "movieName", required = false) String movieName,
+            @RequestParam(value = "director", required = false) String director,
+            @RequestParam(value = "star", required = false) String star,
+            @RequestParam(value = "issuingRegion", required = false) String issuingRegion,
+            @RequestParam(value = "already", required = false) Integer already,
+            @RequestParam(value = "size") Integer size,
+            @RequestParam(value = "page") Integer page
+    ){
+        return movieService.selectMovieList(
+                new Movie(){{
+                    setMovieId(movieId);
+                    setMovieName(VagueUtil.vague(movieName));
+                    setDirector(director);
+                    setStar(star);
+                    setIssuingRegion(issuingRegion);
+                }},
+                already,
+                size,
+                page
+        );
+    }
+    @GetMapping("/simple/movie/list")
+    public Result selectSimpleMovieList(){
+        return movieService.selectSimpleMovieList();
+    }
+    @GetMapping("/simple/screening-room/list")
+    public Result selectSimpleScreeningRoom(){
+        return screeningRoomService.selectSimpleScreeningRoom();
+    }
+    @PostMapping("/slice-arrangement")
+    public Result insertSliceArrangement(@Validated(InsertSliceArrangement.class) @RequestBody SliceArrangement sliceArrangement){
+        return sliceArrangementService.insertSliceArrangement(sliceArrangement);
+    }
+    @GetMapping("/screening-room/by/screening-room-id")
+    public Result selectScreeningRoomByScreeningRoomId(@RequestParam("screeningRoomId") String screeningRoomId){
+        return screeningRoomService.selectScreeningRoomByScreeningRoomId(screeningRoomId);
+    }
+    @GetMapping("/slice-arrangement/by/slice-arrangement")
+    public Result selectSliceArrangementBySliceArrangement(
+            @RequestParam(value = "sliceArrangementId",required = false) String sliceArrangementId,
+            @RequestParam(value = "cinemaId",required = false) String cinemaId,
+            @RequestParam(value = "movieId",required = false) String movieId,
+            @RequestParam(value = "screeningRoomId",required = false) String screeningRoomId,
+            @RequestParam(value = "startTime",required = false) LocalDateTime startTime,
+            @RequestParam(value = "endTime",required = false) LocalDateTime endTime,
+            @RequestParam(value = "page") Integer page,
+            @RequestParam(value = "size") Integer size
+    ){
+        return sliceArrangementService.selectSliceArrangementBySliceArrangement(
+                new SliceArrangement(){{
+                    setSliceArrangementId(sliceArrangementId);
+                    setCinemaId(cinemaId);
+                    setMovieId(movieId);
+                    setScreeningRoomId(screeningRoomId);
+                    setSliceArrangementStartTime(startTime);
+                    setSliceArrangementEndTime(endTime);
+                }},
+                page,
+                size
+        );
     }
 }

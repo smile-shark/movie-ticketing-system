@@ -3,6 +3,7 @@ import { myPath } from "./path";
 import CryptoJS from "crypto-js";
 import { Loading } from "element-ui";
 import router from "@/router";
+import { utils } from "@/utils/globalUtils";
 
 const key = "movie-ticketing-project";
 
@@ -13,7 +14,7 @@ function exportAxios(password){
 let loadingInstance
 
 const instance = axios.create({
-  baseURL: 'http://localhost:8080',
+  baseURL: '/server8080',
 });
 instance.interceptors.request.use(
   (config) => {
@@ -243,5 +244,129 @@ export const myApi={
     },
     updateScreeningRoom(screeningRoom){
       return instance.put(myPath.updateScreeningRoom,screeningRoom)
+    },
+    cinemaSelectSimpleMovieList(){
+      return instance.get(myPath.cinemaSelectSimpleMovieList)
+    },
+    cinemaSelectMovieList({movieId=null,movieName=null,director=null,star=null,issuingRegion=null,already=null,size=10,page=1}){
+      return instance.get(myPath.selectMovieListPlatform,{
+        params:{
+          movieId,
+          movieName,
+          director,
+          star,
+          issuingRegion,
+          already,
+          size,
+          page
+        }
+      })
+    },
+    selectSimpleScreeningRoom(){
+      return instance.get(myPath.selectSimpleScreeningRoom)
+    },
+    insertSliceArrangement(sliceArrangement){
+      sliceArrangement.sliceArrangementStartTime=utils.urbanConversion(sliceArrangement.sliceArrangementStartTime)
+      sliceArrangement.sliceArrangementEndTime=utils.urbanConversion(sliceArrangement.sliceArrangementEndTime)
+      return instance.post(myPath.insertSliceArrangement,sliceArrangement)
+    },
+    selectScreeningRoomByScreeningRoomId(screeningRoomId){
+      return instance.get(myPath.selectScreeningRoomByScreeningRoomId,{
+        params:{
+          screeningRoomId
+        }
+      })
+    },
+    selectSliceArrangementBySliceArrangement({sliceArrangementId=null,cinemaId=null,movieId=null,screeningRoomId=null,startTime=null,endTime=null,page=1,size=1}){
+      if(sliceArrangementId==''){
+        sliceArrangementId=null
+      }
+      if(cinemaId==''){
+        cinemaId=null
+      }
+      if(movieId==''){
+        movieId=null
+      }
+      if(screeningRoomId==''){
+        screeningRoomId=null
+      }
+      if(startTime){
+        startTime=utils.urbanConversion(startTime)
+      }
+      if(endTime){
+        endTime=utils.urbanConversion(endTime)
+      }
+      return instance.get(myPath.selectSliceArrangementBySliceArrangement,{ 
+        params:{
+          sliceArrangementId,
+          cinemaId,
+          movieId,
+          screeningRoomId,
+          startTime,
+          endTime,
+          page,
+          size
+        }
+    })
+  },
+  customerSelectAllCinemaBrand(){
+    return instance.get(myPath.customerSelectAllCinemaBrand)
+  },
+  customerSelectCountyByMarketId(marketId){
+    return instance.get(myPath.customerSelectCountyByMarketId,{
+      params:{
+        marketId
+      }
+    })
+  },
+  customerSelectLowPriceCinema(countyId,cinemaBrandId,movieId,page,size){
+    return instance.get(myPath.customerSelectLowPriceCinema,{
+      params:{
+        countyId,
+        cinemaBrandId,
+        movieId,
+        page,
+        size
+      }
+    })
+  },
+  selectCinemaByCinemaId(cinemaId){
+    return instance.get(myPath.selectCinemaByCinemaId,{
+      params:{
+        cinemaId
+      }
+    })
+  },
+  customerSelectSliceArrangementBySliceArrangement({sliceArrangementId=null,cinemaId=null,movieId=null,screeningRoomId=null,startTime=null,endTime=null,page=1,size=1}){
+    if(sliceArrangementId==''){
+      sliceArrangementId=null
     }
+    if(cinemaId==''){
+      cinemaId=null
+    }
+    if(movieId==''){
+      movieId=null
+    }
+    if(screeningRoomId==''){
+      screeningRoomId=null
+    }
+    if(startTime){
+      startTime=utils.urbanConversion(startTime)
+    }
+    if(endTime){
+      endTime=utils.urbanConversion(endTime)
+    }
+    return instance.get(myPath.selectSliceArrangementBySliceArrangement,{ 
+      params:{
+        sliceArrangementId,
+        cinemaId,
+        movieId,
+        screeningRoomId,
+        startTime,
+        endTime,
+        page,
+        size
+      }
+  })
+  }
 }

@@ -2,16 +2,69 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.movie.mapper.CinemaMapper">
     <select id="selectCinemaByCinemaManagementId" resultType="cinema">
-        select * from cinema where cinema_management_id=#{cinemaManagementId}
+        select *
+        from cinema
+        where cinema_management_id = #{cinemaManagementId}
     </select>
     <insert id="insertCinema">
         insert into cinema
         (cinema_id, cinema_brand_id, cinema_management_id, county_id, cinema_name,
          cinema_address, cinema_phone, cinema_email, cinema_url,
          cinema_start_time, cinema_end_time)
-        values
-        (#{cinema.cinemaId},#{cinema.cinemaBrandId},#{cinema.cinemaManagementId},#{cinema.countyId},
-         #{cinema.cinemaName},#{cinema.cinemaAddress},#{cinema.cinemaPhone},#{cinema.cinemaEmail},
-         #{cinema.cinemaUrl},#{cinema.cinemaStartTime},#{cinema.cinemaEndTime})
+        values (#{cinema.cinemaId}, #{cinema.cinemaBrandId}, #{cinema.cinemaManagementId}, #{cinema.countyId},
+                #{cinema.cinemaName}, #{cinema.cinemaAddress}, #{cinema.cinemaPhone}, #{cinema.cinemaEmail},
+                #{cinema.cinemaUrl}, #{cinema.cinemaStartTime}, #{cinema.cinemaEndTime})
     </insert>
+    <select id="selectCinemaByCinemaId" resultMap="customerSelectLowPriceCinema">
+        select *
+        from cinema
+        where cinema_id = #{cinemaId}
+    </select>
+    <resultMap id="customerSelectLowPriceCinema" type="cinema">
+        <id property="cinemaId" column="cinema_id"/>
+        <result property="cinemaBrandId" column="cinema_brand_id"/>
+        <association property="cinemaBrand"
+                     column="cinema_brand_id"
+                     select="com.movie.mapper.CinemaBrandMapper.selectCinemaBrandByCinemaBrandId"/>
+    </resultMap>
+    <select id="customerSelectLowPriceCinema" resultMap="customerSelectLowPriceCinema">
+        select cinema.cinema_id,
+        cinema.cinema_brand_id,
+        cinema.county_id,
+        cinema.cinema_name,
+        cinema.cinema_address,
+        cinema.cinema_phone,
+        cinema.cinema_points,
+        cinema.cinema_start_time,
+        cinema.cinema_end_time,
+        min(slice_arrangement.vote_price) as lowest_price
+        from cinema
+        join slice_arrangement
+        on slice_arrangement.cinema_id = cinema.cinema_id
+        <where>
+            <if test="countyId!=null">
+                cinema.county_id = #{countyId}
+            </if>
+            <if test="cinemaBrandId!=null">
+                and cinema.cinema_brand_id = #{cinemaBrandId}
+            </if>
+            and ((cinema.cinema_start_time &gt; cinema.cinema_end_time
+            and curtime() between cinema.cinema_start_time and cinema.cinema_end_time)
+            or (cinema.cinema_start_time &gt; cinema.cinema_end_time
+            and (curtime() &gt;= cinema.cinema_start_time
+            or curtime() &lt;= cinema.cinema_end_time)))
+            and slice_arrangement.movie_id = #{movieId}
+            and now() &lt; slice_arrangement.slice_arrangement_start_time
+        </where>
+        group by cinema.cinema_id,
+        cinema.cinema_brand_id,
+        cinema.county_id,
+        cinema.cinema_name,
+        cinema.cinema_address,
+        cinema.cinema_phone,
+        cinema.cinema_points,
+        cinema.cinema_start_time,
+        cinema.cinema_end_time
+        order by cinema.cinema_points desc, lowest_price
+    </select>
 </mapper>

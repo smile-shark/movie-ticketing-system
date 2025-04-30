@@ -18,15 +18,15 @@ public class MarketServiceImp implements MarketService {
 
     @Override
     public Result selectAllMarket() {
-        List<Market> markets;
         try{
-            markets = marketMapper.selectAllMarket();
+            List<Market> markets = marketMapper.selectAllMarket();
+            Result success = Result.success(RespCode.FIND_SUCCESS, markets);
+            System.out.println(success);
+            return success;
         }catch (Exception e){
             e.printStackTrace();
             throw new RuntimeException(RespCode.FIND_ERROR.getMessage());
         }
-        return Result.success(RespCode.FIND_SUCCESS)
-                .setData(markets);
     }
 
     @Override

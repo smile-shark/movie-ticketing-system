@@ -37,7 +37,7 @@
     props: {
       movie: {
         type: Object,
-        required: true,
+        required: false,
         default: () => ({
             posterImage:'',
             movieName: 'defaultName',

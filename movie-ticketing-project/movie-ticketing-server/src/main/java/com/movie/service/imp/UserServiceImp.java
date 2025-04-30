@@ -1,6 +1,7 @@
 package com.movie.service.imp;
 
 import cn.hutool.jwt.JWTUtil;
+import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.movie.common.resp.RespCode;
@@ -99,11 +100,9 @@ public class UserServiceImp implements UserService {
     @Override
     public Result selectUsersByUser(User user,Integer size,Integer page) {
         try {
-            PageHelper.startPage(page,size);
+            Page<Object> objects = PageHelper.startPage(page, size);
             List<User> users = userMapper.selectUsersByUser(user);
-            return Result.success(RespCode.FIND_SUCCESS).setData(
-                    PageInfo.of(users)
-            );
+            return Result.success(RespCode.FIND_SUCCESS,PageInfo.of(objects));
         }catch (Exception e){
             e.printStackTrace();
             throw new BusinessException(RespCode.FIND_ERROR);

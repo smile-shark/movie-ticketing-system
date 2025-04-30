@@ -11,6 +11,11 @@ export const myPath={
     selectAllAllowedMobileDisplays:'/customer/mobile/display',
     selectMovieListCustomer:'/customer/movie',
     selectOneAdvertisementByRandom:'/customer/advertisement',
+    customerSelectAllCinemaBrand:'/customer/cinema/brand',
+    customerSelectCountyByMarketId:'/customer/county/by/market',
+    customerSelectLowPriceCinema:'/customer/cinema/low/price',
+    selectCinemaByCinemaId:'/customer/cinema/by/cinema-id',
+    customerSelectSliceArrangementBySliceArrangement:'/customer/slice-arrangement/by/slice-arrangement',
 
     platformLogin:'/platform/login',
     selectAllMovieType:'/platform/movie/types',
@@ -35,5 +40,11 @@ export const myPath={
     insertCinema:'/cinema/management/cinema',
     insertScreeningRoom:'/cinema/management/screening-room',
     selectScreeningRoomByCinemaId:'/cinema/management/screening-room/by/cinema/id',
-    updateScreeningRoom:'/cinema/management/screening-room'
+    updateScreeningRoom:'/cinema/management/screening-room',
+    cinemaSelectSimpleMovieList:'/cinema/management/simple/movie/list',
+    cinemaSelectMovieList:'/cinema/management/movie/list',
+    selectSimpleScreeningRoom:'/cinema/management/simple/screening-room/list',
+    insertSliceArrangement:'/cinema/management/slice-arrangement',
+    selectScreeningRoomByScreeningRoomId:'/cinema/management/screening-room/by/screening-room-id',
+    selectSliceArrangementBySliceArrangement:'/cinema/management/slice-arrangement/by/slice-arrangement'
 }

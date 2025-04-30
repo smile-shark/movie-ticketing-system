@@ -88,6 +88,7 @@ export default {
         if(res.data.code==200){
           this.customerInfo.marketId=market.marketId
           this.customerInfo.market=market
+          // 更新localstorage的marketId
           localStorage.setItem('customerInfo',JSON.stringify(this.customerInfo))
           this.finstMarketSelectDialog=false
         }

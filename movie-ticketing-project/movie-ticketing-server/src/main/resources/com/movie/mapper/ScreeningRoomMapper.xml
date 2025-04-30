@@ -42,4 +42,10 @@
         </set>
         where screening_room_id = #{screeningRoom.screeningRoomId}
     </update>
+    <select id="selectSimpleScreeningRoom" resultType="screeningRoom">
+        select screening_room_id,screening_room_name from screening_room
+    </select>
+    <select id="selectScreeningRoomByScreeningRoomId" resultType="screeningRoom">
+        select * from screening_room where screening_room_id=#{screeningRoomId}
+    </select>
 </mapper>

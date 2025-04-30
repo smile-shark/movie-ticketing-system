@@ -56,4 +56,26 @@ public class ScreeningRoomServiceImp implements ScreeningRoomService {
             throw new BusinessException(RespCode.DATABASE_ERROR);
         }
     }
+
+    @Override
+    public Result selectSimpleScreeningRoom() {
+        try {
+            List<ScreeningRoom> screeningRooms = screeningRoomMapper.selectSimpleScreeningRoom();
+            return Result.success(RespCode.FIND_SUCCESS, screeningRooms);
+        }catch (Exception e){
+            e.printStackTrace();
+            throw new BusinessException(RespCode.DATABASE_ERROR);
+        }
+    }
+
+    @Override
+    public Result selectScreeningRoomByScreeningRoomId(String screeningRoomId) {
+        try {
+            ScreeningRoom screeningRoom = screeningRoomMapper.selectScreeningRoomByScreeningRoomId(screeningRoomId);
+            return Result.success(RespCode.FIND_SUCCESS, screeningRoom);
+        }catch (Exception e){
+            e.printStackTrace();
+            throw new BusinessException(RespCode.DATABASE_ERROR);
+        }
+    }
 }
