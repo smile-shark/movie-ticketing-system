@@ -61,7 +61,7 @@ public class MovieServiceImp implements MovieService {
                         )
                 );
             }
-            return Result.success(RespCode.FIND_SUCCESS).setData(PageInfo.of(startPage));
+            return Result.success(RespCode.FIND_SUCCESS,PageInfo.of(movies));
         } catch (Exception e) {
             e.printStackTrace();
             throw new BusinessException(RespCode.FIND_ERROR);
@@ -72,7 +72,7 @@ public class MovieServiceImp implements MovieService {
     @Transactional
     public Result updateMovie(Movie movie) {
         try {
-            // 1. 删除现有的类型标签
+            // 1. 删除现有的类型标签F
             movieTypeMiddleMapper.deleteMovieTypeMiddlesByMovieId(movie.getMovieId());
             // 2. 插入新的类型标签
             for (MovieType tag : movie.getTags()) {

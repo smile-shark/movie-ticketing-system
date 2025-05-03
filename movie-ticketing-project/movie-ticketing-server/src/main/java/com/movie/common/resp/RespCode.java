@@ -40,7 +40,9 @@ public enum RespCode {
     TOKEN_VERIFY_ERROR(401, "token验证失败"),
     INSET_SUCCESS(200, "插入成功"),
     INSET_ERROR(5020, "插入失败"),
-    HAVE_SLICE_ARRANGEMENT_IN_THIS_TIME(5021, "该时间段已有排片");
+    HAVE_SLICE_ARRANGEMENT_IN_THIS_TIME(5021, "该时间段已有排片"),
+    SEAT_ALREADY_BUY(5022,"该座位已被抢购" ),
+    ALREADY_ORDER_NOT_PAY(5023, "该订单已下单，未支付");
 
     private final int code;
     private final String message;

@@ -2,7 +2,6 @@
   <artifact type="exploded-war" name="movie-ticketing-server:Web exploded">
     <output-path>$PROJECT_DIR$/out/artifacts/movie_ticketing_server_Web_exploded</output-path>
     <root id="root">
-      <element id="javaee-facet-resources" facet="movie-ticketing-server/web/Web" />
       <element id="directory" name="WEB-INF">
         <element id="directory" name="classes">
           <element id="module-output" name="movie-ticketing-server" />
@@ -65,8 +64,8 @@
           <element id="library" level="project" name="Maven: org.jdom:jdom2:2.0.6.1" />
           <element id="library" level="project" name="Maven: org.reactivestreams:reactive-streams:1.0.3" />
           <element id="library" level="project" name="Maven: org.slf4j:slf4j-api:1.7.30" />
-          <element id="library" level="project" name="Maven: com.github.jsqlparser:jsqlparser:4.7" />
-          <element id="library" level="project" name="Maven: com.github.pagehelper:pagehelper:6.1.0" />
+          <element id="library" level="project" name="Maven: com.github.jsqlparser:jsqlparser:3.2" />
+          <element id="library" level="project" name="Maven: com.github.pagehelper:pagehelper:5.2.0" />
         </element>
       </element>
     </root>

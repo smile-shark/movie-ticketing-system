@@ -119,7 +119,9 @@ export default {
         },
         customerSelectSliceArrangementBySliceArrangement(page=1){
             this.page=page
-            myApi.customerSelectSliceArrangementBySliceArrangement({movieId:this.movieId,cinemaId:this.cinemaId,page:this.page,size:this.size}).then(res=>{
+            myApi.customerSelectSliceArrangementBySliceArrangement(
+                {movieId:this.movieId,cinemaId:this.cinemaId,startTime:new Date(),page:this.page,size:this.size}
+            ).then(res=>{
                 if(res.data.code==200){
                     this.total=res.data.data.total
                     this.sliceArrangements=res.data.data.list
@@ -131,7 +133,12 @@ export default {
             })
         },
         selectSliceArrangement(row){
-            console.log(row)
+            this.$router.push({
+                name:'CustomerSelectSeatPage',
+                params:{
+                    sliceArrangementId:row.sliceArrangementId
+                }
+            })
         }
     },
     mounted(){

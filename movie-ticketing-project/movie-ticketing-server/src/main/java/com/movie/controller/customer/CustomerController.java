@@ -1,11 +1,9 @@
 package com.movie.controller.customer;
 
 import com.movie.common.resp.Result;
-import com.movie.entity.EmailVerify;
-import com.movie.entity.Movie;
-import com.movie.entity.SliceArrangement;
-import com.movie.entity.User;
+import com.movie.entity.*;
 import com.movie.entity.groups.CustomerLogin;
+import com.movie.entity.groups.InsertOrder;
 import com.movie.entity.groups.UpdateUserMarket;
 import com.movie.entity.groups.VerifyEmail;
 import com.movie.service.*;
@@ -28,7 +26,8 @@ public class CustomerController {
     private final CinemaBrandService cinemaBrandService;
     private final CountyService countyService;
     private final CinemaService cinemaService;
-    private SliceArrangementService sliceArrangementService;
+    private final SliceArrangementService sliceArrangementService;
+    private final OrderService orderService;
 
 
     @PostMapping("/register")
@@ -124,5 +123,21 @@ public class CustomerController {
                 page,
                 size
         );
+    }
+    @PostMapping("/order")
+    public Result insertOrder(@Validated(InsertOrder.class)@RequestBody Order order){
+        return orderService.insertOrder(order);
+    }
+    @GetMapping("/order/by/order-id")
+    public Result selectOrderByOrderId(@RequestParam("orderId") String orderId){
+        return orderService.selectOrderByOrderId(orderId);
+    }
+    @PutMapping("/order/state")
+    public Result updateOrderStatus(@RequestParam("orderId")String orderId,@RequestParam("state")String state){
+        return orderService.updateOrderStatus(orderId,Integer.parseInt(state));
+    }
+    @GetMapping("/order/detail/by/order-id")
+    public Result selectOrderDetailByOrderId(@RequestParam("orderId")String orderId){
+        return orderService.selectOrderDetailByOrderId(orderId);
     }
 }

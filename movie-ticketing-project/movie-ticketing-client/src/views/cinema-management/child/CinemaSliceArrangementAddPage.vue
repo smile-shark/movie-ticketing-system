@@ -25,7 +25,8 @@
                         </el-select>
                     </el-form-item>
                     <el-form-item label="开始时间">
-                        <el-date-picker v-model="sliceArrangement.sliceArrangementStartTime" type="datetime" placeholder="选择开始时间"></el-date-picker>
+                        <el-date-picker v-model="sliceArrangement.sliceArrangementStartTime" type="datetime" placeholder="选择开始时间"
+                        @change="handleStartTimeChange"></el-date-picker>
                     </el-form-item>
                     <el-form-item label="结束时间">
                         <el-date-picker v-model="sliceArrangement.sliceArrangementEndTime" type="datetime" placeholder="选择结束时间"></el-date-picker>
@@ -185,6 +186,18 @@ export default {
             }).catch(e=>{
                 console.log(e)
             })
+        },
+        handleStartTimeChange() {
+            // 确保 sliceArrangementStartTime 是一个 Date 对象
+            let startTime = new Date(this.sliceArrangement.sliceArrangementStartTime);
+            console.log(startTime);
+
+            // 创建一个新的 Date 对象，表示开始时间加上两个小时
+            let endTime = new Date(startTime.getTime() + 1000 * 60 * 60 * 2);
+            this.sliceArrangement.sliceArrangementEndTime = endTime;
+
+            // 如果需要，将 endTime 转换回字符串或其他格式
+            this.sliceArrangement.sliceArrangementEndTime = endTime.toISOString();
         }
     },
     mounted(){

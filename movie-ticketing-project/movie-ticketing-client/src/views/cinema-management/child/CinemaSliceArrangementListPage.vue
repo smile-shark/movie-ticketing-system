@@ -73,6 +73,7 @@
                 <el-table-column label="操作">
                     <template slot-scope="scope">
                         <el-button type="text" @click="handleEdit(scope.row)">详情</el-button>
+                        <el-button type="text" @click="getOrderList(scope.row)">订单列表</el-button>
                         <el-button type="text" @click="handleDelete(scope.row)">删除</el-button>
                     </template>
                 </el-table-column>
@@ -118,6 +119,64 @@
             </el-form-item>
         </el-form>
     </el-dialog>
+
+    <el-dialog title="订单列表" :visible.sync="orderListDialogVisible" width="80%">
+        <el-table v-if="orderDate" :data="orderDate.list" style="min-height: 50vh;">
+            <el-table-column label="订单号" prop="orderId"></el-table-column>
+            <el-table-column label="用户" prop="user.userName"></el-table-column>
+            <el-table-column label="总票价">
+                <template slot-scope="scope">
+                    ￥{{ scope.row.voteAllPrice }}
+                </template>
+            </el-table-column>
+            <el-table-column label="座位">
+                <template slot-scope="scope">
+                    <TruncatedText :lines="1">
+                        <span v-for="(seat,index) in JSON.parse(scope.row.seats)" :key="index">
+                            {{  seat.x }}排{{ seat.y }}座
+                        </span>
+                    </TruncatedText>
+                </template>
+            </el-table-column>
+            <el-table-column label="购票状态">
+                <template slot-scope="scope">
+                    <span v-if="scope.row.votePayState==0">
+                        未支付
+                    </span>
+                    <span v-if="scope.row.votePayState==1">
+                        已支付未使用
+                    </span>
+                    <span v-if="scope.row.votePayState==2">
+                        已支付已使用
+                    </span>
+                    <span v-if="scope.row.votePayState==3">
+                        支付超时
+                    </span>
+                    <span v-if="scope.row.votePayState==4">
+                        已取消支付
+                    </span>
+                </template>
+            </el-table-column>
+            <el-table-column label="订单创建时间">
+                <template slot-scope="scope">
+                    <TruncatedText :lines="1">
+                        {{ utils.formatTimestampToYYYMMDDHHMMSS(scope.row.createTime) }}
+                    </TruncatedText>
+                </template>
+            </el-table-column>
+        </el-table>
+        <el-row>
+            <el-col :span="24" style="padding:20px;display: flex;justify-content: center;">
+                <el-pagination
+                background
+                layout="prev, pager, next"
+                @current-change="selectOrderBySliceArrangementId"
+                :page-size="orderSize"
+                :total="orderDate.total">
+                </el-pagination>
+            </el-col>
+        </el-row>
+    </el-dialog>
   </div>
 </template>
 qq
@@ -146,7 +205,14 @@ export default {
             entTime:null,
             utils,
             sliceArrangementDialogVisible:false,
-            showSliceArrangement:{}
+            showSliceArrangement:{},
+            orderDate:{
+                total:0
+            },
+            orderListDialogVisible:false,
+            orderPage:1,
+            orderSize:10,
+            showsliceArrangementId:null
         }
     },
     methods:{
@@ -183,6 +249,23 @@ export default {
         },
         handleDelete(row){
 
+        },
+        getOrderList(row){
+            this.orderListDialogVisible=true
+            this.showsliceArrangementId=row.sliceArrangementId
+            this.selectOrderBySliceArrangementId()
+        },
+        selectOrderBySliceArrangementId(page=1){
+            this.orderPage=page
+            myApi.selectOrderBySliceArrangementId(this.showsliceArrangementId,this.orderPage,this.orderSize).then(res=>{
+                if(res.data.code==200){
+                    this.orderDate=res.data.data
+                }else{
+                    this.$message.error(res.data.message)
+                }
+            }).catch(e=>{
+                console.log(e)
+            })
         }
     },
     mounted(){

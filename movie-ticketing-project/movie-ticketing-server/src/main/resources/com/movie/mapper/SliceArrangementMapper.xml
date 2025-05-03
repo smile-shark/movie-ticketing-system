@@ -58,4 +58,13 @@
         </where>
         order by slice_arrangement_start_time
     </select>
+    <update id="updateSliceArrangementLayout">
+        update slice_arrangement set layout=#{layout} where slice_arrangement_id=#{sliceArrangementId}
+    </update>
+    <select id="selectLayoutBySliceArrangementId" resultType="String">
+        select layout from slice_arrangement where slice_arrangement_id=#{sliceArrangementId}
+    </select>
+    <select id="selectDetailSliceArrangementBySliceArrangementId" resultMap="selectSliceArrangementBySliceArrangementMap">
+        select * from slice_arrangement where slice_arrangement_id=#{sliceArrangementId}
+    </select>
 </mapper>

@@ -25,6 +25,7 @@ public class CinemaManagementController {
     private final ScreeningRoomService screeningRoomService;
     private final MovieService movieService;
     private final SliceArrangementService sliceArrangementService;
+    private final OrderService orderService;
 
     @PostMapping("/register")
     public Result register(@Validated(VerifyEmail.class) @RequestBody EmailVerify emailVerify) {
@@ -134,5 +135,12 @@ public class CinemaManagementController {
                 page,
                 size
         );
+    }
+    @GetMapping("/order/by/slice-arrangement-id")
+    public Result selectOrderBySliceArrangementId(
+            @RequestParam("sliceArrangementId") String sliceArrangementId,
+            @RequestParam("page") Integer page,
+            @RequestParam("size") Integer size){
+        return orderService.selectOrderBySliceArrangementId(sliceArrangementId,page,size);
     }
 }

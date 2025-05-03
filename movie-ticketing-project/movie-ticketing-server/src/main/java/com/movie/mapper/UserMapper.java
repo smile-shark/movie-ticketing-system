@@ -12,4 +12,5 @@ public interface UserMapper {
     int insertUser(@Param("user") User user);
     int updateUserByUserId(@Param("user") User user);
     List<User> selectUsersByUser(@Param("user") User user);
+    User selectUserByUserId(@Param("userId")String userId);
 }

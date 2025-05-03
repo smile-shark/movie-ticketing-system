@@ -8,6 +8,7 @@ import com.movie.common.resp.Result;
 import com.movie.entity.SliceArrangement;
 import com.movie.exception.BusinessException;
 import com.movie.mapper.SliceArrangementMapper;
+import com.movie.service.OrderService;
 import com.movie.service.SliceArrangementService;
 import com.movie.utils.UUIDUtils;
 import lombok.RequiredArgsConstructor;
@@ -20,6 +21,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class SliceArrangementServiceImp implements SliceArrangementService {
     private final SliceArrangementMapper sliceArrangementMapper;
+    private final OrderService orderService;
 
     @Override
     @Transactional
@@ -52,11 +54,14 @@ public class SliceArrangementServiceImp implements SliceArrangementService {
     }
 
     @Override
+    @Transactional
     public Result selectSliceArrangementBySliceArrangement(SliceArrangement sliceArrangement,Integer page,Integer size) {
         try {
+            // 这里先验证是否有订单支付超时了，如果有需要先将座位状态修改回去
+            orderService.verifyOrder();
             Page<Object> objects = PageHelper.startPage(page, size);
             List<SliceArrangement> sliceArrangements = sliceArrangementMapper.selectSliceArrangementBySliceArrangement(sliceArrangement);
-            return Result.success(RespCode.FIND_SUCCESS, PageInfo.of(objects));
+            return Result.success(RespCode.FIND_SUCCESS, PageInfo.of(sliceArrangements));
         }catch (Exception e){
             e.printStackTrace();
             throw new BusinessException(RespCode.DATABASE_ERROR);

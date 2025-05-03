@@ -52,7 +52,7 @@ public class CinemaServiceImp implements CinemaService {
         try {
             Page<Object> objects = PageHelper.startPage(page, size);
             List<Cinema> cinemas = cinemaMapper.customerSelectLowPriceCinema(countyId, cinemaBrandId, movieId);
-            return Result.success(RespCode.FIND_SUCCESS, PageInfo.of(objects));
+            return Result.success(RespCode.FIND_SUCCESS, PageInfo.of(cinemas));
         } catch (Exception e) {
             e.printStackTrace();
             throw new BusinessException(RespCode.DATABASE_ERROR);

@@ -100,9 +100,9 @@ public class UserServiceImp implements UserService {
     @Override
     public Result selectUsersByUser(User user,Integer size,Integer page) {
         try {
-            Page<Object> objects = PageHelper.startPage(page, size);
+            PageHelper.startPage(page, size);
             List<User> users = userMapper.selectUsersByUser(user);
-            return Result.success(RespCode.FIND_SUCCESS,PageInfo.of(objects));
+            return Result.success(RespCode.FIND_SUCCESS,PageInfo.of(users));
         }catch (Exception e){
             e.printStackTrace();
             throw new BusinessException(RespCode.FIND_ERROR);

@@ -16,4 +16,7 @@ public interface SliceArrangementMapper {
             @Param("endTime") LocalDateTime endTime
     );
     List<SliceArrangement> selectSliceArrangementBySliceArrangement(@Param("sliceArrangement") SliceArrangement sliceArrangement);
+    int updateSliceArrangementLayout(@Param("layout") String layout,@Param("sliceArrangementId")String sliceArrangementId);
+    String selectLayoutBySliceArrangementId(@Param("sliceArrangementId")String sliceArrangementId);
+    SliceArrangement selectDetailSliceArrangementBySliceArrangementId(@Param("sliceArrangementId")String sliceArrangementId);
 }

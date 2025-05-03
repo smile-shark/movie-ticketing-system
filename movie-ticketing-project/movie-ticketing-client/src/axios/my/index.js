@@ -368,5 +368,39 @@ export const myApi={
         size
       }
   })
+  },
+  insertOrder(order){
+    return instance.post(myPath.insertOrder,order)
+  },
+  selectOrderByOrderId(orderId){
+    return instance.get(myPath.selectOrderByOrderId,{
+      params:{
+        orderId
+      }
+    })
+  },
+  updateOrderStatus(orderId,state){
+    return instance.put(myPath.updateOrderStatus,null,{
+      params:{
+        orderId,
+        state
+      }
+    })
+  },
+  selectOrderBySliceArrangementId(sliceArrangementId,page=1,size=1){
+    return instance.get(myPath.selectOrderBySliceArrangementId,{
+      params:{
+        sliceArrangementId,
+        page,
+        size
+      }
+    })
+  },
+  selectOrderDetailByOrderId(orderId){
+    return instance.get(myPath.selectOrderDetailByOrderId,{
+      params:{
+        orderId
+      }
+    })
   }
 }

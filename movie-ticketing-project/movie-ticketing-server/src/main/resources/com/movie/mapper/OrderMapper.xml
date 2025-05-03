@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.movie.mapper.OrderMapper">
+    <insert id="insertOrder">
+        insert into `order`
+        (order_id, user_id, slice_arrangement_id, vote_all_price, seats, code_image)
+        values
+        (#{order.orderId},
+         #{order.userId},
+         #{order.sliceArrangementId},
+         #{order.voteAllPrice},
+         #{order.seats},
+         #{order.codeImage})
+    </insert>
+    <select id="selectOrderByUserIdNotPayOne" resultType="order">
+        select * from `order` where user_id = #{userId} and vote_pay_state = 0 and pay_timeout &gt; now() limit 1
+    </select>
+    <select id="selectOrderByOrderId" resultType="order">
+        select * from `order` where order_id=#{orderId}
+    </select>
+    <update id="updateOrderStatus">
+        update `order`
+        set vote_pay_state=#{status}
+        where order_id=#{orderId}
+    </update>
+    <resultMap id="selectOrderBySliceArrangementIdMap" type="order">
+        <id property="orderId" column="order_id"/>
+        <result property="userId" column="user_id"/>
+        <association property="user" column="user_id"
+                     select="com.movie.mapper.UserMapper.selectUserByUserId"/>
+    </resultMap>
+    <select id="selectOrderBySliceArrangementId" resultMap="selectOrderBySliceArrangementIdMap">
+        select * from `order` where slice_arrangement_id=#{sliceArrangementId}
+    </select>
+    <select id="selectTimeOutOrderAndNotUpdateState" resultType="order">
+        select * from `order`
+        where vote_pay_state=0 and pay_timeout &lt; now()
+    </select>
+    <resultMap id="selectOrderDetailByOrderIdMap" type="order">
+        <id property="orderId" column="order_id"/>
+        <result property="sliceArrangementId" column="slice_arrangement_Id"/>
+        <association property="sliceArrangement" column="slice_arrangement_id"
+                     select="com.movie.mapper.SliceArrangementMapper.selectDetailSliceArrangementBySliceArrangementId"/>
+    </resultMap>
+    <select id="selectOrderDetailByOrderId" resultMap="selectOrderDetailByOrderIdMap">
+        select * from `order` where order_id=#{orderId}
+    </select>
+</mapper>

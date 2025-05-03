@@ -70,4 +70,7 @@
             </if>
         </where>
     </select>
+    <select id="selectUserByUserId" resultType="user">
+        select * from user where user_id = #{userId}
+    </select>
 </mapper>

@@ -24,6 +24,9 @@ import CinemaScreeningRoomListPage from '@/views/cinema-management/child/CinemaS
 import CinemaSliceArrangementAddPage from '@/views/cinema-management/child/CinemaSliceArrangementAddPage.vue'
 import CinemaSliceArrangementListPage from '@/views/cinema-management/child/CinemaSliceArrangementListPage.vue'
 import CustomerSelectScreeningRoomPage from '@/views/customer/child/moviePageChild/CustomerSelectScreeningRoomPage.vue'
+import CustomerSelectSeatPage from '@/views/customer/child/moviePageChild/CustomerSelectSeatPage.vue'
+import CustomerPayOrderPage from '@/views/customer/child/moviePageChild/CustomerPayOrderPage.vue'
+import CustomerVerifyVotePage from '@/views/customer/child/moviePageChild/CustomerVerifyVotePage.vue'
 
 Vue.use(VueRouter)
 
@@ -66,6 +69,21 @@ const routes = [
             path: 'select-screening-room', 
             name: 'CustomerSelectScreeningRoomPage',
             component: CustomerSelectScreeningRoomPage
+          },
+          {
+            path:'select-seat/:sliceArrangementId?',
+            name: 'CustomerSelectSeatPage',
+            component: CustomerSelectSeatPage
+          },
+          {
+            path: 'pay-order/:orderId?',
+            name: 'CustomerPayOrderPage',
+            component: CustomerPayOrderPage
+          },
+          {
+            path:'verify-vote/:orderId?',
+            name: 'CustomerVerifyVotePage',
+            component: CustomerVerifyVotePage
           }
         ]
       }

@@ -16,6 +16,10 @@ export const myPath={
     customerSelectLowPriceCinema:'/customer/cinema/low/price',
     selectCinemaByCinemaId:'/customer/cinema/by/cinema-id',
     customerSelectSliceArrangementBySliceArrangement:'/customer/slice-arrangement/by/slice-arrangement',
+    insertOrder:'/customer/order',
+    selectOrderByOrderId:'/customer/order/by/order-id',
+    updateOrderStatus:'/customer/order/state',
+    selectOrderDetailByOrderId:'/customer/order/detail/by/order-id',
 
     platformLogin:'/platform/login',
     selectAllMovieType:'/platform/movie/types',
@@ -46,5 +50,6 @@ export const myPath={
     selectSimpleScreeningRoom:'/cinema/management/simple/screening-room/list',
     insertSliceArrangement:'/cinema/management/slice-arrangement',
     selectScreeningRoomByScreeningRoomId:'/cinema/management/screening-room/by/screening-room-id',
-    selectSliceArrangementBySliceArrangement:'/cinema/management/slice-arrangement/by/slice-arrangement'
+    selectSliceArrangementBySliceArrangement:'/cinema/management/slice-arrangement/by/slice-arrangement',
+    selectOrderBySliceArrangementId:'/cinema/management/order/by/slice-arrangement-id'
 }
