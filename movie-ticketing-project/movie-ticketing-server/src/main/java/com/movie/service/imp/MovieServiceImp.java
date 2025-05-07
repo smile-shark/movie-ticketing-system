@@ -48,10 +48,10 @@ public class MovieServiceImp implements MovieService {
     }
 
     @Override
-    public Result selectMovieList(Movie movie, Integer already, Integer size, Integer page) {
+    public Result selectMovieList(Movie movie,Boolean random, Integer already, Integer size, Integer page) {
         try {
             Page<Object> startPage = PageHelper.startPage(page, size);
-            List<Movie> movies = movieMapper.selectMovieList(movie, already);
+            List<Movie> movies = movieMapper.selectMovieList(movie, already,random);
             for (Movie movieItem : movies) {
                 movieItem.setTags(
                         movieTypeMapper.selectMovieTypesInMovieTypeIds(
@@ -102,6 +102,18 @@ public class MovieServiceImp implements MovieService {
         }catch (Exception e){
             e.printStackTrace();
             throw new BusinessException(RespCode.FIND_ERROR);
+        }
+    }
+
+    @Override
+    public Result selectMovieListOrderByScore() {
+        try {
+            PageHelper.startPage(1,10);
+            List<Movie> movies = movieMapper.selectMovieListOrderByScore();
+            return Result.success(RespCode.UPDATE_SUCCESS,movies);
+        }catch (Exception e){
+            e.printStackTrace();
+            throw new BusinessException(RespCode.UPDATE_ERROR);
         }
     }
 }

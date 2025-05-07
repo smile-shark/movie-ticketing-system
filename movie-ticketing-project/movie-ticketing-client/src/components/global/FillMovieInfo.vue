@@ -13,7 +13,7 @@
     </el-form-item>
     <el-form-item label="电影类型">
         <el-col :span="4">
-        <el-select value-key="movieTypeId" multiple v-model="movieData.tags" placeholder="选择电影类型">
+        <el-select value-key="movieTypeId" multiple v-model="movieData.tags" placeholder="选择电影类型" filterable>
             <el-option :label="item.movieTypeName" :value="item" v-for="item in movieType" :key="item.movieTypeId"></el-option>
         </el-select>
         </el-col>

@@ -74,6 +74,7 @@ public class CinemaManagementController {
     }
     @GetMapping("/movie/list")
     public Result selectMovieList(
+            @RequestParam(value = "random", required = false) Boolean random,
             @RequestParam(value = "movieId", required = false) String movieId,
             @RequestParam(value = "movieName", required = false) String movieName,
             @RequestParam(value = "director", required = false) String director,
@@ -91,6 +92,7 @@ public class CinemaManagementController {
                     setStar(star);
                     setIssuingRegion(issuingRegion);
                 }},
+                random,
                 already,
                 size,
                 page
@@ -142,5 +144,48 @@ public class CinemaManagementController {
             @RequestParam("page") Integer page,
             @RequestParam("size") Integer size){
         return orderService.selectOrderBySliceArrangementId(sliceArrangementId,page,size);
+    }
+    @GetMapping("/order/valid/num/by/time")
+    public Result selectOrderNumByTime(
+            @RequestParam("cinemaId") String cinemaId,
+            @RequestParam("startTime") LocalDateTime startTime,
+            @RequestParam("endTime") LocalDateTime endTime){
+        return orderService.selectOrderNumByTime(cinemaId,startTime,endTime);
+    }
+    @GetMapping("/slice-arrangement/num/by/time")
+    public Result selectSliceArrangementNumByTime(
+            @RequestParam("cinemaId") String cinemaId,
+            @RequestParam("startTime") LocalDateTime startTime,
+            @RequestParam("endTime") LocalDateTime endTime)
+    {
+        return sliceArrangementService.selectSliceArrangementNumByTime(cinemaId,startTime,endTime);
+    }
+    @GetMapping("/order/vote-all-price/valid/by/time")
+    public Result selectOrderVoteAllPriceByTime(
+            @RequestParam("cinemaId") String cinemaId,
+            @RequestParam("startTime") LocalDateTime startTime,
+            @RequestParam("endTime") LocalDateTime endTime)
+    {
+        return orderService.selectOrderVoteAllPriceByTime(cinemaId,startTime,endTime);
+    }
+    @GetMapping("/order/vote-all-price/all")
+    public Result selectAllOrderPrice(@RequestParam("cinemaId") String cinemaId){
+        return orderService.selectAllOrderPrice(cinemaId);
+    }
+    @GetMapping("/movie-revenue/by/time")
+    public Result selectChartValueByTimeAndMovie(
+            @RequestParam("cinemaId") String cinemaId,
+            @RequestParam("startTime") LocalDateTime startTime,
+            @RequestParam("endTime") LocalDateTime endTime
+    ){
+        return orderService.selectChartValueByTime(cinemaId,startTime,endTime);
+    }
+    @GetMapping("/screening-room-revenue/by/time")
+    public Result selectChartValueByTimeAndScreeningRoom(
+            @RequestParam("cinemaId") String cinemaId,
+            @RequestParam("startTime") LocalDateTime startTime,
+            @RequestParam("endTime") LocalDateTime endTime
+    ){
+        return orderService.selectChartValueByTimeAndScreeningRoom(cinemaId,startTime,endTime);
     }
 }

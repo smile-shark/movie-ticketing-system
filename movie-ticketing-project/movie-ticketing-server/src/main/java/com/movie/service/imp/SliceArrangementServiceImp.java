@@ -15,6 +15,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -66,5 +67,15 @@ public class SliceArrangementServiceImp implements SliceArrangementService {
             e.printStackTrace();
             throw new BusinessException(RespCode.DATABASE_ERROR);
         }
+    }
+
+    @Override
+    public Result selectSliceArrangementNumByTime(String cinemaId, LocalDateTime startTime, LocalDateTime endTime) {
+       try {
+           return Result.success(RespCode.FIND_SUCCESS,sliceArrangementMapper.selectSliceArrangementNumByTime(cinemaId,startTime,endTime));
+       }catch (Exception e){
+           e.printStackTrace();
+           throw new BusinessException(RespCode.DATABASE_ERROR);
+       }
     }
 }

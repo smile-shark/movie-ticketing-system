@@ -20,5 +20,20 @@ export const utils ={
     },
     urbanConversion(date){
         return dayjs(date).format('YYYY-MM-DDTHH:mm:ss')
-    }
+    },
+    getTimeForAnyWeek(index=0){
+        if(index==0){
+            return dayjs()
+        }else{
+            return dayjs().subtract(index,'week')
+        }
+    },
+    getTimeForAnyMonth(index=0){
+        if(index==0){
+            return dayjs()
+        }else{
+            return dayjs().subtract(index,'month')
+        }
+    },
+    
 }   

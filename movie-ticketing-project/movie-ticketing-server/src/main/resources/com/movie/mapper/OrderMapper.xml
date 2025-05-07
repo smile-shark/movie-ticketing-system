@@ -45,4 +45,93 @@
     <select id="selectOrderDetailByOrderId" resultMap="selectOrderDetailByOrderIdMap">
         select * from `order` where order_id=#{orderId}
     </select>
+    <select id="selectOrderDetailListByOrder" resultMap="selectOrderDetailByOrderIdMap">
+        select * from `order`
+        <where>
+            <if test="order.orderId!=null">
+              and  order_id=#{order.orderId}
+            </if>
+            <if test="order.userId!=null">
+                and user_id=#{order.userId}
+            </if>
+        <if test="order.sliceArrangementId!=null">
+            and slice_arrangement_id=#{order.sliceArrangementId}
+        </if>
+        <if test="order.votePayState!=null">
+            vote_pay_state=#{order.votePayState}
+        </if>
+        <if test="order.createTime!=null">
+            create_time &gt; #{order.createTime}
+        </if>
+        </where>
+        order by create_time desc
+    </select>
+    <select id="selectOrderNumByTime" resultType="int">
+        select count(`order`.order_id)
+        from `order`
+                 join movie_ticketing_system.slice_arrangement sa
+                      on `order`.slice_arrangement_id = sa.slice_arrangement_id
+        where create_time &gt; #{startTime}
+          and create_time &lt; #{endTime}
+          and vote_pay_state = 1
+          and sa.cinema_id = #{cinemaId}
+    </select>
+    <select id="selectOrderVoteAllPriceByTime" resultType="double">
+        select coalesce(sum(`order`.vote_all_price),0)
+        from `order`
+                 join movie_ticketing_system.slice_arrangement sa
+                      on `order`.slice_arrangement_id = sa.slice_arrangement_id
+        where create_time &gt; #{startTime}
+          and create_time &lt; #{endTime}
+          and vote_pay_state = 1
+          and sa.cinema_id = #{cinemaId}
+    </select>
+    <select id="selectAllOrderPrice" resultType="double">
+        select coalesce(sum(`order`.vote_all_price),0)
+        from `order`
+                 join movie_ticketing_system.slice_arrangement sa
+                      on `order`.slice_arrangement_id = sa.slice_arrangement_id
+        where vote_pay_state = 1
+          and sa.cinema_id = #{cinemaId}
+    </select>
+    <resultMap id="selectChartValueByTimeMap" type="chartValue">
+        <result property="value" column="revenue"/>
+        <result property="name" column="movie_name"/>
+    </resultMap>
+    <select id="selectChartValueByTimeAndMovie" resultMap="selectChartValueByTimeMap">
+        select
+            movie_name,
+            coalesce(sum(`order`.vote_all_price), 0) as revenue
+        from `order`
+                 join slice_arrangement sa
+                      on `order`.slice_arrangement_id = sa.slice_arrangement_id
+                 join movie m
+                      on sa.movie_id = m.movie_id
+        where create_time &gt; #{startTime}
+          and create_time &lt; #{endTime}
+          and vote_pay_state = 1
+          and sa.cinema_id = #{cinemaId}
+        group by
+            sa.movie_id
+    </select>
+    <resultMap id="selectChartValueByTimeAndScreeningRoomMap" type="chartValue">
+        <result property="value" column="revenue"/>
+        <result property="name" column="screening_room_name"/>
+    </resultMap>
+    <select id="selectChartValueByTimeAndScreeningRoom" resultMap="selectChartValueByTimeAndScreeningRoomMap">
+        select
+            screening_room_name,
+            coalesce(sum(`order`.vote_all_price), 0) as revenue
+        from `order`
+                 join slice_arrangement sa
+                      on `order`.slice_arrangement_id = sa.slice_arrangement_id
+                 join screening_room sr
+                     on sa.screening_room_id = sr.screening_room_id
+        where create_time &gt; #{startTime}
+          and create_time &lt; #{endTime}
+          and vote_pay_state = 1
+          and sa.cinema_id = #{cinemaId}
+        group by
+            sa.screening_room_id
+    </select>
 </mapper>

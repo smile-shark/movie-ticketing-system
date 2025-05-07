@@ -56,7 +56,7 @@
                 and slice_arrangement_end_time &lt; #{sliceArrangement.sliceArrangementEndTime}
             </if>
         </where>
-        order by slice_arrangement_start_time
+        order by slice_arrangement_start_time desc
     </select>
     <update id="updateSliceArrangementLayout">
         update slice_arrangement set layout=#{layout} where slice_arrangement_id=#{sliceArrangementId}
@@ -66,5 +66,12 @@
     </select>
     <select id="selectDetailSliceArrangementBySliceArrangementId" resultMap="selectSliceArrangementBySliceArrangementMap">
         select * from slice_arrangement where slice_arrangement_id=#{sliceArrangementId}
+    </select>
+    <select id="selectSliceArrangementNumByTime" resultType="int">
+        select count(slice_arrangement_id)
+        from slice_arrangement
+        where slice_arrangement_start_time &gt; #{startTime}
+          and slice_arrangement_start_time &lt; #{endTime}
+          and cinema_id = #{cinemaId}
     </select>
 </mapper>

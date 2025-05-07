@@ -34,6 +34,7 @@ public class PlatformManagementController {
     }
     @GetMapping("/movie/list")
     public Result selectMovieList(
+            @RequestParam(value = "random", required = false) Boolean random,
             @RequestParam(value = "movieId", required = false) String movieId,
             @RequestParam(value = "movieName", required = false) String movieName,
             @RequestParam(value = "director", required = false) String director,
@@ -51,6 +52,7 @@ public class PlatformManagementController {
                     setStar(star);
                     setIssuingRegion(issuingRegion);
                 }},
+                random,
                 already,
                 size,
                 page

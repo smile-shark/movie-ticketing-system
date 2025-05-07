@@ -1,6 +1,11 @@
 <template>
   <div>
     <el-row>
+        <el-col :span="24" v-if="hotScreeningInProgresData.list.length==0">
+            <el-empty style="min-height: 80vh;">
+                <el-button @click="$router.push('/customer/home')">返回首页</el-button>
+            </el-empty>
+        </el-col>
         <el-col :span="6" v-for="(movie,index) in hotScreeningInProgresData.list" :key="index">
             <MovieListCard :movie="movie"></MovieListCard>
         </el-col>
@@ -9,6 +14,7 @@
         <el-col :span="24" style="padding:20px;display: flex;justify-content: center;align-items: center;" class="jp_pageBox">
             <el-pagination
             background
+            :hide-on-single-page="hotScreeningInProgresData.list.length==0"
             layout="prev, pager, next"
             :page-size="size"
             @current-change="handlePageChange"
@@ -37,7 +43,8 @@ export default {
             },
             page:1,
             size:8,
-            already:null
+            already:null,
+            movieName:null
         }
     },
     mounted(){
@@ -47,12 +54,15 @@ export default {
             case '2': this.already=1;break;
             default: this.already=null;break;
         }
+        if(this.$route.params.movieName){
+            this.movieName=this.$route.params.movieName
+        }
         this.handlePageChange()
     },
     methods:{
         handlePageChange(page=1){
             this.page=page
-            myApi.selectMovieList({already:this.already,page:this.page,size:this.size}).then(res=>{
+            myApi.selectMovieList({movieName:this.movieName,already:this.already,page:this.page,size:this.size}).then(res=>{
                 if(res.data.code==200){
                     this.hotScreeningInProgresData=res.data.data
                 }

@@ -19,4 +19,5 @@ public interface SliceArrangementMapper {
     int updateSliceArrangementLayout(@Param("layout") String layout,@Param("sliceArrangementId")String sliceArrangementId);
     String selectLayoutBySliceArrangementId(@Param("sliceArrangementId")String sliceArrangementId);
     SliceArrangement selectDetailSliceArrangementBySliceArrangementId(@Param("sliceArrangementId")String sliceArrangementId);
+    int selectSliceArrangementNumByTime(@Param("cinemaId")String cinemaId,@Param("startTime")LocalDateTime startTime,@Param("endTime")LocalDateTime endTime);
 }

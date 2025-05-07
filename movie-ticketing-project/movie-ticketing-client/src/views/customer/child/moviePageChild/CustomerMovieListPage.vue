@@ -2,7 +2,7 @@
   <div style="padding:20px;">
     <el-row>
         <el-col :span="24" >
-            <el-image style="min-width: 100%;" :src="advertisement.advertisementImage" @click="toAdvertisementPage">
+            <el-image v-if="advertisement.advertisementImage" style="min-width: 100%;" :src="advertisement.advertisementImage" @click="toAdvertisementPage">
                 <div slot="error" class="image-slot" style="background-color: #f5f7fa;
                 display: flex;align-items: center;justify-content: center;min-height: 20vh;">
                     <i class="el-icon-picture-outline"></i>

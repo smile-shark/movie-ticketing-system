@@ -93,7 +93,7 @@ export const myApi={
       return instance.post(myPath.insertMovie,movie)
     },
     selectAllMarket(){
-      return instance.get(myPath.selectAllMarket)
+      return instance.get(myPath.globalSelectAllMarket)
     },
     updateUserMarket(userId,marketId){
       return instance.put(myPath.updateUserByUserId,{
@@ -104,11 +104,12 @@ export const myApi={
     selectAllAllowedMobileDisplays(){
       return instance.get(myPath.selectAllAllowedMobileDisplays)
     },
-    selectMovieList({movieId=null,movieName=null,director=null,star=null,issuingRegion=null,already=null,size=10,page=1}){
+    selectMovieList({movieId=null,movieName=null,director=null,star=null,issuingRegion=null,random=null,already=null,size=10,page=1}){
       return instance.get(myPath.selectMovieListCustomer,{
         params:{
           movieId,
           movieName,
+          random,
           director,
           star,
           issuingRegion,
@@ -402,5 +403,81 @@ export const myApi={
         orderId
       }
     })
-  }
+  },
+  selectOrderDetailListByOrder({
+    orderId=null,
+    userId=null,
+    sliceArrangementId=null,
+    votePayState=votePayState?votePayState:null,
+    createTime=null,
+    page=1,
+    size=1
+  }){
+    return instance.get(myPath.selectOrderDetailListByOrder,{
+      params:{
+        orderId,
+        userId,
+        sliceArrangementId,
+        votePayState,
+        createTime,
+        page,
+        size
+      }
+    })
+  },
+  selectMovieListOrderByScore(){
+    return instance.get(myPath.selectMovieListOrderByScore)
+  },
+  selectOrderNumByTime(cinemaId,startTime,endTime){
+    return instance.get(myPath.selectOrderNumByTime,{
+      params:{
+        cinemaId,
+        startTime:utils.urbanConversion(startTime),
+        endTime:utils.urbanConversion(endTime)
+      }
+    })
+  },
+  selectSliceArrangementNumByTime(cinemaId,startTime,endTime){
+    return instance.get(myPath.selectSliceArrangementNumByTime,{
+      params:{
+        cinemaId,
+        startTime:utils.urbanConversion(startTime),
+        endTime:utils.urbanConversion(endTime)
+      }
+    })
+  },
+  selectOrderVoteAllPriceByTime(cinemaId,startTime,endTime){
+    return instance.get(myPath.selectOrderVoteAllPriceByTime,{
+      params:{
+        cinemaId,
+        startTime:utils.urbanConversion(startTime),
+        endTime:utils.urbanConversion(endTime)
+      }
+    })
+  },
+  selectAllOrderPrice(cinemaId){
+    return instance.get(myPath.selectAllOrderPrice,{
+      params:{
+        cinemaId
+      }
+    })
+  },
+  selectChartValueByTimeAndMovie(cinemaId,startTime,endTime){
+    return instance.get(myPath.selectChartValueByTimeAndMovie,{
+      params:{
+        cinemaId,
+        startTime:utils.urbanConversion(startTime),
+        endTime:utils.urbanConversion(endTime)
+      }
+    })
+  },
+  selectChartValueByTimeAndScreeningRoom(cinemaId,startTime,endTime){
+    return instance.get(myPath.selectChartValueByTimeAndScreeningRoom,{
+      params:{
+        cinemaId,
+        startTime:utils.urbanConversion(startTime),
+        endTime:utils.urbanConversion(endTime)
+      }
+    })
+  },
 }

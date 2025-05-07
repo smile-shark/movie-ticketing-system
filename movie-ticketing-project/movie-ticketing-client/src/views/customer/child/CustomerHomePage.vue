@@ -24,7 +24,7 @@
                             正在热映 ({{ hotScreeningInProgresData.total }})
                         </div>
                         <div style="position: absolute;right: 0;top: 0;padding: 10px;font-size: 14px;">
-                            <el-link :underline="false">
+                            <el-link :underline="false" @click="$router.push('/customer/home/movie')">
                                 更多<i class="el-icon-arrow-right"></i>
                             </el-link>
                         </div>
@@ -44,10 +44,10 @@
                 <el-col :span="24">
                     <div style="background-color: #f2f2f2;position:relative;padding:10px;">
                         <div style="text-align: center;font-size: 18px;font-weight: bold;">
-                            即将上映 ({{ hotScreeningInProgresData.total }})
+                            即将上映 ({{ soonScreeningInProgresData.total }})
                         </div>
                         <div style="position: absolute;right: 0;top: 0;padding: 10px;font-size: 14px;">
-                            <el-link :underline="false">
+                            <el-link :underline="false" @click="$router.push('/customer/home/movie')">
                                 更多<i class="el-icon-arrow-right"></i>
                             </el-link>
                         </div>
@@ -55,7 +55,7 @@
                 </el-col>
             </el-row>
             <el-row>
-                <el-col :span="6" v-for="(movie,index) in hotScreeningInProgresData.list" :key="index">
+                <el-col :span="6" v-for="(movie,index) in soonScreeningInProgresData.list" :key="index">
                     <MovieListCard :movie="movie"></MovieListCard>
                 </el-col>
             </el-row>
@@ -76,6 +76,9 @@ export default {
             mobileDisplays:[],
             hotScreeningInProgresData:{
                 total:0,
+            },
+            soonScreeningInProgresData:{
+                total:0,
             }
         }
     },
@@ -92,6 +95,7 @@ export default {
         selectHotScreeningInProgress(){
             myApi.selectMovieList(
                 {
+                    random:true,
                     already: 0,
                     size: 4
                 }
@@ -100,11 +104,25 @@ export default {
                     this.hotScreeningInProgresData=res.data.data
                 }
             })
+        },
+        selectSoonScreeningInProgress(){
+            myApi.selectMovieList(
+                {
+                    random:true,
+                    already: 0,
+                    size: 4
+                }
+            ).then(res=>{
+                if(res.data.code==200){
+                    this.soonScreeningInProgresData=res.data.data
+                }
+            })
         }
     },
     mounted(){
         this.selectAllAllowedMobileDisplays()
         this.selectHotScreeningInProgress()
+        this.selectSoonScreeningInProgress()
     }
 }
 </script>

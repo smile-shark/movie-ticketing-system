@@ -140,7 +140,7 @@ export default {
     selectedSeat:{
         type: Array,
         required:false,
-        default:[]
+        default:()=>[]
     }
   },
   methods: {

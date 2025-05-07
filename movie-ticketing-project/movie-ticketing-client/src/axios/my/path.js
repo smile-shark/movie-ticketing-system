@@ -3,6 +3,7 @@ export const myPath={
     fileDelete:'/file/delete',
 
     sendMailVerifyCode:'/global/email/verification/code',
+    globalSelectAllMarket:'/global/market',
 
     customerRegister:'/customer/register',
     customerLogin:'/customer/login',
@@ -20,6 +21,8 @@ export const myPath={
     selectOrderByOrderId:'/customer/order/by/order-id',
     updateOrderStatus:'/customer/order/state',
     selectOrderDetailByOrderId:'/customer/order/detail/by/order-id',
+    selectOrderDetailListByOrder:'/customer/order/detail/list/by/order',
+    selectMovieListOrderByScore:'/customer/movie/order-by/score',
 
     platformLogin:'/platform/login',
     selectAllMovieType:'/platform/movie/types',
@@ -51,5 +54,11 @@ export const myPath={
     insertSliceArrangement:'/cinema/management/slice-arrangement',
     selectScreeningRoomByScreeningRoomId:'/cinema/management/screening-room/by/screening-room-id',
     selectSliceArrangementBySliceArrangement:'/cinema/management/slice-arrangement/by/slice-arrangement',
-    selectOrderBySliceArrangementId:'/cinema/management/order/by/slice-arrangement-id'
+    selectOrderBySliceArrangementId:'/cinema/management/order/by/slice-arrangement-id',
+    selectOrderNumByTime:'/cinema/management/order/valid/num/by/time',
+    selectSliceArrangementNumByTime:'/cinema/management/slice-arrangement/num/by/time',
+    selectOrderVoteAllPriceByTime:'/cinema/management/order/vote-all-price/valid/by/time',
+    selectAllOrderPrice:'/cinema/management/order/vote-all-price/all',
+    selectChartValueByTimeAndMovie:'/cinema/management/movie-revenue/by/time',
+    selectChartValueByTimeAndScreeningRoom:'/cinema/management/screening-room-revenue/by/time'
 }

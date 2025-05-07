@@ -27,6 +27,9 @@ import CustomerSelectScreeningRoomPage from '@/views/customer/child/moviePageChi
 import CustomerSelectSeatPage from '@/views/customer/child/moviePageChild/CustomerSelectSeatPage.vue'
 import CustomerPayOrderPage from '@/views/customer/child/moviePageChild/CustomerPayOrderPage.vue'
 import CustomerVerifyVotePage from '@/views/customer/child/moviePageChild/CustomerVerifyVotePage.vue'
+import CustomerOrderListPage from '@/views/customer/child/moviePageChild/CustomerOrderListPage.vue'
+import CustomerRatingListPage from '@/views/customer/child/moviePageChild/CustomerRatingListPage.vue'
+import MovieListView from '@/components/global/MovieListView.vue'
 
 Vue.use(VueRouter)
 
@@ -61,7 +64,7 @@ const routes = [
             component: CustomerMovieListPage,
           },
           {
-            path:'detail/:movieId',
+            path:'detail/:movieId?',
             name: 'CustomerMovieDetailPage',
             component: CustomerMovieDetailPage,
           },
@@ -84,13 +87,32 @@ const routes = [
             path:'verify-vote/:orderId?',
             name: 'CustomerVerifyVotePage',
             component: CustomerVerifyVotePage
+          },
+          {
+            path: 'order-list',
+            name: 'CustomerOrderListPage',
+            component: CustomerOrderListPage
+          },
+          {
+            path: 'search-list/:movieName',
+            name: 'MovieListView',
+            component: MovieListView
           }
         ]
+      },
+      {
+        path: 'rating-list',
+        name: 'CustomerRatingListPage',
+        component: CustomerRatingListPage
       }
     ]
   },
   {
     path: '/all/admin',
+    redirect: '/platform/login'
+  },
+  {
+    path: '/a',
     redirect: '/platform/login'
   },
   {
@@ -147,6 +169,10 @@ const routes = [
   },
   {
     path: '/cinema/admin',
+    redirect: '/cinema/login'
+  },
+  {
+    path: '/c',
     redirect: '/cinema/login'
   },
   {

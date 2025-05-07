@@ -5,20 +5,23 @@ import com.movie.entity.EmailVerify;
 import com.movie.entity.User;
 import com.movie.entity.groups.SendEmail;
 import com.movie.service.EmailVerifyService;
+import com.movie.service.MarketService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/global")
 @RequiredArgsConstructor
 public class GlobalController {
     private final EmailVerifyService emailVerifyService;
+    private final MarketService marketService;
     @PostMapping("/email/verification/code")
     public Result emailVerificationCode(@Validated(SendEmail.class) @RequestBody EmailVerify emailVerify) {
         return emailVerifyService.sentEmail(emailVerify);
+    }
+    @GetMapping("/market")
+    public Result selectAllMarket() {
+        return marketService.selectAllMarket();
     }
 }

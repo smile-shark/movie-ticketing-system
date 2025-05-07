@@ -81,10 +81,13 @@ export default {
     myApi.selectOrderDetailByOrderId(this.orderId).then(res=>{
       if(res.data.code==200){
         this.order=res.data.data
+        if(this.order.votePayState!==1){
+          this.$message.error('该订单已失效')
+          this.$router.push('/customer/home')
+        }
       }else{
         this.$message.error(res.data.message)
       }
-      console.log(this.order)
     }).catch(e=>{
       console.log(e)
     })

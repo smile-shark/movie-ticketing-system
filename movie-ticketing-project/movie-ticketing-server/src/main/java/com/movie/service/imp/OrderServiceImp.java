@@ -9,6 +9,7 @@ import com.movie.common.resp.RespCode;
 import com.movie.common.resp.Result;
 import com.movie.entity.ChildLayout;
 import com.movie.entity.Order;
+import com.movie.entity.code.OrderStatus;
 import com.movie.exception.BusinessException;
 import com.movie.mapper.OrderMapper;
 import com.movie.mapper.SliceArrangementMapper;
@@ -18,6 +19,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
 
@@ -26,7 +28,6 @@ import java.util.List;
 public class OrderServiceImp implements OrderService {
     private final OrderMapper orderMapper;
     private final SliceArrangementMapper sliceArrangementMapper;
-    private final Order order;
 
     @Override
     @Transactional
@@ -91,6 +92,9 @@ public class OrderServiceImp implements OrderService {
     public Result updateOrderStatus(String orderId, Integer state) {
         try {
             if(orderMapper.updateOrderStatus(orderId,state)>0){
+                if(state==OrderStatus.PAYMENT_CANCELLED.getCode()){
+                    verifyOrderChild(List.of(orderMapper.selectOrderByOrderId(orderId)));
+                }
                 return Result.success(RespCode.UPDATE_SUCCESS);
             }else{
                 throw new BusinessException(RespCode.UPDATE_ERROR);
@@ -119,31 +123,15 @@ public class OrderServiceImp implements OrderService {
     public void verifyOrder() {
         // 查询支付超时并且没有修改状态的订单
         List<Order> orders = orderMapper.selectTimeOutOrderAndNotUpdateState();
+        verifyOrderChild(orders,OrderStatus.PAYMENT_TIMEOUT);
+    }
+    public void verifyOrderChild(List<Order> orders, OrderStatus orderStatus){
         for(Order order:orders){
-            ChildLayout[] orderLayout= JSON.parseObject(order.getSeats(),ChildLayout[].class);
-            // 首先要修改对应排片中的座位
-            ChildLayout[][] sliceOldLayout = JSON.parseObject(sliceArrangementMapper.selectLayoutBySliceArrangementId(order.getSliceArrangementId()),ChildLayout[][].class);
-            for (ChildLayout orderChild : orderLayout) {
-                int targetX = orderChild.getX();
-                int targetY = orderChild.getY();
-
-                // 遍历 sliceOldLayout 二维数组
-                for (ChildLayout[] row : sliceOldLayout) {
-                    for (ChildLayout oldChild : row) {
-                        if (oldChild.getX() == targetX && oldChild.getY() == targetY) {
-                            oldChild.setIsBuy(false);
-                            oldChild.setColor("white");
-                        }
-                    }
-                }
-            }
-            // 将修改后的布局存入数据库
-            String sliceNewLayout =JSON.toJSONString(sliceOldLayout, SerializerFeature.DisableCircularReferenceDetect);
             if(sliceArrangementMapper.updateSliceArrangementLayout(
-                    sliceNewLayout,order.getSliceArrangementId()
+                    getNewLayout(order),order.getSliceArrangementId()
             )>0){
-                // 修改订单的状态为支付超时
-                if(orderMapper.updateOrderStatus(order.getOrderId(),3)<=0){
+                // 修改订单的状态
+                if(orderMapper.updateOrderStatus(order.getOrderId(),orderStatus.getCode())<=0){
                     throw new BusinessException(RespCode.UPDATE_ERROR);
                 }
             }else{
@@ -152,11 +140,106 @@ public class OrderServiceImp implements OrderService {
         }
     }
 
+    public void verifyOrderChild(List<Order> orders){
+        for(Order order:orders){
+            if(sliceArrangementMapper.updateSliceArrangementLayout(
+                    getNewLayout(order),order.getSliceArrangementId()
+            )<=0){
+                throw new BusinessException(RespCode.UPDATE_ERROR);
+            }
+        }
+    }
+    public String getNewLayout(Order order){
+        ChildLayout[] orderLayout= JSON.parseObject(order.getSeats(),ChildLayout[].class);
+        // 首先要修改对应排片中的座位
+        ChildLayout[][] sliceOldLayout = JSON.parseObject(sliceArrangementMapper.selectLayoutBySliceArrangementId(order.getSliceArrangementId()),ChildLayout[][].class);
+        for (ChildLayout orderChild : orderLayout) {
+            int targetX = orderChild.getX();
+            int targetY = orderChild.getY();
+
+            // 遍历 sliceOldLayout 二维数组
+            for (ChildLayout[] row : sliceOldLayout) {
+                for (ChildLayout oldChild : row) {
+                    if (oldChild.getX() == targetX && oldChild.getY() == targetY) {
+                        oldChild.setIsBuy(false);
+                        oldChild.setColor("white");
+                    }
+                }
+            }
+        }
+        // 将修改后的布局存入数据库
+        return JSON.toJSONString(sliceOldLayout, SerializerFeature.DisableCircularReferenceDetect);
+    }
+
     @Override
     public Result selectOrderDetailByOrderId(String orderId) {
         try {
             Order orderInfo = orderMapper.selectOrderDetailByOrderId(orderId);
             return Result.success(RespCode.FIND_SUCCESS,orderInfo);
+        }catch (Exception e){
+            e.printStackTrace();
+            throw new BusinessException(RespCode.DATABASE_ERROR);
+        }
+    }
+
+    @Override
+    @Transactional
+    public Result selectOrderDetailListByOrder(Order order, Integer page, Integer size) {
+        try {
+            verifyOrder();
+            PageHelper.startPage(page,size);
+            List<Order> orders = orderMapper.selectOrderDetailListByOrder(order);
+            return Result.success(RespCode.FIND_SUCCESS,PageInfo.of(orders));
+        }catch (Exception e){
+            e.printStackTrace();
+            throw new BusinessException(RespCode.DATABASE_ERROR);
+        }
+    }
+
+    @Override
+    public Result selectOrderNumByTime(String cinemaId,LocalDateTime startTime, LocalDateTime endTime) {
+        try {
+            return Result.success(RespCode.FIND_SUCCESS,orderMapper.selectOrderNumByTime(cinemaId,startTime,endTime));
+        }catch (Exception e){
+            e.printStackTrace();
+            throw new BusinessException(RespCode.DATABASE_ERROR);
+        }
+    }
+
+    @Override
+    public Result selectOrderVoteAllPriceByTime(String cinemaId, LocalDateTime startTime, LocalDateTime endTime) {
+        try {
+            return Result.success(RespCode.FIND_SUCCESS,orderMapper.selectOrderVoteAllPriceByTime(cinemaId,startTime,endTime));
+        }catch (Exception e){
+            e.printStackTrace();
+            throw new BusinessException(RespCode.DATABASE_ERROR);
+        }
+    }
+
+    @Override
+    public Result selectAllOrderPrice(String cinemaId) {
+        try {
+            return Result.success(RespCode.FIND_SUCCESS,orderMapper.selectAllOrderPrice(cinemaId));
+        }catch (Exception e){
+            e.printStackTrace();
+            throw new BusinessException(RespCode.DATABASE_ERROR);
+        }
+    }
+
+    @Override
+    public Result selectChartValueByTime(String cinemaId, LocalDateTime startTime, LocalDateTime endTime) {
+        try {
+            return Result.success(RespCode.FIND_SUCCESS,orderMapper.selectChartValueByTimeAndMovie(cinemaId,startTime,endTime));
+        }catch (Exception e){
+            e.printStackTrace();
+            throw new BusinessException(RespCode.DATABASE_ERROR);
+        }
+    }
+
+    @Override
+    public Result selectChartValueByTimeAndScreeningRoom(String cinemaId, LocalDateTime startTime, LocalDateTime endTime) {
+        try {
+            return Result.success(RespCode.FIND_SUCCESS,orderMapper.selectChartValueByTimeAndScreeningRoom(cinemaId,startTime,endTime));
         }catch (Exception e){
             e.printStackTrace();
             throw new BusinessException(RespCode.DATABASE_ERROR);

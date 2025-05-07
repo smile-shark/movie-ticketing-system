@@ -39,6 +39,9 @@
                 </if>
             </if>
         </where>
+        <if test="random">
+            order by rand()
+        </if>
     </select>
     <select id="selectMovieById" resultType="movie">
         select * from movie where movie_id = #{movieId}
@@ -61,5 +64,8 @@
     </select>
     <select id="selectMovieByMovieId" resultType="movie">
         select * from movie where movie_id=#{moiveId}
+    </select>
+    <select id="selectMovieListOrderByScore" resultType="movie">
+        select * from movie order by score desc
     </select>
 </mapper>

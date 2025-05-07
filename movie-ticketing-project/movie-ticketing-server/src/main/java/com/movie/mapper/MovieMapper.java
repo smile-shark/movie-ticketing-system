@@ -21,10 +21,12 @@ public interface MovieMapper {
      * @return 返回匹配查询条件的电影列表。
      */
     List<Movie> selectMovieList(@Param("movie") Movie movie,
-                                @Param("already") Integer already
+                                @Param("already") Integer already,
+                                @Param("random")Boolean random
     );
     Movie selectMovieById(@Param("movieId") String movieId);
     int updateMovie(@Param("movie") Movie movie);
     List<Movie> selectSimpleMovieList();
     Movie selectMovieByMovieId(@Param("movieId") String movieId);
+    List<Movie> selectMovieListOrderByScore();
 }

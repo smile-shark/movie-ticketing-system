@@ -72,7 +72,7 @@ public class AllTest {
     }
     @Test
     public void selectMovieListTest(){
-        System.out.println(movieService.selectMovieList(new Movie(),0,4,1));
+        System.out.println(movieService.selectMovieList(new Movie(),null,0,4,1));
     }
     @Test
     public void tokenUtilsTest() throws IllegalAccessException, InstantiationException {
