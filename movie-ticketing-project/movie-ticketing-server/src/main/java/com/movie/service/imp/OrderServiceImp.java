@@ -245,4 +245,84 @@ public class OrderServiceImp implements OrderService {
             throw new BusinessException(RespCode.DATABASE_ERROR);
         }
     }
+
+    @Override
+    public Result orderTotalAmount() {
+        try {
+            return Result.success(RespCode.FIND_SUCCESS,orderMapper.orderTotalAmount());
+        }catch (Exception e){
+            e.printStackTrace();
+            throw new BusinessException(RespCode.DATABASE_ERROR);
+        }
+    }
+
+    @Override
+    public Result payedOrderTotalAmount() {
+        try {
+            return Result.success(RespCode.FIND_SUCCESS,orderMapper.payedOrderTotalAmount());
+        }catch (Exception e){
+            e.printStackTrace();
+            throw new BusinessException(RespCode.DATABASE_ERROR);
+        }
+    }
+
+    @Override
+    public Result orderTotal() {
+        try {
+            return Result.success(RespCode.FIND_SUCCESS,orderMapper.orderTotal());
+        }catch (Exception e){
+            e.printStackTrace();
+            throw new BusinessException(RespCode.DATABASE_ERROR);
+        }
+    }
+
+    @Override
+    public Result payedOrderTotal() {
+        try {
+            return Result.success(RespCode.FIND_SUCCESS,orderMapper.payedOrderTotal());
+        }catch (Exception e){
+            e.printStackTrace();
+            throw new BusinessException(RespCode.DATABASE_ERROR);
+        }
+    }
+
+    @Override
+    public Result selectOrderVoteAllPriceByTimeNotCinema(LocalDateTime startTime, LocalDateTime endTime) {
+        try {
+            return Result.success(RespCode.FIND_SUCCESS,orderMapper.selectOrderVoteAllPriceByTimeNotCinema(startTime,endTime));
+        }catch (Exception e){
+            e.printStackTrace();
+            throw new BusinessException(RespCode.DATABASE_ERROR);
+        }
+    }
+
+    @Override
+    public Result selectOrderVotePriceByTimeNotCinema(LocalDateTime startTime, LocalDateTime endTime) {
+        try {
+            return Result.success(RespCode.FIND_SUCCESS,orderMapper.selectOrderVotePriceByTimeNotCinema(startTime,endTime));
+        }catch (Exception e){
+            e.printStackTrace();
+            throw new BusinessException(RespCode.DATABASE_ERROR);
+        }
+    }
+
+    @Override
+    public Result selectChartValueByTimeAndMovieNotCinema(LocalDateTime startTime, LocalDateTime endTime) {
+        try {
+            return Result.success(RespCode.FIND_SUCCESS,orderMapper.selectChartValueByTimeAndMovieNotCinema(startTime,endTime));
+        }catch (Exception e){
+            e.printStackTrace();
+            throw new BusinessException(RespCode.DATABASE_ERROR);
+        }
+    }
+
+    @Override
+    public Result selectChartValueByTimeGroupCinema(LocalDateTime startTime, LocalDateTime endTime) {
+        try {
+            return Result.success(RespCode.FIND_SUCCESS,orderMapper.selectChartValueByTimeGroupCinema(startTime,endTime));
+        }catch (Exception e){
+            e.printStackTrace();
+            throw new BusinessException(RespCode.DATABASE_ERROR);
+        }
+    }
 }

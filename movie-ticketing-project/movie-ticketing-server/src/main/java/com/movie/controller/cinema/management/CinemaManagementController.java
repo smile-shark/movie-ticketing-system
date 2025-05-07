@@ -7,6 +7,7 @@ import com.movie.entity.groups.*;
 import com.movie.service.*;
 import com.movie.utils.VagueUtil;
 import lombok.RequiredArgsConstructor;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -103,8 +104,8 @@ public class CinemaManagementController {
         return movieService.selectSimpleMovieList();
     }
     @GetMapping("/simple/screening-room/list")
-    public Result selectSimpleScreeningRoom(){
-        return screeningRoomService.selectSimpleScreeningRoom();
+    public Result selectSimpleScreeningRoom(@RequestParam("cinemaId")String cinemaId){
+        return screeningRoomService.selectSimpleScreeningRoom(cinemaId);
     }
     @PostMapping("/slice-arrangement")
     public Result insertSliceArrangement(@Validated(InsertSliceArrangement.class) @RequestBody SliceArrangement sliceArrangement){
@@ -187,5 +188,17 @@ public class CinemaManagementController {
             @RequestParam("endTime") LocalDateTime endTime
     ){
         return orderService.selectChartValueByTimeAndScreeningRoom(cinemaId,startTime,endTime);
+    }
+    @PutMapping("/cinema")
+    public Result updateCinema(@Validated(UpdateCinema.class) @RequestBody Cinema cinema){
+        return cinemaService.updateCinema(cinema);
+    }
+    @GetMapping("/county/by/county-id")
+    public Result selectCountyByCountyId(@RequestParam("countyId") String countyId){
+        return countyService.selectCountyByCountyId(countyId);
+    }
+    @GetMapping("/market/by/market-id")
+    public Result selectMarketByMarketId(@RequestParam("marketId") String marketId){
+        return marketService.selectMarketById(marketId);
     }
 }

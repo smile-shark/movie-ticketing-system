@@ -9,4 +9,5 @@ public interface MovieService {
      Result updateMovie(Movie movie);
      Result selectSimpleMovieList();
      Result selectMovieListOrderByScore();
+     Result movieTotal();
 }

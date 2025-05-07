@@ -73,7 +73,7 @@
                       on `order`.slice_arrangement_id = sa.slice_arrangement_id
         where create_time &gt; #{startTime}
           and create_time &lt; #{endTime}
-          and vote_pay_state = 1
+          and vote_pay_state in (1,2)
           and sa.cinema_id = #{cinemaId}
     </select>
     <select id="selectOrderVoteAllPriceByTime" resultType="double">
@@ -83,7 +83,7 @@
                       on `order`.slice_arrangement_id = sa.slice_arrangement_id
         where create_time &gt; #{startTime}
           and create_time &lt; #{endTime}
-          and vote_pay_state = 1
+          and vote_pay_state in (1,2)
           and sa.cinema_id = #{cinemaId}
     </select>
     <select id="selectAllOrderPrice" resultType="double">
@@ -133,5 +133,63 @@
           and sa.cinema_id = #{cinemaId}
         group by
             sa.screening_room_id
+    </select>
+    <select id="orderTotalAmount" resultType="double">
+        select coalesce(sum(`order`.vote_all_price),0) from `order`
+    </select>
+    <select id="payedOrderTotalAmount" resultType="double">
+        select coalesce(sum(`order`.vote_all_price),0) from `order` where vote_pay_state in (1,2)
+    </select>
+    <select id="orderTotal" resultType="double">
+        select count(order_id) from `order`
+    </select>
+    <select id="payedOrderTotal" resultType="double">
+        select count(order_id) from `order` where vote_pay_state in (1,2)
+    </select>
+    <select id="selectOrderVoteAllPriceByTimeNotCinema" resultType="double">
+        select coalesce(sum(`order`.vote_all_price),0)
+        from `order`
+        where create_time &gt; #{startTime}
+          and create_time &lt; #{endTime}
+          and vote_pay_state in (1,2)
+    </select>
+    <select id="selectOrderVotePriceByTimeNotCinema" resultType="double">
+        select coalesce(sum(`order`.vote_all_price),0)
+        from `order`
+        where create_time &gt; #{startTime}
+          and create_time &lt; #{endTime}
+    </select>
+    <select id="selectChartValueByTimeAndMovieNotCinema" resultMap="selectChartValueByTimeMap">
+        select
+            movie_name,
+            coalesce(sum(`order`.vote_all_price), 0) as revenue
+        from `order`
+                 join slice_arrangement sa
+                      on `order`.slice_arrangement_id = sa.slice_arrangement_id
+                 join movie m
+                      on sa.movie_id = m.movie_id
+        where create_time &gt; #{startTime}
+          and create_time &lt; #{endTime}
+          and vote_pay_state in(1,2)
+        group by
+            sa.movie_id
+    </select>
+    <resultMap id="selectChartValueByTimeGroupCinemaMap" type="chartValue">
+        <result property="value" column="revenue"/>
+        <result property="name" column="cinema_name"/>
+    </resultMap>
+    <select id="selectChartValueByTimeGroupCinema" resultMap="selectChartValueByTimeGroupCinemaMap">
+        select
+            cinema_name,
+            coalesce(sum(`order`.vote_all_price), 0) as revenue
+        from `order`
+                 join slice_arrangement sa
+                      on `order`.slice_arrangement_id = sa.slice_arrangement_id
+                 join cinema c on sa.cinema_id = c.cinema_id
+        where create_time &gt; #{startTime}
+          and create_time &lt; #{endTime}
+          and vote_pay_state in (1,2)
+        group by
+            sa.cinema_id
     </select>
 </mapper>

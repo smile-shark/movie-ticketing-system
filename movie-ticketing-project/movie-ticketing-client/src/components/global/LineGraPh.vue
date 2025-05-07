@@ -46,9 +46,20 @@ export default {
           yAxis: { type: "value" },
           series: [
             {
+              name: "邮件营销",
               data: [150, 230, 224, 218, 135, 147, 260],
               type: "line",
               smooth: true,
+              symbol: 'circle',
+              symbolSize:8
+            },
+            {
+              name: "联盟广告",
+              data: [120, 280, 214, 208, 105, 137, 280],
+              type: "line",
+              smooth: true,
+              symbol: 'circle',
+              symbolSize:8
             },
           ],
         };

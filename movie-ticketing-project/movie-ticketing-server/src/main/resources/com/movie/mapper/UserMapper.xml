@@ -73,4 +73,10 @@
     <select id="selectUserByUserId" resultType="user">
         select * from user where user_id = #{userId}
     </select>
+    <select id="activeUserTotal" resultType="int">
+        select count(distinct user_id) from `order`
+    </select>
+    <select id="userTotal" resultType="int">
+        select count(user_id) from user
+    </select>
 </mapper>

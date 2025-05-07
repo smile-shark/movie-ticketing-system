@@ -36,6 +36,20 @@ export const myPath={
     platformUpdateUserByUserId:'/platform/user',
     mobileDisplay:'/platform/mobile/display',
     selectSimpleMovieList:'/platform/movie/simple/list',
+    activeUserTotal:'/platform/active-user/total',
+    userTotal:'/platform/user/total',
+    cinemaTotal:'/platform/cinema/total',
+    aMonthHasSliceArrangementTotal:'/platform/slice-arrangement/total/a-mount',
+    movieTotal:'/platform/movie/total',
+    orderTotalAmount:'/platform/order-total-amount',
+    payedOrderTotalAmount:'/platform/payed-order-total-amount',
+    orderTotal:'/platform/order-total',
+    payedOrderTotal:'/platform/payed-order-total',
+    applyForNewMovieTotal:'/platform/apply-for-new-movie/total',
+    selectOrderVoteAllPriceByTimeNotCinema:'/platform/order/vote-all-price/by-time/not/cinema',
+    selectOrderVotePriceByTimeNotCinema:'/platform/order/vote-price/by-time/not/cinema',
+    selectChartValueByTimeAndMovieNotCinema:'/platform/chart-value/by/time-movie/not/cinema',
+    selectChartValueByTimeGroupCinema:'/platform/chart-value/by/time/group/cinema',
 
     cinemaManagementRegister:'/cinema/management/register',
     cinemaManagementLogin:'/cinema/management/login',
@@ -60,5 +74,8 @@ export const myPath={
     selectOrderVoteAllPriceByTime:'/cinema/management/order/vote-all-price/valid/by/time',
     selectAllOrderPrice:'/cinema/management/order/vote-all-price/all',
     selectChartValueByTimeAndMovie:'/cinema/management/movie-revenue/by/time',
-    selectChartValueByTimeAndScreeningRoom:'/cinema/management/screening-room-revenue/by/time'
+    selectChartValueByTimeAndScreeningRoom:'/cinema/management/screening-room-revenue/by/time',
+    updateCinema:'/cinema/management/cinema',
+    selectCountyByCountyId:'/cinema/management/county/by/county-id',
+    selectMarketByMarketId:'/cinema/management/market/by/market-id'
 }

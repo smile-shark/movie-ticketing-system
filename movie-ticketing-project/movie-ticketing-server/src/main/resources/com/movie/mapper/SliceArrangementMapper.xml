@@ -74,4 +74,8 @@
           and slice_arrangement_start_time &lt; #{endTime}
           and cinema_id = #{cinemaId}
     </select>
+    <select id="aMonthHasSliceArrangementTotal" resultType="int">
+        select count(slice_arrangement_id) from slice_arrangement
+        where slice_arrangement_start_time > DATE_SUB(CURDATE(), INTERVAL 1 MONTH)
+    </select>
 </mapper>

@@ -35,4 +35,20 @@ public interface OrderMapper {
             @Param("cinemaId") String cinemaId,
             @Param("startTime")LocalDateTime startTime,
             @Param("endTime")LocalDateTime endTime);
+    double orderTotalAmount();
+    double payedOrderTotalAmount();
+    double orderTotal();
+    double payedOrderTotal();
+    double selectOrderVoteAllPriceByTimeNotCinema(
+            @Param("startTime")LocalDateTime startTime,
+            @Param("endTime")LocalDateTime endTime);
+    double selectOrderVotePriceByTimeNotCinema(
+            @Param("startTime")LocalDateTime startTime,
+            @Param("endTime")LocalDateTime endTime);
+    List<ChartValue> selectChartValueByTimeAndMovieNotCinema(
+            @Param("startTime")LocalDateTime startTime,
+            @Param("endTime")LocalDateTime endTime);
+    List<ChartValue> selectChartValueByTimeGroupCinema(
+            @Param("startTime")LocalDateTime startTime,
+            @Param("endTime")LocalDateTime endTime);
 }

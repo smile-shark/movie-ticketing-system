@@ -1,5 +1,5 @@
 <template>
-  <el-card style="background-color: #f7f7f7;">
+  <el-card style="background-color: #f7f7f7;margin-bottom: 20px;">
     <el-col :span="4">
       <el-image :src="cinema.cinemaBrand.cinemaBrandLogo"
       style="width: 150px;height: 150px;border-radius: 5px;" fit="cover"/>

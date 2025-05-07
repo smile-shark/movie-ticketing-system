@@ -116,4 +116,14 @@ public class MovieServiceImp implements MovieService {
             throw new BusinessException(RespCode.UPDATE_ERROR);
         }
     }
+
+    @Override
+    public Result movieTotal() {
+        try{
+            return Result.success(RespCode.FIND_SUCCESS,movieMapper.movieTotal());
+        }catch (Exception e){
+            e.printStackTrace();
+            throw new BusinessException(RespCode.UPDATE_ERROR);
+        }
+    }
 }

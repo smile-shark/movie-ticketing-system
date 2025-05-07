@@ -165,10 +165,6 @@ export default {
                 this.$message.error('请输入官方邮箱')
                 return
             }
-            if(!utils.verifyEmailFormat(this.cinema.cinemaEmail)){
-                this.$message.error('请输入正确的邮箱格式')
-                return
-            }
             if(this.cinema.cinemaUrl==''){
                 this.$message.error('请输入官方网站')
                 return

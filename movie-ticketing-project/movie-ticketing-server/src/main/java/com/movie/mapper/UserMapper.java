@@ -13,4 +13,6 @@ public interface UserMapper {
     int updateUserByUserId(@Param("user") User user);
     List<User> selectUsersByUser(@Param("user") User user);
     User selectUserByUserId(@Param("userId")String userId);
+    int activeUserTotal();
+    int userTotal();
 }

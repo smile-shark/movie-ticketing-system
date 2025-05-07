@@ -4,6 +4,7 @@ import com.github.pagehelper.PageHelper;
 import com.movie.common.resp.RespCode;
 import com.movie.common.resp.Result;
 import com.movie.entity.County;
+import com.movie.exception.BusinessException;
 import com.movie.mapper.CountyMapper;
 import com.movie.service.CountyService;
 import lombok.RequiredArgsConstructor;
@@ -23,7 +24,18 @@ public class CountyServiceImp implements CountyService {
             return Result.success(RespCode.FIND_SUCCESS,counties);
         }catch (Exception e){
             e.printStackTrace();
-            return Result.error(RespCode.FIND_ERROR);
+            throw new BusinessException(RespCode.FIND_ERROR);
+        }
+    }
+
+    @Override
+    public Result selectCountyByCountyId(String countyId) {
+        try {
+            County county = countyMapper.selectCountyByCountyId(countyId);
+            return Result.success(RespCode.FIND_SUCCESS,county);
+        }catch (Exception e){
+            e.printStackTrace();
+            throw new BusinessException(RespCode.FIND_ERROR);
         }
     }
 }

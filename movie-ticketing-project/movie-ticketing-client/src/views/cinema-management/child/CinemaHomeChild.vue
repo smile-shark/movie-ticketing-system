@@ -5,12 +5,14 @@
         <el-card shadow="hover">
           <el-statistic
             group-separator=","
-            :value="orderNum"
             title="近一周售票量"
           >
             <template slot="prefix">
               <span v-if="orderNum < 10"> 😔 </span>
               <span v-else> 😋 </span>
+            </template>
+            <template slot="formatter">
+              <DigitalAnimation :order-all-limit="orderNum" :decimalPlaces="0"></DigitalAnimation>
             </template>
           </el-statistic>
         </el-card>
@@ -19,9 +21,11 @@
         <el-card shadow="hover">
           <el-statistic
             group-separator=","
-            :value="sliceArrangementNum"
-            title="近一周排片发布量🤔"
+            title="近一周排片量🤔"
           >
+            <template slot="formatter">
+              <DigitalAnimation :order-all-limit="sliceArrangementNum" :decimalPlaces="0"></DigitalAnimation>
+            </template>
           </el-statistic>
         </el-card>
       </el-col>
@@ -29,12 +33,14 @@
         <el-card shadow="hover">
           <el-statistic
             group-separator=","
-            :value="orderAllPrice"
-            :precision="2"
             title="近一周营业额"
           >
             <template slot="prefix">
               <i class="el-icon-s-flag" style="color: red"></i>
+              ￥
+            </template>
+            <template slot="formatter">
+              <DigitalAnimation :order-all-limit="orderAllPrice"></DigitalAnimation>
             </template>
             <template slot="suffix">
               <i class="el-icon-s-flag" style="color: blue"></i>
@@ -46,10 +52,14 @@
         <el-card shadow="hover">
           <el-statistic
             group-separator=","
-            :value="turnover"
-            :precision="2"
             title="总营业额🙂"
           >
+            <template slot="prefix">
+              ￥
+            </template>
+            <template slot="formatter">
+              <DigitalAnimation :order-all-limit="turnover"></DigitalAnimation>
+            </template>
           </el-statistic>
         </el-card>
       </el-col>
@@ -82,6 +92,7 @@
 <script>
 import { myApi } from "@/axios/my";
 import { utils } from "@/utils/globalUtils";
+import DigitalAnimation from "@/components/global/DigitalAnimation.vue";
 import Charts from "@/components/global/Charts.vue";
 import LineGraPh from "@/components/global/LineGraPh.vue";
 import PieChart from "@/components/global/PieChart.vue";
@@ -90,6 +101,7 @@ export default {
     Charts,
     LineGraPh,
     PieChart,
+    DigitalAnimation
   },
   data() {
     return {
@@ -109,6 +121,7 @@ export default {
         yAxis: { type: "value" },
         series: [
           {
+            name: "营业额（元）",
             data: [],
             type: "line",
             smooth: true,

@@ -29,4 +29,5 @@ public interface MovieMapper {
     List<Movie> selectSimpleMovieList();
     Movie selectMovieByMovieId(@Param("movieId") String movieId);
     List<Movie> selectMovieListOrderByScore();
+    int movieTotal();
 }

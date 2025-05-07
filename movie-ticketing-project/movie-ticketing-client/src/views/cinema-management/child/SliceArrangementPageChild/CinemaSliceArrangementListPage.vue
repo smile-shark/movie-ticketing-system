@@ -43,7 +43,7 @@
             <el-form-item style="padding: 10px">
               指定时间之前：
               <el-date-picker
-                v-model="entTime"
+                v-model="endTime"
                 type="datetime"
                 placeholder="选择日期时间"
               ></el-date-picker>
@@ -285,7 +285,7 @@ export default {
       screeningRoomId: null,
       screeningRooms: [],
       startTIme: null,
-      entTime: null,
+      endTime: null,
       utils,
       sliceArrangementDialogVisible: false,
       showSliceArrangement: {},
@@ -309,7 +309,7 @@ export default {
           movieId: this.movieId,
           screeningRoomId: this.screeningRoomId,
           startTime: this.startTIme,
-          entTime: this.entTime,
+          endTime: this.endTime,
           page: this.page,
           size: this.size,
         })
@@ -360,22 +360,23 @@ export default {
     },
   },
   mounted() {
-    myApi.cinemaSelectSimpleMovieList().then((res) => {
-      if (res.data.code == 200) {
-        this.movies = res.data.data;
-      }
-    });
-    myApi.selectSimpleScreeningRoom().then((res) => {
-      if (res.data.code == 200) {
-        this.screeningRooms = res.data.data;
-      }
-    });
     let cinemaId = localStorage.getItem("cinemaId");
     if (cinemaId) {
       this.cinemaId = cinemaId;
     } else {
       this.$message.error("请先选择影院");
+      return
     }
+    myApi.cinemaSelectSimpleMovieList().then((res) => {
+      if (res.data.code == 200) {
+        this.movies = res.data.data;
+      }
+    });
+    myApi.selectSimpleScreeningRoom(this.cinemaId).then((res) => {
+      if (res.data.code == 200) {
+        this.screeningRooms = res.data.data;
+      }
+    });
     this.selectSliceArrangementBySliceArrangement();
   },
 };

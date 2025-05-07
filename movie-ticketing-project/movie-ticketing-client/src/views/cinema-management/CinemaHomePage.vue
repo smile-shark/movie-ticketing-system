@@ -113,6 +113,9 @@
               </el-submenu>
               <el-submenu index="">
                 <span slot="title"><i class="el-icon-s-grid"></i>其他管理</span>
+                <el-menu-item index="/cinema/home/info-management">
+                  影院信息管理
+                </el-menu-item>
               </el-submenu>
             </el-menu>
           </div>
@@ -216,7 +219,6 @@ export default {
                 this.updageLocalStorage(this.cinemaId);
               }
             }
-            console.log(this.cinemaId)
           }
         } else {
           this.$message.error(res.data.message);

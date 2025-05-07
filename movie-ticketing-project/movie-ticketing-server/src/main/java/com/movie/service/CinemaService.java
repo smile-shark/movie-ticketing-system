@@ -21,4 +21,6 @@ public interface CinemaService {
     Result customerSelectLowPriceCinema(String countyId,String cinemaBrandId,String movieId,Integer page,Integer size);
 
     Result selectCinemaByCinemaId(String cinemaId);
+    Result updateCinema(Cinema cinema);
+    Result cinemaTotal();
 }

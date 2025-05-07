@@ -9,4 +9,6 @@ public interface UserService {
      Result login(User user);
      Result updateUserByUserId(User user);
      Result selectUsersByUser(User user,Integer size,Integer page);
+     Result activeUserTotal();
+     Result userTotal();
 }

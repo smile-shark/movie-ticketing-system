@@ -12,7 +12,7 @@ import java.util.List;
 
 @Data
 @Component
-public class Movie {
+public class    Movie {
     @Length(min = 32, max = 32, message = "唯一标识符不符合规则", groups = {UpdateMovie.class})
     private String movieId;
     @NotBlank(message = "电影名称不能为空", groups = {InsertMovie.class, UpdateMovie.class})

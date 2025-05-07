@@ -13,6 +13,7 @@ import com.movie.service.CinemaService;
 import com.movie.utils.UUIDUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -64,6 +65,31 @@ public class CinemaServiceImp implements CinemaService {
         try{
             Cinema cinema = cinemaMapper.selectCinemaByCinemaId(cinemaId);
             return Result.success(RespCode.FIND_SUCCESS, cinema);
+        }catch (Exception e){
+            e.printStackTrace();
+            throw new BusinessException(RespCode.DATABASE_ERROR);
+        }
+    }
+
+    @Override
+    @Transactional
+    public Result updateCinema(Cinema cinema) {
+        try {
+            if (cinemaMapper.updateCinema(cinema) > 0) {
+                return Result.success(RespCode.UPDATE_SUCCESS);
+            }else{
+                return Result.error(RespCode.UPDATE_ERROR);
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+            throw new BusinessException(RespCode.DATABASE_ERROR);
+        }
+    }
+
+    @Override
+    public Result cinemaTotal() {
+        try{
+            return Result.success(RespCode.FIND_SUCCESS,cinemaMapper.cinemaTotal());
         }catch (Exception e){
             e.printStackTrace();
             throw new BusinessException(RespCode.DATABASE_ERROR);

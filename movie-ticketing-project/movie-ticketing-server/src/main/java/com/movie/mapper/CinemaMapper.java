@@ -14,4 +14,6 @@ public interface CinemaMapper {
     List<Cinema> customerSelectLowPriceCinema(@Param("countyId")String countyId,
                                               @Param("cinemaBrandId") String cinemaBrandId,
                                               @Param("movieId")String movieId);
+    int updateCinema(@Param("cinema")Cinema cinema);
+    int cinemaTotal();
 }

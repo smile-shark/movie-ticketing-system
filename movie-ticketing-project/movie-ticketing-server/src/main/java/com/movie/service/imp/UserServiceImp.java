@@ -108,4 +108,24 @@ public class UserServiceImp implements UserService {
             throw new BusinessException(RespCode.FIND_ERROR);
         }
     }
+
+    @Override
+    public Result activeUserTotal() {
+        try{
+            return Result.success(RespCode.FIND_SUCCESS,userMapper.activeUserTotal());
+        }catch (Exception e){
+            e.printStackTrace();
+            throw new BusinessException(RespCode.FIND_ERROR);
+        }
+    }
+
+    @Override
+    public Result userTotal() {
+        try{
+            return Result.success(RespCode.FIND_SUCCESS,userMapper.userTotal());
+        }catch (Exception e){
+            e.printStackTrace();
+            throw new BusinessException(RespCode.FIND_ERROR);
+        }
+    }
 }

@@ -28,7 +28,8 @@
                      select="com.movie.mapper.CinemaBrandMapper.selectCinemaBrandByCinemaBrandId"/>
     </resultMap>
     <select id="customerSelectLowPriceCinema" resultMap="customerSelectLowPriceCinema">
-        select cinema.cinema_id,
+        SELECT
+        cinema.cinema_id,
         cinema.cinema_brand_id,
         cinema.county_id,
         cinema.cinema_name,
@@ -37,26 +38,32 @@
         cinema.cinema_points,
         cinema.cinema_start_time,
         cinema.cinema_end_time,
-        min(slice_arrangement.vote_price) as lowest_price
-        from cinema
-        join slice_arrangement
-        on slice_arrangement.cinema_id = cinema.cinema_id
+        MIN(
+        CASE WHEN slice_arrangement.movie_id = #{movieId}
+        THEN slice_arrangement.vote_price
+        ELSE NULL END
+        ) AS lowest_price
+        FROM cinema
+        JOIN slice_arrangement ON slice_arrangement.cinema_id = cinema.cinema_id
         <where>
             <if test="countyId!=null">
                 cinema.county_id = #{countyId}
             </if>
             <if test="cinemaBrandId!=null">
-                and cinema.cinema_brand_id = #{cinemaBrandId}
+                AND cinema.cinema_brand_id = #{cinemaBrandId}
             </if>
-            and ((cinema.cinema_start_time &gt; cinema.cinema_end_time
-            and curtime() between cinema.cinema_start_time and cinema.cinema_end_time)
-            or (cinema.cinema_start_time &gt; cinema.cinema_end_time
-            and (curtime() &gt;= cinema.cinema_start_time
-            or curtime() &lt;= cinema.cinema_end_time)))
-            and slice_arrangement.movie_id = #{movieId}
-            and now() &lt; slice_arrangement.slice_arrangement_start_time
+            AND (
+            (cinema.cinema_start_time &lt; cinema.cinema_end_time AND
+                                        CURTIME() BETWEEN cinema.cinema_start_time AND cinema.cinema_end_time)
+            OR
+            (cinema.cinema_start_time &gt; cinema.cinema_end_time AND
+            (CURTIME() &gt;= cinema.cinema_start_time OR CURTIME() &lt;= cinema.cinema_end_time))
+            )
+            AND slice_arrangement.movie_id = #{movieId}
+            AND NOW() &lt; slice_arrangement.slice_arrangement_start_time
         </where>
-        group by cinema.cinema_id,
+        GROUP BY
+        cinema.cinema_id,
         cinema.cinema_brand_id,
         cinema.county_id,
         cinema.cinema_name,
@@ -65,6 +72,22 @@
         cinema.cinema_points,
         cinema.cinema_start_time,
         cinema.cinema_end_time
-        order by cinema.cinema_points desc, lowest_price
+        ORDER BY cinema.cinema_points DESC, lowest_price
+    </select>
+    <update id="updateCinema">
+        update cinema
+        set cinema_brand_id=#{cinema.cinemaBrandId},
+            county_id=#{cinema.countyId},
+            cinema_name=#{cinema.cinemaName},
+            cinema_address=#{cinema.cinemaAddress},
+            cinema_phone=#{cinema.cinemaPhone},
+            cinema_email=#{cinema.cinemaEmail},
+            cinema_url=#{cinema.cinemaUrl},
+            cinema_start_time=#{cinema.cinemaStartTime},
+            cinema_end_time=#{cinema.cinemaEndTime}
+        where cinema_id=#{cinema.cinemaId}
+    </update>
+    <select id="cinemaTotal">
+        select count(cinema_id) from cinema
     </select>
 </mapper>

@@ -68,4 +68,7 @@
     <select id="selectMovieListOrderByScore" resultType="movie">
         select * from movie order by score desc
     </select>
+    <select id="movieTotal" resultType="int">
+        select count(movie_id) from movie
+    </select>
 </mapper>

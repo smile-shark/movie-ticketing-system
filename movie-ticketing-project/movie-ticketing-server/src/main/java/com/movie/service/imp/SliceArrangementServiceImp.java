@@ -78,4 +78,14 @@ public class SliceArrangementServiceImp implements SliceArrangementService {
            throw new BusinessException(RespCode.DATABASE_ERROR);
        }
     }
+
+    @Override
+    public Result aMonthHasSliceArrangementTotal() {
+        try {
+            return Result.success(RespCode.FIND_SUCCESS,sliceArrangementMapper.aMonthHasSliceArrangementTotal());
+        }catch (Exception e){
+            e.printStackTrace();
+            throw new BusinessException(RespCode.DATABASE_ERROR);
+        }
+    }
 }

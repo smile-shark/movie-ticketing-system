@@ -39,4 +39,15 @@ public class MarketServiceImp implements MarketService {
             throw new BusinessException(RespCode.FIND_ERROR);
         }
     }
+
+    @Override
+    public Result selectMarketById(String marketId) {
+        try {
+            Market market = marketMapper.selectMarketById(marketId);
+            return Result.success(RespCode.FIND_SUCCESS,market);
+        }catch (Exception e){
+            e.printStackTrace();
+            throw new BusinessException(RespCode.DATABASE_ERROR);
+        }
+    }
 }

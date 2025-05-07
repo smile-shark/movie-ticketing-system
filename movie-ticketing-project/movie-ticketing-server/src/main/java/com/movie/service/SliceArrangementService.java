@@ -9,4 +9,5 @@ public interface SliceArrangementService {
     Result insertSliceArrangement(SliceArrangement sliceArrangement);
     Result selectSliceArrangementBySliceArrangement(SliceArrangement sliceArrangement,Integer page,Integer size);
     Result selectSliceArrangementNumByTime(String cinemaId, LocalDateTime startTime, LocalDateTime endTime);
+    Result aMonthHasSliceArrangementTotal();
 }

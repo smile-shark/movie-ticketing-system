@@ -58,9 +58,9 @@ public class ScreeningRoomServiceImp implements ScreeningRoomService {
     }
 
     @Override
-    public Result selectSimpleScreeningRoom() {
+    public Result selectSimpleScreeningRoom(String cinemaId) {
         try {
-            List<ScreeningRoom> screeningRooms = screeningRoomMapper.selectSimpleScreeningRoom();
+            List<ScreeningRoom> screeningRooms = screeningRoomMapper.selectSimpleScreeningRoom(cinemaId);
             return Result.success(RespCode.FIND_SUCCESS, screeningRooms);
         }catch (Exception e){
             e.printStackTrace();

@@ -4,4 +4,7 @@
     <select id="selectCountyByMarketId" resultType="county">
         select * from county where market_id=#{marketId}
     </select>
+    <select id="selectCountyByCountyId" resultType="county">
+        select * from county where county_id=#{countyId}
+    </select>
 </mapper>

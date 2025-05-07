@@ -18,4 +18,12 @@ public interface OrderService {
     Result selectAllOrderPrice(String cinemaId);
     Result selectChartValueByTime(String cinemaId,LocalDateTime startTime,LocalDateTime endTime);
     Result selectChartValueByTimeAndScreeningRoom(String cinemaId,LocalDateTime startTime,LocalDateTime endTime);
+    Result orderTotalAmount();
+    Result payedOrderTotalAmount();
+    Result orderTotal();
+    Result payedOrderTotal();
+    Result selectOrderVoteAllPriceByTimeNotCinema(LocalDateTime startTime,LocalDateTime endTime);
+    Result selectOrderVotePriceByTimeNotCinema(LocalDateTime startTime,LocalDateTime endTime);
+    Result selectChartValueByTimeAndMovieNotCinema(LocalDateTime startTime,LocalDateTime endTime);
+    Result selectChartValueByTimeGroupCinema(LocalDateTime startTime,LocalDateTime endTime);
 }

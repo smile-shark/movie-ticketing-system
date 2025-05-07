@@ -19,21 +19,23 @@ import PlatformMobileDisplayPage from '@/views/platform-management/child/other-m
 import CinemaLoginPage from '@/views/cinema-management/CinemaLoginPage.vue'
 import CinemaHomePage from '@/views/cinema-management/CinemaHomePage.vue'
 import CinemaHomeChild from '@/views/cinema-management/child/CinemaHomeChild.vue'
-import CinemaScreeningRoomAddPage from '@/views/cinema-management/child/CinemaScreeningRoomAddPage.vue'
-import CinemaScreeningRoomListPage from '@/views/cinema-management/child/CinemaScreeningRoomListPage.vue'
-import CinemaSliceArrangementAddPage from '@/views/cinema-management/child/CinemaSliceArrangementAddPage.vue'
-import CinemaSliceArrangementListPage from '@/views/cinema-management/child/CinemaSliceArrangementListPage.vue'
-import CustomerSelectScreeningRoomPage from '@/views/customer/child/moviePageChild/CustomerSelectScreeningRoomPage.vue'
-import CustomerSelectSeatPage from '@/views/customer/child/moviePageChild/CustomerSelectSeatPage.vue'
-import CustomerPayOrderPage from '@/views/customer/child/moviePageChild/CustomerPayOrderPage.vue'
-import CustomerVerifyVotePage from '@/views/customer/child/moviePageChild/CustomerVerifyVotePage.vue'
-import CustomerOrderListPage from '@/views/customer/child/moviePageChild/CustomerOrderListPage.vue'
+import CinemaScreeningRoomAddPage from '@/views/cinema-management/child/ScreeningRoomPageChild/CinemaScreeningRoomAddPage.vue'
+import CinemaScreeningRoomListPage from '@/views/cinema-management/child/ScreeningRoomPageChild/CinemaScreeningRoomListPage.vue'
+import CinemaSliceArrangementAddPage from '@/views/cinema-management/child/SliceArrangementPageChild/CinemaSliceArrangementAddPage.vue'
+import CinemaSliceArrangementListPage from '@/views/cinema-management/child/SliceArrangementPageChild/CinemaSliceArrangementListPage.vue'
+import CustomerSelectScreeningRoomPage from '@/views/customer/child/seatPageChild/CustomerSelectScreeningRoomPage.vue'
+import CustomerSelectSeatPage from '@/views/customer/child/seatPageChild/CustomerSelectSeatPage.vue'
+import CustomerPayOrderPage from '@/views/customer/child/orderPageChild/CustomerPayOrderPage.vue'
+import CustomerVerifyVotePage from '@/views/customer/child/orderPageChild/CustomerVerifyVotePage.vue'
+import CustomerOrderListPage from '@/views/customer/child/orderPageChild/CustomerOrderListPage.vue'
 import CustomerRatingListPage from '@/views/customer/child/moviePageChild/CustomerRatingListPage.vue'
 import MovieListView from '@/components/global/MovieListView.vue'
+import CinemaInfoManagementPage from '@/views/cinema-management/child/AnotherPageChild/CinemaInfoManagementPage.vue'
 
 Vue.use(VueRouter)
 
 const routes = [
+  // 用户  ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
   {
     path: '',
     redirect: '/customer/login'
@@ -107,6 +109,7 @@ const routes = [
       }
     ]
   },
+  // 平台  ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
   {
     path: '/all/admin',
     redirect: '/platform/login'
@@ -167,6 +170,7 @@ const routes = [
       }
     ]
   },
+  // 影院  ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
   {
     path: '/cinema/admin',
     redirect: '/cinema/login'
@@ -208,10 +212,23 @@ const routes = [
         path: 'list-slice-arrangement',
         name: 'CinemaSliceArrangementListPage',
         component: CinemaSliceArrangementListPage
+      },
+      {
+        path: 'info-management',
+        name: 'CinemaInfoManagementPage',
+        component: CinemaInfoManagementPage
       }
     ]
   }
 ]
+
+const originalPush=VueRouter.prototype.push
+
+VueRouter.prototype.push=function push(location){
+  return originalPush.call(this,location).catch(err=>{
+    if(err.name !== 'NavigationDuplicated') throw err
+  })
+}
 
 const router = new VueRouter({
   mode: 'history',
