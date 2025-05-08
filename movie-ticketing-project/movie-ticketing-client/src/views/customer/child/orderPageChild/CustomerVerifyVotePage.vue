@@ -3,7 +3,7 @@
     <el-row v-if="order">
       <el-col :span="24">
         <el-row>
-          <el-col :span="12">
+          <el-col :span="utils.getsmall()?24:12">
             <div class="line-card">
               <TruncatedText :lines="1">
                 影院：{{ order.sliceArrangement.cinema.cinemaName }}
@@ -41,11 +41,9 @@
               </TruncatedText>
             </div>
           </el-col>
-          <el-col :span="12">
+          <el-col :span="utils.getsmall()?24:12">
             <div class="line-card">
-              <TruncatedText :lines="1">
                 订单号： {{ order.orderId }}
-              </TruncatedText>
             </div>
             <div>
               <img src='@/assets/verifyMovieVote.png'/>

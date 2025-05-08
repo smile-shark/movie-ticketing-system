@@ -80,22 +80,7 @@ public class CustomerFilter implements Filter {
             }
         }
         else if(!requestURI.endsWith("/customer/email/verification/code")) {
-            String token = httpRequest.getHeader("Authorization");
-            if(token==null || token.isEmpty()){
-                SendErrorResponseUtil.sendErrorResponse(httpResponse,RespCode.TOKEN_VERIFY_ERROR);
-                return;
-            }
-            try{
-                if(!tokenUtils.verifyToken(token)){
-                    SendErrorResponseUtil.sendErrorResponse(httpResponse,RespCode.TOKEN_VERIFY_ERROR);
-                    return;
-                }
-            }catch (Exception e){
-                e.printStackTrace();
-                SendErrorResponseUtil.sendErrorResponse(httpResponse,RespCode.TOKEN_VERIFY_ERROR);
-                return;
-            }
-            System.out.println("验证token成功");
+            if (TokenUtils.verifyToken(httpRequest, httpResponse, tokenUtils,RespCode.CUSTOMER_TOKEN_VERIFY_ERROR)) return;
         }
         filterChain.doFilter(wrappedRequest, servletResponse);
     }

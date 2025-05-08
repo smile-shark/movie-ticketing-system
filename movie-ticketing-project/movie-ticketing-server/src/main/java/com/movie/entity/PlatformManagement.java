@@ -17,4 +17,5 @@ public class PlatformManagement {
     private String platformManagementPassword;
     private String platformManagementName;
     private String platformManagementProfilePicture;
+    private String platformToken;
 }

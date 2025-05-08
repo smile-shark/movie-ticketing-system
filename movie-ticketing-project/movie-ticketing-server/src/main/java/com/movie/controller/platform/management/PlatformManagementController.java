@@ -26,6 +26,7 @@ public class PlatformManagementController {
     private final SliceArrangementService sliceArrangementService;
     private final OrderService orderService;
     private final ApplyForNewMovieService applyForNewMovieService;
+    private final CinemaManagementService cinemaManagementService;
 
     @PostMapping("/login")
     public Result login(@Validated(PlatformManagementLogin.class) @RequestBody PlatformManagement platformManagement) {
@@ -183,5 +184,12 @@ public class PlatformManagementController {
             @RequestParam("endTime")LocalDateTime endTime
     ){
         return orderService.selectChartValueByTimeGroupCinema(startTime,endTime);
+    }
+    @GetMapping("/cinema-management/list")
+    public Result selectAllCinemaManagement(
+            @RequestParam("page")Integer page,
+            @RequestParam("size")Integer size
+    ){
+        return cinemaManagementService.selectAllCinemaManagement(page,size);
     }
 }

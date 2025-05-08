@@ -6,9 +6,11 @@
                 <el-button @click="$router.push('/customer/home')">返回首页</el-button>
             </el-empty>
         </el-col>
-        <el-col :span="6" v-for="(movie,index) in hotScreeningInProgresData.list" :key="index">
-            <MovieListCard :movie="movie"></MovieListCard>
-        </el-col>
+        <AnimateView>
+            <el-col :xs="12" :sm="8" :md="6" v-for="(movie,index) in hotScreeningInProgresData.list" :key="index" :data-index="index">
+                <MovieListCard :movie="movie"></MovieListCard>
+            </el-col>
+        </AnimateView>
     </el-row>
     <el-row>
         <el-col :span="24" style="padding:20px;display: flex;justify-content: center;align-items: center;" class="jp_pageBox">
@@ -28,9 +30,10 @@
 <script>
 import { myApi } from '@/axios/my';
 import MovieListCard from './MovieListCard.vue';
+import AnimateView from './AnimateView.vue';
 export default {
     components:{
-        MovieListCard
+        MovieListCard,AnimateView
     },
     props:{
         classification:String

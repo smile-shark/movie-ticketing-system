@@ -8,6 +8,8 @@ import lombok.Data;
 import org.hibernate.validator.constraints.Length;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 @Data
 @Component
 public class CinemaManagement {
@@ -20,4 +22,5 @@ public class CinemaManagement {
     private String cinemaManagementPassword;
     private String cinemaManagementProfilePicture;
     private String token;
+    private List<Cinema> cinemas;
 }

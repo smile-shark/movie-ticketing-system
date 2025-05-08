@@ -22,7 +22,7 @@
                   </el-form-item>
                   <el-form-item label="区域：">
                     <div style=" overflow-x: auto;">
-                      <el-radio-group v-model="selectedCountyId" size="small" fill="#ff7b32" @input="customerSelectLowPriceCinema(1)" style="white-space: nowrap;">
+                      <el-radio-group v-model="selectedCountyId" size="small" fill="#ff7b32" @input="customerSelectLowPriceCinema(1)">
                         <el-radio-button v-for="(county,index) in counties" :key="index"
                         :label="county.countyId">
                         {{ county.countyName }}

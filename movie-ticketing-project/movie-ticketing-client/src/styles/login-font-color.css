@@ -1,0 +1,15 @@
+.size-style {
+    position: relative;
+    top: 2px;
+    padding: 10px;
+    font-size: 1.2rem;
+    /* 字体大小，可按需调整 */
+    font-weight: bold;
+    /* 加粗 */
+    background: linear-gradient(to right, #fcc326, #f35c53);
+    /* 标准的从左到右文字渐变 */
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-fill-color: transparent;
+}

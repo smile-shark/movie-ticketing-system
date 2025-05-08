@@ -31,6 +31,7 @@ import CustomerOrderListPage from '@/views/customer/child/orderPageChild/Custome
 import CustomerRatingListPage from '@/views/customer/child/moviePageChild/CustomerRatingListPage.vue'
 import MovieListView from '@/components/global/MovieListView.vue'
 import CinemaInfoManagementPage from '@/views/cinema-management/child/AnotherPageChild/CinemaInfoManagementPage.vue'
+import CinemaAccountManagementPage from '@/views/platform-management/child/cinema-management/CinemaAccountManagementPage.vue'
 
 Vue.use(VueRouter)
 
@@ -167,6 +168,11 @@ const routes = [
         path: 'mobile-display',
         name: 'PlatformMobileDisplayPage',
         component: PlatformMobileDisplayPage,
+      },
+      {
+        path: 'cinema-account-management',
+        name: 'CinemaAccountManagementPage',
+        component: CinemaAccountManagementPage,
       }
     ]
   },

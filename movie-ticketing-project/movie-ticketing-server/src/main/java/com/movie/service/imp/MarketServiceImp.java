@@ -20,9 +20,7 @@ public class MarketServiceImp implements MarketService {
     public Result selectAllMarket() {
         try{
             List<Market> markets = marketMapper.selectAllMarket();
-            Result success = Result.success(RespCode.FIND_SUCCESS, markets);
-            System.out.println(success);
-            return success;
+            return Result.success(RespCode.FIND_SUCCESS, markets);
         }catch (Exception e){
             e.printStackTrace();
             throw new RuntimeException(RespCode.FIND_ERROR.getMessage());

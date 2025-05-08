@@ -7,6 +7,7 @@ import com.movie.exception.BusinessException;
 import com.movie.filter.request.RequestWrapper;
 import com.movie.utils.AesUtils;
 import com.movie.utils.SendErrorResponseUtil;
+import com.movie.utils.TokenUtils;
 import jakarta.servlet.*;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -15,8 +16,10 @@ import java.io.IOException;
 
 public class PlatformManagementFilter implements Filter {
     private final AesUtils aesUtils;
-    public PlatformManagementFilter(AesUtils aesUtils) {
+    private final TokenUtils tokenUtils;
+    public PlatformManagementFilter(AesUtils aesUtils,TokenUtils tokenUtils) {
         this.aesUtils = aesUtils;
+        this.tokenUtils = tokenUtils;
     }
 
     @Override
@@ -28,7 +31,7 @@ public class PlatformManagementFilter implements Filter {
 
         // 包装请求以便多次读取body
         RequestWrapper wrappedRequest = new RequestWrapper(httpRequest);
-        // 处理注册/登录
+        // 处理登录
         if(("POST".equalsIgnoreCase(httpRequest.getMethod()) &&
                         requestURI.endsWith("/platform/login"))) {
             try {
@@ -57,6 +60,11 @@ public class PlatformManagementFilter implements Filter {
                 return;
             }
         }
+        else {
+            if (TokenUtils.verifyToken(httpRequest, httpResponse, tokenUtils,RespCode.PLATFORM_MANAGEMENT_TOKEN_VERIFY_ERROR)) return;
+        }
         filterChain.doFilter(wrappedRequest, servletResponse);
     }
+
+
 }

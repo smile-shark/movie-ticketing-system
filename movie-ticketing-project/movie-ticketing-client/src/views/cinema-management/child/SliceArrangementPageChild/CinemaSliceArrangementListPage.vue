@@ -80,6 +80,7 @@
             <template slot-scope="scope">
               <TruncatedText :lines="1">
                 {{
+                  
                   utils.timeStampToMinutes(
                     scope.row.sliceArrangementEndTime -
                       scope.row.sliceArrangementStartTime

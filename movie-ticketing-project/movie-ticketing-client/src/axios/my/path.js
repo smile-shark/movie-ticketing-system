@@ -50,6 +50,7 @@ export const myPath={
     selectOrderVotePriceByTimeNotCinema:'/platform/order/vote-price/by-time/not/cinema',
     selectChartValueByTimeAndMovieNotCinema:'/platform/chart-value/by/time-movie/not/cinema',
     selectChartValueByTimeGroupCinema:'/platform/chart-value/by/time/group/cinema',
+    selectAllCinemaManagement:'/platform/cinema-management/list',
 
     cinemaManagementRegister:'/cinema/management/register',
     cinemaManagementLogin:'/cinema/management/login',

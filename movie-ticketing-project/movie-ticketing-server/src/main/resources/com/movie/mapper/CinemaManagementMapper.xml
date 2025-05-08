@@ -16,4 +16,13 @@
          #{cinemaManagement.cinemaManagementPassword},
          #{cinemaManagement.cinemaManagementProfilePicture})
     </insert>
+    <resultMap id="selectAllCinemaManagementMap" type="cinemaManagement">
+        <id property="cinemaManagementId" column="cinema_management_id"/>
+        <association property="cinemas"
+                     column="cinema_management_id"
+                     select="com.movie.mapper.CinemaMapper.selectCinemaByCinemaManagementId"/>
+    </resultMap>
+    <select id="selectAllCinemaManagement" resultMap="selectAllCinemaManagementMap">
+        select cinema_management_id,cinema_management_email,cinema_management_profile_picture from cinema_management
+    </select>
 </mapper>

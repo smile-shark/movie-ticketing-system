@@ -69,7 +69,7 @@ import { utils } from '@/utils/globalUtils'
 export default {
   data(){
     return{
-      isPerson:false,
+      isPerson:true,
       imageVerifyDialog:false,
       imageVerifyCode:'',
       imageVerifyUrl:'',

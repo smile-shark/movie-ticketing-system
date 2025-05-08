@@ -137,4 +137,9 @@ export default {
     float:right;
     font-size: 1.5rem;
 }
+@media screen and (max-width: 768px) {
+    .pay-btn{
+        width: 100%;
+    }
+}
 </style>

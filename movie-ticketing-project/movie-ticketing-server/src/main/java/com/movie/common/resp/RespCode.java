@@ -37,7 +37,9 @@ public enum RespCode {
     UPDATE_ERROR(5018, "修改失败"),
     DELETE_SUCCESS(200, "删除成功"),
     DELETE_ERROR(5019, "删除失败"),
-    TOKEN_VERIFY_ERROR(401, "token验证失败"),
+    CUSTOMER_TOKEN_VERIFY_ERROR(401, "身份验证已过期"), // 客户
+    CINEMA_MANAGEMENT_TOKEN_VERIFY_ERROR(402, "身份验证已过期"), // 影院管理
+    PLATFORM_MANAGEMENT_TOKEN_VERIFY_ERROR(403, "身份验证已过期"), // 平台管理
     INSET_SUCCESS(200, "插入成功"),
     INSET_ERROR(5020, "插入失败"),
     HAVE_SLICE_ARRANGEMENT_IN_THIS_TIME(5021, "该时间段已有排片"),

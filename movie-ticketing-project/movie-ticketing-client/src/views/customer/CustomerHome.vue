@@ -1,10 +1,13 @@
 <template>
   <div id="app">
     <el-container style="background-color: #f0f2f5; height: 100vh">
-      <el-header class="header" style="padding: 0 18%">
+      <el-header class="header">
         <el-row style="height: 9vh">
           <el-col :span="24" class="title-container">
-            <div style="padding: 5px; display: flex; align-items: center">
+            <div
+              style="padding: 5px; display: flex; align-items: center"
+              v-if="!utils.getsmall()"
+            >
               <el-image
                 src="https://img.axureshop.com/db/65/7f/db657fd4b7a84b5aa76b1c2d09d02108/images/0_1%E7%99%BB%E5%BD%95/u32.png"
                 style="width: 180px; height: 50px; position: relative; top: 5px"
@@ -14,7 +17,11 @@
             </div>
           </el-col>
         </el-row>
-        <el-dropdown @command="handleDropdownCommand" style="cursor: pointer">
+        <el-dropdown
+          @command="handleDropdownCommand"
+          style="cursor: pointer"
+          v-if="!utils.getsmall()"
+        >
           <span class="el-dropdown-link">
             {{ city.marketName
             }}<i class="el-icon-arrow-down el-icon--right"></i>
@@ -30,8 +37,8 @@
           </el-dropdown-menu>
         </el-dropdown>
         <el-menu
+          v-if="!utils.getsmall()"
           :default-active="activeIndex"
-          class="nav-menu"
           mode="horizontal"
           background-color="#03071E"
           text-color="#fff"
@@ -47,18 +54,18 @@
           v-model="searchText"
           @keyup.enter.native="handleSearch"
           placeholder="请输入电影名称"
-          prefix-icon="el-icon-search"
           class="search-input"
-        ></el-input>
+        >
+        <el-button slot="append" icon="el-icon-search"  @click="handleSearch"></el-button>
+      </el-input>
         <el-avatar :src="circleUrl"></el-avatar>
-        <el-dropdown v-if="customerInfo">
+        <el-dropdown v-if="customerInfo&&!utils.getsmall()">
           <span
             class="login-text el-dropdown-link"
             style="font-size: 14px; color: white"
             >{{ customerInfo.userName }}</span
           >
           <el-dropdown-menu slot="dropdown">
-            <el-dropdown-item>个人中心</el-dropdown-item>
             <el-dropdown-item
               @click.native="$router.push('/customer/home/movie/order-list')"
               >订单</el-dropdown-item
@@ -66,7 +73,7 @@
           </el-dropdown-menu>
         </el-dropdown>
         <el-button
-          v-else
+          v-else-if="!utils.getsmall()"
           type="text"
           class="login-button"
           @click="$router.push('/customer/login')"
@@ -77,25 +84,50 @@
           type="text"
           class="login-button"
           @click="$router.push('/customer/login')"
-          icon="el-icon-right"
+          :icon="utils.getsmall()?'':'el-icon-right'"
           >退出</el-button
         >
       </el-header>
-      <el-main>
-        <div style="padding: 0 18%">
-          <router-view style="background-color: white"></router-view>
-          <div
-            style="
-              padding: 10px;
-              text-align: center;
-              font-size: 14px;
-              color: #999;
-            "
-          >
-            看吧电影-相约电影院，享受好时光！
-          </div>
-        </div>
+      <el-main class="home-main">
+        <el-row>
+          <el-col :xs="0" :sm="4" :md="4"> &nbsp; </el-col>
+          <el-col :xs="24" :sm="16" :md="16">
+            <router-view style="background-color: white"></router-view>
+            <div
+              style="
+                padding: 10px;
+                text-align: center;
+                font-size: 14px;
+                color: #999;
+              "
+            >
+              看吧电影-相约电影院，享受好时光！
+            </div>
+          </el-col>
+          <el-col :xs="0" :sm="4" :md="4"> &nbsp; </el-col>
+        </el-row>
       </el-main>
+      <el-footer
+        v-if="utils.getsmall()"
+        style="padding: 0; position: sticky; bottom: -1px; width: 100%"
+      >
+        <el-menu
+          stretch
+          :default-active="activeIndex"
+          mode="horizontal"
+          background-color="#03071E"
+          text-color="#fff"
+          active-text-color="#ff7b32"
+          class="evenly-spaced-menu"
+          router
+        >
+          <el-menu-item index="/customer/home">首页</el-menu-item>
+          <el-menu-item index="/customer/home/movie">影片</el-menu-item>
+          <!-- <el-menu-item >影院</el-menu-item> -->
+          <el-menu-item index="/customer/home/rating-list">评分榜</el-menu-item>
+          <el-menu-item index="/customer/home/movie/order-list">订单</el-menu-item>
+        </el-menu>
+      </el-footer>
     </el-container>
     <el-dialog
       title="选择所在的城市"
@@ -118,6 +150,7 @@
 </template>
 <script>
 import { myApi } from "@/axios/my";
+import { utils } from "@/utils/globalUtils";
 export default {
   data() {
     return {
@@ -133,6 +166,7 @@ export default {
       customerInfo: null,
       finstMarketSelectDialog: false,
       searchText: "",
+      utils,
     };
   },
   methods: {
@@ -157,13 +191,16 @@ export default {
           }
         });
     },
-    handleSearch(){
+    handleSearch() {
       if (!this.searchText?.trim()) {
-        this.$message.warning('请输入搜索内容');
-        return; 
+        this.$message.warning("请输入搜索内容");
+        return;
       }
-      this.$router.push({name:'MovieListView',params:{movieName:this.searchText.trim()}})
-    }
+      this.$router.push({
+        name: "MovieListView",
+        params: { movieName: this.searchText.trim() },
+      });
+    },
   },
   mounted() {
     this.customerInfo = JSON.parse(localStorage.getItem("customerInfo"));
@@ -209,6 +246,7 @@ export default {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  padding: 0 18%
 }
 .logo {
   display: flex;
@@ -233,5 +271,30 @@ export default {
 }
 .login-button {
   color: #fff;
+}
+
+@media (max-width: 768px) {
+  /* 电影卡片列宽占满一行 */
+  .home-main {
+    padding: 0;
+    /* max-height: 85vh; */
+  }
+
+  .evenly-spaced-menu {
+    display: flex !important;
+    justify-content: space-around !important;
+  }
+
+  .evenly-spaced-menu .el-menu-item {
+    flex: 1 !important;
+    text-align: center !important;
+  }
+  .search-input {
+    width: 70vw;
+    margin-right:0;
+  }
+  .header {
+    padding: 0 2%
+  }
 }
 </style>

@@ -6,6 +6,7 @@ import com.movie.entity.PlatformManagement;
 import com.movie.exception.BusinessException;
 import com.movie.mapper.PlatformManagementMapper;
 import com.movie.service.PlatformManagementService;
+import com.movie.utils.TokenUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -13,6 +14,8 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class PlatformManagementServiceImp implements PlatformManagementService {
     private final PlatformManagementMapper platformManagementMapper;
+    private final TokenUtils tokenUtils;
+
     @Override
     public Result login(PlatformManagement platformManagement) {
         PlatformManagement selectByAccount = platformManagementMapper.selectByAccount(platformManagement.getPlatformManagementAccount());
@@ -23,6 +26,7 @@ public class PlatformManagementServiceImp implements PlatformManagementService {
             throw new BusinessException(RespCode.PASSWORD_ERROR);
         }
         selectByAccount.setPlatformManagementPassword(null);
+        selectByAccount.setPlatformToken(tokenUtils.createToken(selectByAccount));
         return Result.success(RespCode.LOGIN_USER_SUCCESS,selectByAccount);
     }
 }

@@ -16,11 +16,14 @@
          #{sliceArrangement.sliceArrangementEndTime})
     </insert>
     <select id="selectSliceArrangementByScreeningRoomIdAndBetweenTime" resultType="sliceArrangement">
-        select * from slice_arrangement
-        where screening_room_id=#{screeningRoomId}
-        and (#{startTime} &gt; slice_arrangement_start_time and #{startTime} &lt; slice_arrangement_end_time
-        or #{endTime} &gt; slice_arrangement_start_time and #{endTime} &lt; slice_arrangement_end_time
-        or #{startTime} &lt;= slice_arrangement_start_time and #{endTime} &lt;= slice_arrangement_end_time)
+        SELECT * FROM slice_arrangement
+        WHERE screening_room_id = #{screeningRoomId}
+        AND DATE(slice_arrangement_start_time) = DATE(#{startTime})
+        AND (
+        (#{startTime} &gt;= slice_arrangement_start_time AND #{startTime} &lt; slice_arrangement_end_time)
+        OR (#{endTime} &gt; slice_arrangement_start_time AND #{endTime} &lt;= slice_arrangement_end_time)
+        OR (#{startTime} &lt;= slice_arrangement_start_time AND #{endTime} &gt;= slice_arrangement_end_time)
+        )
     </select>
     <resultMap id="selectSliceArrangementBySliceArrangementMap" type="sliceArrangement">
         <id property="sliceArrangementId" column="slice_arrangement_id"/>

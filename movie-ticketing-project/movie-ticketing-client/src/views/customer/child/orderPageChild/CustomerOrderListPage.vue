@@ -14,8 +14,10 @@
     </el-row>
     <el-row>
       <el-col :span="24">
-         <CustomerOrderListCard v-for="(order,index) in orderList" :key="index"
-         :order="order"></CustomerOrderListCard>
+        <AnimateView>
+          <CustomerOrderListCard v-for="(order,index) in orderList" :key="index" :data-index="index"
+          :order="order"></CustomerOrderListCard>
+        </AnimateView>
       </el-col>
       <el-col :span="24" v-if="orderList.length==0">
         <el-empty style="min-height: 80vh;">
@@ -41,9 +43,10 @@
 <script>
 import { myApi } from '@/axios/my';
 import CustomerOrderListCard from '@/components/customer/CustomerOrderListCard.vue';
+import AnimateView from '@/components/global/AnimateView.vue';
 export default {
   components:{
-    CustomerOrderListCard
+    CustomerOrderListCard,AnimateView
   },
   data(){
     return{

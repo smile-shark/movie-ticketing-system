@@ -1,10 +1,11 @@
 <template>
   <el-card style="background-color: #f7f7f7;margin-bottom: 20px;">
-    <el-col :span="4">
+    <el-col :span="4" v-if="!utils.getsmall()">
       <el-image :src="cinema.cinemaBrand.cinemaBrandLogo"
-      style="width: 150px;height: 150px;border-radius: 5px;" fit="cover"/>
+      style="width: 150px;height: 150px;border-radius: 5px;" 
+      fit="cover"/>
     </el-col>
-    <el-col :span="15" class="cinema-info">
+    <el-col :span="utils.getsmall()? 24 : 15" class="cinema-info">
       <div style="padding-bottom: 20px;font-weight:bold;">{{ cinema.cinemaName }}</div>
       <div style="font-size: 14px;">
         <div class="rating">
@@ -20,7 +21,7 @@
         </div>
       </div>
     </el-col>
-    <el-col :span="5">
+    <el-col :span="utils.getsmall()? 24 : 5">
       <div class="price" style="display: flex;align-items: center;justify-content: center;height: 15vh;">
           <span style="font-weight: bold;">¥ {{ cinema.lowestPrice }}
             <span style="font-size:1rem;color:#a9a9a8;font-weight: normal;">起</span>
@@ -32,7 +33,13 @@
 </template>
 
 <script>
+import { utils } from '@/utils/globalUtils';
 export default {
+  data(){
+    return{
+      utils
+    }
+  },
   props: {
     cinema: {
       type: Object,
@@ -125,6 +132,11 @@ export default {
 
 .price .el-button {
   margin-left: 10px;
+}
+@media screen and (max-width: 768px) {
+  .score{
+    margin-left:0;
+  }
 }
 </style>
 

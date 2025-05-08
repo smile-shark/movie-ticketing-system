@@ -8,11 +8,14 @@ import cn.hutool.jwt.JWTUtil;
 import cn.hutool.jwt.JWTValidator;
 import com.movie.common.resp.RespCode;
 import com.movie.exception.BusinessException;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Component;
 
+import java.io.IOException;
 import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.Map;
@@ -63,5 +66,24 @@ public class TokenUtils {
     public boolean verifyToken(String token) {
         JWTValidator.of(token).validateDate(DateUtil.date());
         return JWTUtil.verify(token, JWT_KEY.getBytes());
+    }
+
+    public static boolean verifyToken(HttpServletRequest httpRequest, HttpServletResponse httpResponse, TokenUtils tokenUtils, RespCode respCode) throws IOException {
+        String token = httpRequest.getHeader("Authorization");
+        if(token==null || token.isEmpty()){
+            SendErrorResponseUtil.sendErrorResponse(httpResponse, respCode);
+            return true;
+        }
+        try{
+            if(!tokenUtils.verifyToken(token)){
+                SendErrorResponseUtil.sendErrorResponse(httpResponse,respCode);
+                return true;
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+            SendErrorResponseUtil.sendErrorResponse(httpResponse,respCode);
+            return true;
+        }
+        return false;
     }
 }

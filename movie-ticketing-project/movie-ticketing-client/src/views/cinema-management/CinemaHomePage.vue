@@ -35,12 +35,16 @@
             >
               <span style="margin-right: 20px">
                 <el-select
-                style="border-top-right-radius: 0;border-bottom-right-radius: 0;"
+                  style="
+                    border-top-right-radius: 0;
+                    border-bottom-right-radius: 0;
+                  "
                   v-model="cinemaId"
                   filterable
                   placeholder="选择影院"
                   @change="refreshWindow(cinemaId)"
                 >
+                
                   <el-option
                     v-for="(cinema, index) in cinemaList"
                     :key="index"
@@ -48,8 +52,14 @@
                     :value="cinema.cinemaId"
                   ></el-option>
                 </el-select>
-                <el-button type="primary" style="border-top-left-radius: 0;border-bottom-left-radius: 0;"
-                @click="selectCinemaDialogVisibleEnd=true">
+                <el-button
+                  type="primary"
+                  style="
+                    border-top-left-radius: 0;
+                    border-bottom-left-radius: 0;
+                  "
+                  @click="selectCinemaDialogVisibleEnd = true"
+                >
                   添加影院
                 </el-button>
               </span>
@@ -83,6 +93,7 @@
         >
           <div>
             <el-menu
+              ref="menuRef"
               :default-active="defaultActive"
               router
               background-color="white"
@@ -139,10 +150,7 @@
     >
       <CinemaManagementCreateCinema></CinemaManagementCreateCinema>
     </el-dialog>
-    <el-dialog
-      :visible.sync="selectCinemaDialogVisibleEnd"
-      title="创建影院"
-    >
+    <el-dialog :visible.sync="selectCinemaDialogVisibleEnd" title="创建影院">
       <CinemaManagementCreateCinema></CinemaManagementCreateCinema>
     </el-dialog>
   </div>
@@ -163,14 +171,14 @@ export default {
       cinemaManagementInfo: {},
       cinemaList: [],
       selectCinemaDialogVisible: false,
-      selectCinemaDialogVisibleEnd:false,
+      selectCinemaDialogVisibleEnd: false,
       cinemaId: "",
     };
   },
   methods: {
-    refreshWindow(cinemaId){
-      this.updageLocalStorage(cinemaId)
-      window.location.reload()
+    refreshWindow(cinemaId) {
+      this.updageLocalStorage(cinemaId);
+      window.location.reload();
     },
     updageLocalStorage(cinemaId) {
       localStorage.setItem("cinemaId", cinemaId);
@@ -189,6 +197,7 @@ export default {
     },
   },
   mounted() {
+    this.$refs.menuRef.open("");
     if (localStorage.getItem("cinemaManagementInfo")) {
       this.cinemaManagementInfo = JSON.parse(
         localStorage.getItem("cinemaManagementInfo")
@@ -208,13 +217,13 @@ export default {
             });
           } else {
             this.cinemaList = res.data.data;
-            if(this.cinemaList.length==1){
+            if (this.cinemaList.length == 1) {
               this.cinemaId = this.cinemaList[0].cinemaId;
               this.updageLocalStorage(this.cinemaId);
-            }else{
-              if(localStorage.getItem("cinemaId")){
+            } else {
+              if (localStorage.getItem("cinemaId")) {
                 this.cinemaId = localStorage.getItem("cinemaId");
-              }else{
+              } else {
                 this.cinemaId = this.cinemaList[0].cinemaId;
                 this.updageLocalStorage(this.cinemaId);
               }

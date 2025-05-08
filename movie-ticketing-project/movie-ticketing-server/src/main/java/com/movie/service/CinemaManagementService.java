@@ -7,4 +7,5 @@ import com.movie.entity.EmailVerify;
 public interface CinemaManagementService {
     Result register(EmailVerify emailVerify);
     Result login(CinemaManagement cinemaManagement);
+    Result selectAllCinemaManagement(Integer page, Integer size);
 }

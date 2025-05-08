@@ -2,7 +2,7 @@
   <div>
     <el-row>
       <el-col :span="24" style="padding-left: 20px"> 屏幕方向 </el-col>
-      <el-col :span="20" style="padding: 20px; overflow-x: auto">
+      <el-col :span="utils.getsmall()?24:20" style="padding: 20px; overflow-x: auto">
         <span v-if="layout.length == 0">&nbsp;</span>
         <div style="display: inline-block">
           <div
@@ -32,7 +32,7 @@
           </div>
         </div>
       </el-col>
-      <el-col :span="4">
+      <el-col :span="utils.getsmall()?24:4">
         <p
           style="
             display: flex;
@@ -109,8 +109,14 @@
 </template>
 
 <script>
+import { utils } from "@/utils/globalUtils";
 import Seat from "./Seat.vue";
 export default {
+  data(){
+    return{
+      utils
+    }
+  },
   components: {
     Seat,
   },

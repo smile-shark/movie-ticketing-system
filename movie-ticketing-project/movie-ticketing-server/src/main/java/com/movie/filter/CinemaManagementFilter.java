@@ -7,6 +7,7 @@ import com.movie.exception.BusinessException;
 import com.movie.filter.request.RequestWrapper;
 import com.movie.utils.AesUtils;
 import com.movie.utils.SendErrorResponseUtil;
+import com.movie.utils.TokenUtils;
 import jakarta.servlet.*;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -16,8 +17,10 @@ import java.io.IOException;
 
 public class CinemaManagementFilter implements Filter {
     private final AesUtils aesUtils;
-    public CinemaManagementFilter(AesUtils aesUtils) {
+    private final TokenUtils tokenUtils;
+    public CinemaManagementFilter(AesUtils aesUtils,TokenUtils tokenUtils) {
         this.aesUtils = aesUtils;
+        this.tokenUtils = tokenUtils;
     }
 
     @Override
@@ -72,6 +75,9 @@ public class CinemaManagementFilter implements Filter {
                 SendErrorResponseUtil.sendErrorResponse(httpResponse,RespCode.DECRYPT_ERROR);
                 return;
             }
+        }
+        else {
+            if (TokenUtils.verifyToken(httpRequest, httpResponse, tokenUtils,RespCode.CINEMA_MANAGEMENT_TOKEN_VERIFY_ERROR)) return;
         }
         filterChain.doFilter(wrappedRequest, servletResponse);
     }

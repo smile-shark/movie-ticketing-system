@@ -1,5 +1,7 @@
 package com.movie.service.imp;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.movie.common.resp.RespCode;
 import com.movie.common.resp.Result;
 import com.movie.entity.CinemaManagement;
@@ -73,5 +75,17 @@ public class CinemaManagementServiceImp implements CinemaManagementService {
         have.setToken(tokenUtils.createToken(have));
         // 3. 登录成功
         return Result.success(RespCode.LOGIN_USER_SUCCESS,have);
+    }
+
+    @Override
+    public Result selectAllCinemaManagement(Integer page,Integer size) {
+        try {
+            PageHelper.startPage(page,size);
+            List<CinemaManagement> cinemaManagements = cinemaManagementMapper.selectAllCinemaManagement();
+            return Result.success(RespCode.FIND_SUCCESS, PageInfo.of(cinemaManagements));
+        }catch (Exception e){
+            e.printStackTrace();
+            return Result.error(RespCode.DATABASE_ERROR);
+        }
     }
 }

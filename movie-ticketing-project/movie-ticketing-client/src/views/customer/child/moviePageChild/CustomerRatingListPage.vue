@@ -2,8 +2,12 @@
   <div>
     <el-row>
         <el-col :span="24">
-            <MovieRatingCard v-for="(movie,index) in movies" :key="index"
-            :movie="movie"></MovieRatingCard>
+           <AnimateView>
+            <MovieRatingCard v-for="(movie,index) in movies" :key="index" :data-index="index"   
+            :movie="movie">
+            {{ index+1 }}
+        </MovieRatingCard>
+           </AnimateView>
         </el-col>
     </el-row>
   </div>
@@ -12,9 +16,10 @@
 <script>
 import { myApi } from '@/axios/my';
 import MovieRatingCard from '@/components/global/MovieRatingCard.vue';
+import AnimateView from '@/components/global/AnimateView.vue';
 export default {
     components:{
-        MovieRatingCard
+        MovieRatingCard,AnimateView
     },
     data(){
         return {

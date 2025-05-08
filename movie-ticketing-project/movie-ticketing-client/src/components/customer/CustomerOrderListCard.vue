@@ -15,22 +15,23 @@
                 <TruncatedText :lines="1" class="text-center">
                     <span style="font-size: .9rem;color:#c9c9c9;">影院：</span>
                     {{ order.sliceArrangement.cinema.cinemaName }}
-                    <TruncatedText :lines="1" :customStyle="{float: 'right'}">
+                    <TruncatedText :lines="1" :customStyle="{float: 'right'}" v-if="!utils.getsmall()">
                         <span style="font-size: .9rem;color:#c9c9c9;">场次：</span>
                         {{ utils.formatTimestampToYYYMMDDHHMMSS(order.sliceArrangement.sliceArrangementStartTime) }}
                         - {{ utils.formatTimestampToYYYMMDDHHMMSS(order.sliceArrangement.sliceArrangementEndTime) }}
                     </TruncatedText>
                 </TruncatedText>
+                <TruncatedText :lines="1" class="text-center" v-if="utils.getsmall()">
+                        <span style="font-size: .9rem;color:#c9c9c9;">场次：</span>
+                        {{ utils.formatTimestampToYYYMMDDHHMMSS(order.sliceArrangement.sliceArrangementStartTime) }}
+                        - {{ utils.formatTimestampToYYYMMDDHHMMSS(order.sliceArrangement.sliceArrangementEndTime) }}
+                    </TruncatedText>
                 <TruncatedText :lines="1" class="text-center">
                     <span style="font-size: .9rem;color:#c9c9c9;">影厅：</span>
                     {{ order.sliceArrangement.screeningRoom.screeningRoomName }}
-                    <TruncatedText :lines="1" :customStyle="{float: 'right'}">
+                    <TruncatedText :lines="1" :customStyle="{float: 'right'}"  v-if="!utils.getsmall()">
                         <span style="font-size: .9rem;color:#c9c9c9;">订单状态：</span>
                         <span v-if="order.votePayState==0">未支付
-                            (<span>
-                                <el-statistic :value="new Date(order.payTimeOut)" time-indices>
-                                </el-statistic>
-                            </span>)
                         </span>
                         <span v-if="order.votePayState==1">已支付未使用</span>
                         <span v-if="order.votePayState==2">已使用</span>
@@ -38,17 +39,27 @@
                         <span v-if="order.votePayState==4">已取消</span>
                     </TruncatedText>
                 </TruncatedText>
-                <el-statistic v-if="order.votePayState==0" :value="new Date(order.payTimeOut)" time-indices :value-style="{color:'red'}">
-                    <template slot="prefix">
-                        剩余支付时间
-                    </template>
-                </el-statistic>
+                <TruncatedText :lines="1" class="text-center" v-if="utils.getsmall()">
+                        <span style="font-size: .9rem;color:#c9c9c9;">订单状态：</span>
+                        <span v-if="order.votePayState==0">未支付
+                        </span>
+                        <span v-if="order.votePayState==1">已支付未使用</span>
+                        <span v-if="order.votePayState==2">已使用</span>
+                        <span v-if="order.votePayState==3">支付超时</span>
+                        <span v-if="order.votePayState==4">已取消</span>
+                    </TruncatedText>
+                    <el-statistic v-if="order.votePayState==0&&!utils.getsmall()" :value="new Date(order.payTimeOut)" time-indices :value-style="{color:'red'}">
+                        <template slot="prefix">
+                            剩余支付时间
+                        </template>
+                    </el-statistic>
                 <TruncatedText :lines="1" class="text-center">
                     <span style="font-size: .9rem;color:#c9c9c9;">座位：</span>
                     <span v-for="(seat,index) in JSON.parse(order.seats)" :key="index">
                         {{ seat.x }}列{{ seat.y }}座
                     </span>
-                    <el-button type="success" class="float-right" v-if="order.votePayState==0" @click="$router.push({
+                    <span  v-if="!utils.getsmall()">
+                        <el-button type="success" class="float-right" v-if="order.votePayState==0" @click="$router.push({
                         name:'CustomerPayOrderPage',
                         params:{
                             orderId:order.orderId
@@ -61,6 +72,29 @@
                             orderId:order.orderId
                         }
                     })">查看订单</el-button>
+                    </span>
+                </TruncatedText>
+                <TruncatedText :lines="1" class="text-center" v-if="utils.getsmall()">
+                    <el-statistic v-if="order.votePayState==0" :value="new Date(order.payTimeOut)" time-indices :value-style="{color:'red'}">
+                    <template slot="prefix">
+                        剩余支付时间
+                    </template>
+                </el-statistic>
+                </TruncatedText>
+                <TruncatedText  v-if="utils.getsmall()">
+                    <el-button type="success" class="float-right" v-if="order.votePayState==0" @click="$router.push({
+                    name:'CustomerPayOrderPage',
+                    params:{
+                        orderId:order.orderId
+                    }
+                })">去支付</el-button>
+                <el-button type="danger" class="float-right" v-if="order.votePayState==0" @click="updateOrderStatus">取消支付</el-button>
+                <el-button type="primary" class="float-right" v-if="order.votePayState==1" @click="$router.push({
+                    name:'CustomerVerifyVotePage',
+                    params:{
+                        orderId:order.orderId
+                    }
+                })">查看订单</el-button>
                 </TruncatedText>
             </div>
         </el-card>

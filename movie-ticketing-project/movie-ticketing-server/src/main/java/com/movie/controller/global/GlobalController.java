@@ -22,6 +22,8 @@ public class GlobalController {
     }
     @GetMapping("/market")
     public Result selectAllMarket() {
-        return marketService.selectAllMarket();
+        Result result = marketService.selectAllMarket();
+        System.out.println(result);
+        return result;
     }
 }

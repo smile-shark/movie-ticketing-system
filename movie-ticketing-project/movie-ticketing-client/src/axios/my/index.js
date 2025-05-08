@@ -20,8 +20,23 @@ instance.interceptors.request.use(
   (config) => {
     loadingInstance = Loading.service();
     // 验证请求路径为customer加上token
-    if (config.url.includes("customer")) {
+    // 用户的身份验证
+    if (config.url.startsWith("/customer")) {
       const token = localStorage.getItem("customerToken");
+      if (token) {
+        config.headers.Authorization = token;
+      }
+    }
+    // 影院管理员的身份验证
+    if (config.url.startsWith("/cinema/management")) {
+      const token = localStorage.getItem("cinemaManagementToken");
+      if (token) {
+        config.headers.Authorization = token;
+      }
+    }
+    // 平台管理员的身份验证
+    if (config.url.startsWith("/platform")) {
+      const token = localStorage.getItem("platformToken");
       if (token) {
         config.headers.Authorization = token;
       }
@@ -36,6 +51,12 @@ instance.interceptors.response.use(
   (response) => {
     if (response.data.code == 401) {
       router.push("/");
+    }
+    if (response.data.code == 402) {
+      router.push("/c");
+    }
+    if (response.data.code == 403) {
+      router.push("/a");
     }
     loadingInstance.close();
     return response;
@@ -278,7 +299,7 @@ export const myApi = {
     size = 10,
     page = 1,
   }) {
-    return instance.get(myPath.selectMovieListPlatform, {
+    return instance.get(myPath.cinemaSelectMovieList, {
       params: {
         movieId,
         movieName,
@@ -613,4 +634,12 @@ export const myApi = {
       },
     });
   },
+  selectAllCinemaManagement(page,size){
+    return instance.get(myPath.selectAllCinemaManagement, {
+      params: {
+        page, 
+        size,
+      },
+    });
+  }
 };

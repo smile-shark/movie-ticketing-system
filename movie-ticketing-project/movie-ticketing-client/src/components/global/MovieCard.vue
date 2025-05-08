@@ -1,7 +1,7 @@
 <template>
     <div class="movie-info">
       <el-row>
-        <el-col :span="4">
+        <el-col :span="utils.getsmall()?24:4" :style="utils.getsmall()?'padding:10px 50px;':''">
           <el-image :src="movie.posterImage" alt="电影海报" class="movie-poster" style="height:100%;width:100%">
             <div slot="error" class="image-slot" style="display:flex;align-items:center;justify-content:center;height:100%;
             background-color:#f5f7fa;min-height:35vh;
@@ -10,7 +10,7 @@
             </div>
           </el-image>
         </el-col>
-        <el-col :span="20">
+        <el-col :span="utils.getsmall()?24:20">
           <div class="movie-details">
             <div class="movie-title">{{ movie.movieName }}
                 <span style="color:#ff7b4b;font-size:20px;margin-left:10px">{{movie.score}}分</span>
@@ -32,6 +32,7 @@
   
   <script>
   import dayjs from 'dayjs';
+  import { utils } from '@/utils/globalUtils';
   export default {
     name: 'MovieInfo',
     props: {
@@ -50,6 +51,11 @@
             movieStartTime: '',
             introduction: ''
         })
+      }
+    },
+    data(){
+      return{
+        utils
       }
     },
     methods: {

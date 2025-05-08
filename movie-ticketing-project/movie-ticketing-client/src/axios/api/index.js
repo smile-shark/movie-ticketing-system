@@ -11,6 +11,9 @@ const apis={
                         qskey:'redis-sk-MATKmIISApWiByAc'
                     }
                 })
+    },
+    getKey(){
+        return api.get(apiPath.getKey)
     }
 }
 export default apis;
