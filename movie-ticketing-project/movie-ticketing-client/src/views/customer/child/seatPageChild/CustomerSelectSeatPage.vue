@@ -45,8 +45,8 @@ export default {
         }
     },
     methods:{
-        selectSliceArrangementBySliceArrangement(){
-            myApi.selectSliceArrangementBySliceArrangement({
+        customerSelectSliceArrangementBySliceArrangement(){
+            myApi.customerSelectSliceArrangementBySliceArrangement({
                 sliceArrangementId:this.sliceArrangementId,page:1,size:1
             }).then(res=>{
                 if(res.data.code==200){
@@ -118,7 +118,7 @@ export default {
     },
     mounted(){
         this.sliceArrangementId=this.$route.params.sliceArrangementId
-        this.selectSliceArrangementBySliceArrangement()
+        this.customerSelectSliceArrangementBySliceArrangement()
         let customerId=JSON.parse(localStorage.getItem('customerInfo')).userId
         this.customerId=customerId
     },

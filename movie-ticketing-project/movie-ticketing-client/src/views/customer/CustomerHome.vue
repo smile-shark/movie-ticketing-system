@@ -239,6 +239,7 @@ export default {
 };
 </script>
 <style scoped>
+@import '@/styles/login-background.css';
 .header {
   background-color: #03071e;
   color: #fff;

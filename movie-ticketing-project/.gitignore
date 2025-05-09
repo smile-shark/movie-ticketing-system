@@ -13,6 +13,7 @@ target/
 *.ipr
 
 movie-ticketing-server/src/main/resources/aliyunoss-config.properties
+movie-ticketing-server/src/main/resources/email-config.properties
 out/
 
 ### Eclipse ###

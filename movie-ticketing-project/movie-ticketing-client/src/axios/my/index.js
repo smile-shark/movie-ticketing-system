@@ -432,7 +432,7 @@ export const myApi = {
     if (endTime) {
       endTime = utils.urbanConversion(endTime);
     }
-    return instance.get(myPath.selectSliceArrangementBySliceArrangement, {
+    return instance.get(myPath.customerSelectSliceArrangementBySliceArrangement, {
       params: {
         sliceArrangementId,
         cinemaId,

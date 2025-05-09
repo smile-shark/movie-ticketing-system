@@ -149,19 +149,20 @@ export default {
         this.$message.error("请输入正确的验证码");
         return;
       }
-      this.$apis
-        .getVerifyCode(this.imageVerifyUrl, this.imageVerifyCode)
-        .then((res) => {
-          if (res.data.status) {
-            this.$message.success(res.data.messages);
-            this.isPerson = true;
-            this.imageVerifyDialog = false;
+      // this.$apis
+      //   .getVerifyCode(this.imageVerifyUrl, this.imageVerifyCode)
+      //   .then((res) => {
+      //     if (res.data.status) {
+      //       this.$message.success(res.data.messages);
+      //       this.isPerson = true;
+      //     } else {
+      //       this.$message.error(res.data.messages);
+      //     }
+      //   });  
+        
+        this.imageVerifyDialog = false;
             // 发送邮箱验证码
             this.getEmailVerifyCode();
-          } else {
-            this.$message.error(res.data.messages);
-          }
-        });
     },
     getEmailVerifyCode() {
       // 如果没有通过人机验证就弹出人机验证的弹窗
