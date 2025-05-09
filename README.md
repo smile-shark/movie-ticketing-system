@@ -1,7 +1,57 @@
 # 电影购票系统（movie-ticketing-system）
-电影购票系统：包含客户端、电影院管理端、平台管理端
+页面布局参考：https://cloud.axureshop.com/48L08O
 
-项目参考：https://cloud.axureshop.com/48L08O
+> 电影购票系统是一个综合性的在线平台，旨在为用户提供便捷的电影购票服务，同时为电影院和平台管理员提供高效的管理工具。该系统分为三个主要部分：用户端、影院管理端和平台管理端。
+>
+
+##### 后端配置文件构成
+
+**aliyunoss-config.properties：**阿里云oss服务配置：
+
+* 因为安全策略，这个文件是没有上传到git库的
+
+* ```
+  oss.endpoint=oss-cn-chengdu.aliyuncs.com # 我使用的是成都的
+  oss.bucketName=public-file-container #容器名称
+  oss.fileUrlPrefix=https://public-file-container.oss-cn-chengdu.aliyuncs.com/ # 我使用的是成都的
+  oss.accessKeyId=accessKeyId # 唯一的标识符
+  oss.accessKeySecret=accessKeySecret # 密钥
+  ```
+
+**email-config.properties：**邮件的发送配置
+
+* 因为隐私问题，这个文件是没有上传到git库的
+
+* ```
+  email.username=邮箱
+  email.password=应用密码
+  mail.smtp.host=smtp服务器
+  mail.smtp.port=端口
+  mail.smtp.auth=true
+  mail.smtp.starttls.enable=true
+  ```
+
+**KEY.properties：**密钥配置
+
+* ```
+  AES_KEY=movie-ticketing-project # AES加密密钥
+  JWT_KEY=b8942cc3878a41659aaacc9b151399c4 # JWT加密密钥
+  JWT_EXPIRATION_TIME=36000000 # JWT有效时长
+  ```
+
+**mybaits-config.properties：**数据库配置
+
+* ```
+  datasource.host=localhost # 需要修改可以更换
+  datasource.port=3306 # 需要修改可以更换
+  datasource.database=movie_ticketing_system # 项目指定的数据库名是这个在表结构中有
+  datasource.another=useSSL=false&serverTimezone=UTC&characterEncoding=UTF-8&allowPublicKeyRetrieval=true
+  
+  druid.driverClassName=com.mysql.cj.jdbc.Driver
+  druid.url=jdbc:mysql://${datasource.host:localhost}:${datasource.port:3306}/${datasource.database}?${datasource.another}
+  druid.username=root # 需要修改可以更换
+  druid.password=123456 # 需要修改可以更换
+  ```
 
 ## 数据库结构设计图
 
@@ -9,18 +59,20 @@
 
 ## 需求分析
 
-### 用户端
+### 用户端：（多端可用）
 
-用户端适配移动软件：
+为了扩大用户群体、提升用户体验和适应移动互联网发展趋势，我设计了适配web端(`2560px`)的和移动端的ui(`768px`)
 
-图略大部分：
+**移动端部分展示图：**
 
-![image-20250508175908929](image/image-20250508175908929.png)
+<div style="display: flex;">
+  <img src="image\image-20250509090845735.png" alt="image-20250509090845735" style="zoom:50%;">
+  <img src="image/image-20250508175908929.png" alt="image-20250508175908929" style="zoom:50%;">
+</div>
 
+登录（页面）
 
-
-1. 登录（页面）
-   1. ![image-20250418171649543](./image/image-20250418171649543.png)
+1. 1. ![image-20250418171649543](./image/image-20250418171649543.png)
    2. 输入用户邮箱和密码进行登录
       1. 验证邮箱和密码的格式正确
       2. 后端验证账户：
@@ -31,7 +83,7 @@
       3. 将返回的账户数据存储在浏览器本地
    3. 记住我：
       1. 功能实现：将状态记录到本地浏览器，进入登录页面的时候进行读取
-
+   
 2. 注册（页面）
    1. 
    2. 输入邮箱和密码进行注册
