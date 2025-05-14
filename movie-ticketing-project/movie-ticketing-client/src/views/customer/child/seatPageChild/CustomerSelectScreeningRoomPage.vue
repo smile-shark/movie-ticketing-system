@@ -4,7 +4,7 @@
         <el-col :span="24">
             <el-row v-if="cinema!=null">
                 <el-col :span="5">
-                <el-image :src="cinema.cinemaBrand.cinemaBrandLogo"
+                <el-image :src="cinema.cinemaBrand.cinemaBrandLogo" v-if="!utils.getsmall()"
                 style="width: 180px;height: 180px;border-radius: 5px;" fit="cover"/>
                 </el-col>
                 <el-col :span="19" class="cinema-info">

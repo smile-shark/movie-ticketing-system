@@ -455,11 +455,12 @@ export const myApi = {
       },
     });
   },
-  updateOrderStatus(orderId, state) {
+  updateOrderStatus(orderId, state,paramState) {
     return instance.put(myPath.updateOrderStatus, null, {
       params: {
         orderId,
         state,
+        paramState
       },
     });
   },
@@ -639,6 +640,16 @@ export const myApi = {
       params: {
         page, 
         size,
+      },
+    });
+  },
+  updateOrderStateByOrderIdAndState(cinemaId,orderId,state,paramState){
+    return instance.put(myPath.updateOrderStateByOrderIdAndState, null, {
+      params: {
+        cinemaId,
+        orderId,
+        state,
+        paramState,
       },
     });
   }

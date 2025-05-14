@@ -44,7 +44,11 @@ public enum RespCode {
     INSET_ERROR(5020, "插入失败"),
     HAVE_SLICE_ARRANGEMENT_IN_THIS_TIME(5021, "该时间段已有排片"),
     SEAT_ALREADY_BUY(5022,"该座位已被抢购" ),
-    ALREADY_ORDER_NOT_PAY(5023, "该订单已下单，未支付");
+    ALREADY_ORDER_NOT_PAY(5023, "该订单已下单，未支付"),
+    ORDER_NOT_IN_THIS_CINEMA(5024, "该订单不属于该影院"),
+    ORDER_NOT_PAY(5025, "该订单未支付"),
+    ORDER_ALREADY_USE(5026, "该订单已使用"),
+    ORDER_HAS_EXPIRED(5027,"订单已失效");
 
     private final int code;
     private final String message;

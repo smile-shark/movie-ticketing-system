@@ -21,7 +21,7 @@
     <update id="updateOrderStatus">
         update `order`
         set vote_pay_state=#{status}
-        where order_id=#{orderId}
+        where order_id=#{orderId} and vote_pay_state!=#{status}
     </update>
     <resultMap id="selectOrderBySliceArrangementIdMap" type="order">
         <id property="orderId" column="order_id"/>
@@ -192,4 +192,10 @@
         group by
             sa.cinema_id
     </select>
+    <update id="updateOrderStateByOrderIdAndState">
+        update `order`
+        set vote_pay_state=#{state}
+        where order_id=#{orderId}
+          and vote_pay_state=#{paramState}
+    </update>
 </mapper>

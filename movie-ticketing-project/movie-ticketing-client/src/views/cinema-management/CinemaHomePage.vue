@@ -127,6 +127,9 @@
                 <el-menu-item index="/cinema/home/info-management">
                   影院信息管理
                 </el-menu-item>
+                <el-menu-item index="/cinema/home/cinema-order-verify">
+                  订单校验页面
+                </el-menu-item>
               </el-submenu>
             </el-menu>
           </div>

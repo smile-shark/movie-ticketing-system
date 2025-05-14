@@ -51,4 +51,5 @@ public interface OrderMapper {
     List<ChartValue> selectChartValueByTimeGroupCinema(
             @Param("startTime")LocalDateTime startTime,
             @Param("endTime")LocalDateTime endTime);
+    int updateOrderStateByOrderIdAndState(@Param("orderId")String orderId,@Param("state")int state,@Param("paramState")int paramState);
 }

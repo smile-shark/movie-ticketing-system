@@ -78,5 +78,6 @@ export const myPath={
     selectChartValueByTimeAndScreeningRoom:'/cinema/management/screening-room-revenue/by/time',
     updateCinema:'/cinema/management/cinema',
     selectCountyByCountyId:'/cinema/management/county/by/county-id',
-    selectMarketByMarketId:'/cinema/management/market/by/market-id'
+    selectMarketByMarketId:'/cinema/management/market/by/market-id',
+    updateOrderStateByOrderIdAndState:'/cinema/management/order/state'
 }

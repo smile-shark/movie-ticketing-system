@@ -89,9 +89,9 @@ public class OrderServiceImp implements OrderService {
     }
 
     @Override
-    public Result updateOrderStatus(String orderId, Integer state) {
+    public Result updateOrderStatus(String orderId, Integer state,Integer paramSate) {
         try {
-            if(orderMapper.updateOrderStatus(orderId,state)>0){
+            if(orderMapper.updateOrderStateByOrderIdAndState(orderId,state,paramSate)>0){
                 if(state==OrderStatus.PAYMENT_CANCELLED.getCode()){
                     verifyOrderChild(List.of(orderMapper.selectOrderByOrderId(orderId)));
                 }
@@ -320,6 +320,39 @@ public class OrderServiceImp implements OrderService {
     public Result selectChartValueByTimeGroupCinema(LocalDateTime startTime, LocalDateTime endTime) {
         try {
             return Result.success(RespCode.FIND_SUCCESS,orderMapper.selectChartValueByTimeGroupCinema(startTime,endTime));
+        }catch (Exception e){
+            e.printStackTrace();
+            throw new BusinessException(RespCode.DATABASE_ERROR);
+        }
+    }
+
+    @Override
+    @Transactional
+    public Result updateOrderStateByOrderIdAndState(String CinemaId,String orderId, Integer state, Integer paramState) {
+        // 1. 首先判断这个订单是否是属于这个影院的
+        Order order = orderMapper.selectOrderDetailByOrderId(orderId);
+        if(!order.getSliceArrangement().getCinemaId().equals(CinemaId)){
+            throw new BusinessException(RespCode.ORDER_NOT_IN_THIS_CINEMA);
+        }
+        // 2. 然后判断订单状态是否合法
+        switch (order.getVotePayState()){
+            case 0:
+                throw new BusinessException(RespCode.ORDER_NOT_PAY);
+            case 2:
+                throw new BusinessException(RespCode.ORDER_ALREADY_USE);
+            case 3:
+            case 4:
+                throw new BusinessException(RespCode.ORDER_HAS_EXPIRED);
+            default:
+                break;
+        }
+        try {
+            // 3. 更新订单状态
+            if(orderMapper.updateOrderStateByOrderIdAndState(orderId,state,paramState)>0){
+                return Result.success(RespCode.UPDATE_SUCCESS);
+            }else{
+                throw new BusinessException(RespCode.UPDATE_ERROR);
+            }
         }catch (Exception e){
             e.printStackTrace();
             throw new BusinessException(RespCode.DATABASE_ERROR);

@@ -72,6 +72,7 @@
                             orderId:order.orderId
                         }
                     })">查看订单</el-button>
+                    <el-button type="success" class="float-right" v-if="order.votePayState==2" >去评价</el-button>
                     </span>
                 </TruncatedText>
                 <TruncatedText :lines="1" class="text-center" v-if="utils.getsmall()">
@@ -95,6 +96,7 @@
                         orderId:order.orderId
                     }
                 })">查看订单</el-button>
+                <el-button type="success" class="float-right" v-if="order.votePayState==2" >去评价</el-button>
                 </TruncatedText>
             </div>
         </el-card>
@@ -148,7 +150,7 @@ export default {
     },
     methods:{
         updateOrderStatus(){
-            myApi.updateOrderStatus(this.order.orderId,4).then(res=>{
+            myApi.updateOrderStatus(this.order.orderId,4,0).then(res=>{
                 if(res.data.code==200){
                     this.$message.success('订单取消成功');
                     this.order.votePayState = 4;

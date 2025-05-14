@@ -150,8 +150,11 @@ public class CustomerController {
     }
 
     @PutMapping("/order/state")
-    public Result updateOrderStatus(@RequestParam("orderId") String orderId, @RequestParam("state") String state) {
-        return orderService.updateOrderStatus(orderId, Integer.parseInt(state));
+    public Result updateOrderStatus(
+            @RequestParam("orderId") String orderId,
+            @RequestParam("state") Integer state,
+            @RequestParam("paramState")Integer paramState) {
+        return orderService.updateOrderStatus(orderId, state,paramState);
     }
 
     @GetMapping("/order/detail/by/order-id")

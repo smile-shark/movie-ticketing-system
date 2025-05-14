@@ -311,23 +311,32 @@ export default {
           console.log(e);
         });
     },
+    timeGetData(){
+      setTimeout(()=>{
+        if(!localStorage.getItem("cinemaId")){
+          this.timeGetData();
+        }else{
+          this.cinemaId = localStorage.getItem("cinemaId");
+          this.selectOrderNumByTime(
+            utils.getTimeForAnyWeek(1),
+            utils.getTimeForAnyWeek()
+          );
+          this.selectSliceArrangementNumByTime(
+            utils.getTimeForAnyWeek(1),
+            utils.getTimeForAnyWeek()
+          );
+          this.selectOrderVoteAllPriceByTime(
+            utils.getTimeForAnyWeek(1),
+            utils.getTimeForAnyWeek()
+          );
+          this.selectAllOrderPrice();
+          this.selectNewTurnoverData();
+        }
+      },200)
+    }
   },
   mounted() {
-    this.cinemaId = localStorage.getItem("cinemaId");
-    this.selectOrderNumByTime(
-      utils.getTimeForAnyWeek(1),
-      utils.getTimeForAnyWeek()
-    );
-    this.selectSliceArrangementNumByTime(
-      utils.getTimeForAnyWeek(1),
-      utils.getTimeForAnyWeek()
-    );
-    this.selectOrderVoteAllPriceByTime(
-      utils.getTimeForAnyWeek(1),
-      utils.getTimeForAnyWeek()
-    );
-    this.selectAllOrderPrice();
-    this.selectNewTurnoverData();
+    this.timeGetData();
   },
 };
 </script>

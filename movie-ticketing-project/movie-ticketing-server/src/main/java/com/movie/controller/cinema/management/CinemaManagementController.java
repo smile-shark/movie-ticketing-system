@@ -201,4 +201,14 @@ public class CinemaManagementController {
     public Result selectMarketByMarketId(@RequestParam("marketId") String marketId){
         return marketService.selectMarketById(marketId);
     }
+    @PutMapping("/order/state")
+    public Result updateOrderStateByOrderIdAndState(
+            @RequestParam("cinemaId")String cinemaId,
+            @RequestParam("orderId")String orderId,
+            @RequestParam("state")Integer state,
+            @RequestParam("paramState")Integer paramState
+    ){
+        return orderService.updateOrderStateByOrderIdAndState(cinemaId,orderId,state,paramState);
+    }
+
 }

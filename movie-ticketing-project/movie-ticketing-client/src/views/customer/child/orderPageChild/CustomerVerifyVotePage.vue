@@ -46,7 +46,8 @@
                 订单号： {{ order.orderId }}
             </div>
             <div>
-              <img src='@/assets/verifyMovieVote.png'/>
+              <canvas ref="qrCanvas"></canvas>
+              <!-- <img src='@/assets/verifyMovieVote.png'/> -->
             </div>
           </el-col>
         </el-row>
@@ -58,6 +59,7 @@
 <script>
 import { myApi } from '@/axios/my';
 import { utils } from '@/utils/globalUtils';
+import QRcode from 'qrcode';
 import TruncatedText from '@/components/global/TruncatedText.vue';
 export default {
   components:{
@@ -71,7 +73,13 @@ export default {
     }
   },
   methods:{
-
+    getnerateQRcode(){
+      const canvas = this.$refs.qrCanvas;
+      QRcode.toCanvas(canvas, this.orderId,(error)=>{
+        if(error) console.log(error)
+        else console.log('QR code generated successfully')
+      })
+    }
   },
   mounted(){
     this.orderId = this.$route.params.orderId;
@@ -82,6 +90,10 @@ export default {
         if(this.order.votePayState!==1){
           this.$message.error('该订单已失效')
           this.$router.push('/customer/home')
+        }else{
+          this.$nextTick(() => {
+            this.getnerateQRcode();
+          });
         }
       }else{
         this.$message.error(res.data.message)

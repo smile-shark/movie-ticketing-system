@@ -8,7 +8,7 @@ import java.time.LocalDateTime;
 public interface OrderService {
     Result insertOrder(Order order);
     Result selectOrderByOrderId(String orderId);
-    Result updateOrderStatus(String orderId,Integer state);
+    Result updateOrderStatus(String orderId,Integer state,Integer paramState);
     Result selectOrderBySliceArrangementId(String sliceArrangementId,Integer page,Integer size);
     void verifyOrder();
     Result selectOrderDetailByOrderId(String orderId);
@@ -26,4 +26,5 @@ public interface OrderService {
     Result selectOrderVotePriceByTimeNotCinema(LocalDateTime startTime,LocalDateTime endTime);
     Result selectChartValueByTimeAndMovieNotCinema(LocalDateTime startTime,LocalDateTime endTime);
     Result selectChartValueByTimeGroupCinema(LocalDateTime startTime,LocalDateTime endTime);
+    Result updateOrderStateByOrderIdAndState(String cinemaId,String orderId,Integer state,Integer paramState);
 }

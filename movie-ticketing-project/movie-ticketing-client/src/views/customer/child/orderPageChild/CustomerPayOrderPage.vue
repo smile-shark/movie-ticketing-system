@@ -133,7 +133,7 @@ export default {
     },
     updateOrderStatus() {
       myApi
-        .updateOrderStatus(this.orderId, 1)
+        .updateOrderStatus(this.orderId, 1,0)
         .then((res) => {
           if (res.data.code == 200) {
             // 支付成功生成二维码转跳到可验证的票页面

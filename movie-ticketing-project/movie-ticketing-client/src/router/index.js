@@ -32,6 +32,7 @@ import CustomerRatingListPage from '@/views/customer/child/moviePageChild/Custom
 import MovieListView from '@/components/global/MovieListView.vue'
 import CinemaInfoManagementPage from '@/views/cinema-management/child/AnotherPageChild/CinemaInfoManagementPage.vue'
 import CinemaAccountManagementPage from '@/views/platform-management/child/cinema-management/CinemaAccountManagementPage.vue'
+import CinemaOrderVerifyPage from '@/views/cinema-management/child/AnotherPageChild/CinemaOrderVerifyPage.vue'
 
 Vue.use(VueRouter)
 
@@ -223,6 +224,11 @@ const routes = [
         path: 'info-management',
         name: 'CinemaInfoManagementPage',
         component: CinemaInfoManagementPage
+      },
+      {
+        path: 'cinema-order-verify',
+        name: 'CinemaOrderVerifyPage',
+        component: CinemaOrderVerifyPage,
       }
     ]
   }
