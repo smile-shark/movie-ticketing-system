@@ -79,5 +79,7 @@ export const myPath={
     updateCinema:'/cinema/management/cinema',
     selectCountyByCountyId:'/cinema/management/county/by/county-id',
     selectMarketByMarketId:'/cinema/management/market/by/market-id',
-    updateOrderStateByOrderIdAndState:'/cinema/management/order/state'
+    updateOrderStateByOrderIdAndState:'/cinema/management/order/state',
+    cinemaManagementSelectOrderDetailByOrderId:'/cinema/management/order/detail/by/order-id'
+
 }

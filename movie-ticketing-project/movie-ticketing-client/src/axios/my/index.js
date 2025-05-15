@@ -652,5 +652,12 @@ export const myApi = {
         paramState,
       },
     });
+  },
+  cinemaManagementSelectOrderDetailByOrderId(orderId){
+    return instance.get(myPath.cinemaManagementSelectOrderDetailByOrderId, {
+      params: {
+        orderId,
+      },
+    });
   }
 };

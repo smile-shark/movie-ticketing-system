@@ -210,5 +210,9 @@ public class CinemaManagementController {
     ){
         return orderService.updateOrderStateByOrderIdAndState(cinemaId,orderId,state,paramState);
     }
+    @GetMapping("/order/detail/by/order-id")
+    public Result selectOrderDetailByOrderId(@RequestParam("orderId")String orderId){
+        return orderService.selectOrderDetailByOrderId(orderId);
+    }
 
 }

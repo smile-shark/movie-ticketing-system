@@ -31,13 +31,51 @@
       <!-- 扫描结果 -->
       <el-divider></el-divider>
       <div class="result-section">
-        <el-alert 
-          v-if="orderId"
-          :title="'扫描结果: ' + orderId+ '     '+returnMessage" 
+        <div
+          v-if="orderId">
+          <el-alert 
+          :title="'扫描结果: ' + orderId+ ' =====> '+returnMessage" 
           :type="orderState==200?'success':'error'" 
           :closable="false"
           show-icon
         ></el-alert>
+        <el-row v-if="orderData">
+          <el-col :span="24">
+            <el-form label-width="80px">
+              <el-form-item label="电影">
+                <TruncatedText :lines="1">
+                  {{ orderData.sliceArrangement.movie.movieName }}
+                </TruncatedText>
+              </el-form-item>
+              <el-form-item label="影院">
+                <TruncatedText :lines="1">
+                  {{ orderData.sliceArrangement.cinema.cinemaName }}
+                </TruncatedText>
+              </el-form-item>
+              <el-form-item label="影厅">
+                <truncated-text :lines="1">
+                  {{ orderData.sliceArrangement.screeningRoom.screeningRoomName }}
+                </truncated-text>
+              </el-form-item>
+              <el-form-item label="场次">
+                {{ utils.formatTimestampToYYYMMDDHHMMSS(orderData.sliceArrangement.sliceArrangementStartTime) }}
+                -
+                {{ utils.formatTimestampToYYYMMDDHHMMSS(orderData.sliceArrangement.sliceArrangementEndTime) }}
+              </el-form-item>
+              <el-form-item label="总价">
+                <truncated-text :lines="1">
+                  {{ orderData.voteAllPrice }}
+                </truncated-text>
+              </el-form-item>
+              <el-form-item label="座位">
+                <span v-for="(seat,index) in JSON.parse(orderData.seats)" :key="index">
+                  {{ seat.x }}排{{ seat.y }}座
+                </span>
+              </el-form-item>
+            </el-form>
+          </el-col>
+        </el-row>
+        </div>
         <el-empty v-else description="暂无扫描结果"></el-empty>
       </div>
     </el-card>
@@ -47,16 +85,23 @@
 <script>
 import { Html5Qrcode } from "html5-qrcode";
 import { myApi } from "@/axios/my";
+import { utils } from "@/utils/globalUtils";
+import TruncatedText from "@/components/global/TruncatedText.vue";
 
 export default {
+  components:{
+    TruncatedText
+  },
   data() {
     return {
+      utils,
         cinemaId:null,
         orderId: null,
         html5QrcodeScanner: null,
         isScanning: false,
         orderState:null,
         returnMessage:null,
+        orderData:null
     };
   },
   methods: {
@@ -71,6 +116,7 @@ export default {
           this.orderId = decodedText;
           console.log("扫描结果:", decodedText);
           // 扫描完成后关闭扫描器
+          this.cinemaManagementSelectOrderDetailByOrderId()
           this.updateOrderStateByOrderIdAndState(this.cinemaId,this.orderId,2,1)
           this.stopScanner();
         },
@@ -104,6 +150,15 @@ export default {
                 this.returnMessage=res.data.message
             }
         }).catch(e=>console.log(e))
+    },
+    cinemaManagementSelectOrderDetailByOrderId(){
+      myApi.cinemaManagementSelectOrderDetailByOrderId(this.orderId).then(res=>{
+        if(res.data.code==200){
+            this.orderData=res.data.data
+        }else{
+          this.$message.error(res.data.message)
+        }
+      }).catch(e=>console.log(e)) 
     }
   },
   beforeDestroy() {
