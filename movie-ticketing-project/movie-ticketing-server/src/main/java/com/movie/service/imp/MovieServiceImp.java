@@ -7,6 +7,7 @@ import com.movie.common.resp.RespCode;
 import com.movie.common.resp.Result;
 import com.movie.entity.Movie;
 import com.movie.entity.MovieType;
+import com.movie.entity.MovieTypeMiddle;
 import com.movie.exception.BusinessException;
 import com.movie.mapper.MovieMapper;
 import com.movie.mapper.MovieTypeMapper;
@@ -17,6 +18,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -53,13 +55,18 @@ public class MovieServiceImp implements MovieService {
             Page<Object> startPage = PageHelper.startPage(page, size);
             List<Movie> movies = movieMapper.selectMovieList(movie, already,random);
             for (Movie movieItem : movies) {
-                movieItem.setTags(
-                        movieTypeMapper.selectMovieTypesInMovieTypeIds(
-                                movieTypeMiddleMapper.selectMovieTypeMiddlesByMovieId(
-                                        movieItem.getMovieId()
-                                )
-                        )
+                List<MovieTypeMiddle> movieTypeMiddles = movieTypeMiddleMapper.selectMovieTypeMiddlesByMovieId(
+                        movieItem.getMovieId()
                 );
+                if(movieTypeMiddles.isEmpty()){
+                    movieItem.setTags(new ArrayList<>());
+                }else{
+                    movieItem.setTags(
+                            movieTypeMapper.selectMovieTypesInMovieTypeIds(
+                                    movieTypeMiddles
+                            )
+                    );
+                }
             }
             return Result.success(RespCode.FIND_SUCCESS,PageInfo.of(movies));
         } catch (Exception e) {
